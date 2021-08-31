@@ -1,5 +1,7 @@
 package clases;
 
-public class Promocion {
+abstract class Promocion {
 
+	
+	// lalalaasdsaghjkj
 }
