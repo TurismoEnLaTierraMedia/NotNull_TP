@@ -3,12 +3,13 @@ package clases;
 public class Usuario {
 
 	private String nombre;
-	private double presupuesto;
-	private int tiempoDisponible;
+	private int presupuesto;
+	private double tiempoDisponible;
 	private Tipo_De_Atraccion preferencia;
 
-	public Usuario(String nombre, double presupuesto, int tiempoDisponible, Tipo_De_Atraccion preferencia) {
-		super();
+	
+
+	public Usuario(String nombre, int presupuesto, double tiempoDisponible, Tipo_De_Atraccion preferencia) {
 		this.nombre = nombre;
 		this.presupuesto = presupuesto;
 		this.tiempoDisponible = tiempoDisponible;
@@ -23,11 +24,19 @@ public class Usuario {
 		return presupuesto;
 	}
 
-	public int getTiempoDisponible() {
-		return tiempoDisponible;
-	}
-
+	
 	public Tipo_De_Atraccion getPreferencia() {
 		return preferencia;
 	}
+
+	public double getTiempoDisponible() {
+		return tiempoDisponible;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [nombre=" + nombre + ", presupuesto=" + presupuesto + ", tiempoDisponible=" + tiempoDisponible
+				+ ", preferencia=" + preferencia + "]";
+	}
+	
 }
