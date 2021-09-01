@@ -5,14 +5,14 @@ public class Usuario {
 	private String nombre;
 	private double presupuesto;
 	private int tiempoDisponible;
-	private String tipoPreferido;
+	private Tipo_De_Atraccion preferencia;
 
-	public Usuario(String nombre, double presupuesto, int tiempoDisponible, String tipoPreferido) {
+	public Usuario(String nombre, double presupuesto, int tiempoDisponible, Tipo_De_Atraccion preferencia) {
 		super();
 		this.nombre = nombre;
 		this.presupuesto = presupuesto;
 		this.tiempoDisponible = tiempoDisponible;
-		this.tipoPreferido = tipoPreferido;
+		this.preferencia = preferencia;
 	}
 
 	public String getNombre() {
@@ -27,7 +27,7 @@ public class Usuario {
 		return tiempoDisponible;
 	}
 
-	public String getTipoPreferido() {
-		return tipoPreferido;
+	public Tipo_De_Atraccion getPreferencia() {
+		return preferencia;
 	}
 }
