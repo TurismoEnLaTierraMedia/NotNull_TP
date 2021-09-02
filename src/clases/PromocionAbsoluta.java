@@ -2,10 +2,11 @@ package clases;
 
 public class PromocionAbsoluta extends Promocion {
 
-	private int valorDesc;
 
+	private int valorDesc;
 	
-	public PromocionAbsoluta(int valorDesc) {
+	public PromocionAbsoluta(int valorDesc, Atraccion[] atraccion) {
+		super(atraccion);
 		this.valorDesc = valorDesc;
 	}
 

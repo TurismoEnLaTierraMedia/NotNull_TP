@@ -2,7 +2,11 @@ package clases;
 
 public class Promocion {
 
-	private Atraccion[] atraccion;
+	protected Atraccion[] atraccion;
+
+	public Promocion(Atraccion[] atraccion) {
+		this.atraccion = atraccion;
+	}
 
 	public Atraccion [] getAtracciones(){
 		return this.atraccion;
@@ -11,7 +15,7 @@ public class Promocion {
 	public double getCostoParcial( Atraccion [] atraccion) {
 		double costoTotal = 0;
 		for (Atraccion atracciones : atraccion) {
-			costoTotal+= atracciones.getCosto();
+			costoTotal+= atracciones.getCostoDeVisita();
 		}
 		return costoTotal;
 	}

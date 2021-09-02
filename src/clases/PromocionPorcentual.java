@@ -3,7 +3,8 @@ package clases;
 public class PromocionPorcentual extends Promocion {
 	private int porcenDesc;
 
-	public PromocionPorcentual(int porcenDesc) {
+	public PromocionPorcentual(int porcenDesc, Atraccion[] atraccion) {
+		super(atraccion);
 		this.porcenDesc = porcenDesc;
 	}
 

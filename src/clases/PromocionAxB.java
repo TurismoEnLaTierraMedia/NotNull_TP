@@ -3,7 +3,8 @@ package clases;
 public class PromocionAxB extends Promocion {
 	private Atraccion atraccionGratis;
 
-	public PromocionAxB(Atraccion atraccionGratis) {
+	public PromocionAxB(Atraccion atraccionGratis, Atraccion[] atraccion) {
+		super(atraccion);
 		this.atraccionGratis = atraccionGratis;
 	}
 
