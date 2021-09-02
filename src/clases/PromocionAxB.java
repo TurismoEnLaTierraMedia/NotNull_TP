@@ -12,4 +12,9 @@ public class PromocionAxB extends Promocion {
 		return this.atraccionGratis;
 	}
 
+	@Override
+	public String toString() {
+		return "¡En horabuena!, por la compra del paquete usted recibe gratis la atracción: " + atraccionGratis;
+	}
+
 }
