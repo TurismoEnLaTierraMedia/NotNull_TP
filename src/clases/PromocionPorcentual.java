@@ -7,6 +7,11 @@ public class PromocionPorcentual extends Promocion {
 		super(atraccion);
 		this.porcenDesc = porcenDesc;
 	}
+	
+	public PromocionPorcentual(int porcenDesc, int tamanio) {
+		super(tamanio);
+		this.porcenDesc = porcenDesc;
+	}
 
 	public int getPorcenDesc() {
 		return this.porcenDesc;

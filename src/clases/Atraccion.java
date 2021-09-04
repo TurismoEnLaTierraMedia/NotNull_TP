@@ -70,6 +70,12 @@ public class Atraccion {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		if (obj instanceof String) {
+			String nombre = (String) obj;
+			if (this.getNombre() == nombre) {
+				return true;
+			}
+		}
 		Atraccion other = (Atraccion) obj;
 		return costoDeVisita == other.costoDeVisita && cupo == other.cupo
 				&& Double.doubleToLongBits(duracion) == Double.doubleToLongBits(other.duracion)

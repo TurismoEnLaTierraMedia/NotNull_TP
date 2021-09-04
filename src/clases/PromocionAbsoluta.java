@@ -8,6 +8,11 @@ public class PromocionAbsoluta extends Promocion {
 		super(atraccion);
 		this.valorDesc = valorDesc;
 	}
+	
+	public PromocionAbsoluta(int valorDesc, int tamanio) {
+		super(tamanio);
+		this.valorDesc = valorDesc;
+	}
 
 	public int getValorDesc() {
 		return this.valorDesc;
@@ -20,8 +25,8 @@ public class PromocionAbsoluta extends Promocion {
 	@Override
 	public String toString() {
 
-		return "¡Buenas noticias! Usted ha recibido un descuento de " + valorDesc
-				+ ". El costo final de su recorrido es de: " + this.obtenerPrecioFinal(valorDesc);
+		return "¡Buenas noticias! Usted ha recibido un descuento de " + valorDesc;
+
 	}
 
 }

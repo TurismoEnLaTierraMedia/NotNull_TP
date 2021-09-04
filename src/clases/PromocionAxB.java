@@ -7,6 +7,11 @@ public class PromocionAxB extends Promocion {
 		super(atraccion);
 		this.atraccionGratis = atraccionGratis;
 	}
+	
+	public PromocionAxB(Atraccion atraccionGratis, int tamanio) {
+		super(tamanio);
+		this.atraccionGratis = atraccionGratis;
+	}
 
 	public Atraccion getAtraccionGratis() {
 		return this.atraccionGratis;
