@@ -9,12 +9,12 @@ public class Atraccion {
 	private int cupo;
 	private Tipo_De_Atraccion tipo;
 
-	public Atraccion(String nombre, int costoDeVisita, double duracion, int cupo, Tipo_De_Atraccion tipo) {
+	public Atraccion(String nombre, int costoDeVisita, double duracion, int cupo, String tipo) {
 		this.nombre = nombre;
 		this.costoDeVisita = costoDeVisita;
 		this.duracion = duracion;
 		this.cupo = cupo;
-		this.tipo = tipo;
+		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
 	}
 
 	public String getNombre() {
@@ -70,12 +70,6 @@ public class Atraccion {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		if (obj instanceof String) {
-			String nombre = (String) obj;
-			if (this.getNombre() == nombre) {
-				return true;
-			}
-		}
 		Atraccion other = (Atraccion) obj;
 		return costoDeVisita == other.costoDeVisita && cupo == other.cupo
 				&& Double.doubleToLongBits(duracion) == Double.doubleToLongBits(other.duracion)

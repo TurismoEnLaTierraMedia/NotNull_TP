@@ -1,6 +1,7 @@
 package clases;
 
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class Admin {
 	
@@ -9,8 +10,6 @@ public class Admin {
 	}
 
 	public static void main(String[] args) {
-	
-		
 		Sistema s1 = new Sistema();
 		s1.cargaUsuarios("ListaDeUsuarios");
 		s1.cargaAtracciones("ListaDeAtracciones");
@@ -27,7 +26,7 @@ public class Admin {
 			
 		}
 		
-		
+		System.out.println("Si/No");
 		
 		while (usuarioIterator.hasNext()) {
 			System.out.println(usuarioIterator.next().toString());
