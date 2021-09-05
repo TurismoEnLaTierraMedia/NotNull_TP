@@ -1,9 +1,11 @@
 package clases;
 
+import java.util.ArrayList;
+
 public class PromocionAxB extends Promocion {
 	private Atraccion atraccionGratis;
 
-	public PromocionAxB(Atraccion atraccionGratis, Atraccion[] atraccion) {
+	public PromocionAxB(Atraccion atraccionGratis, ArrayList<Atraccion> atraccion) {
 		super(atraccion);
 		this.atraccionGratis = atraccionGratis;
 	}
