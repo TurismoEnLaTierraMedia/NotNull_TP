@@ -62,6 +62,10 @@ public class Atraccion {
 		return Objects.hash(costoDeVisita, cupo, duracion, nombre, tipo);
 	}
 
+	public boolean tieneCupo() {
+		return this.cupo>0;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
