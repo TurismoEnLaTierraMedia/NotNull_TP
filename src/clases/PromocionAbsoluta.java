@@ -1,14 +1,16 @@
 package clases;
-
-import java.util.ArrayList;
-
 public class PromocionAbsoluta extends Promocion {
 
 	private int valorDesc;
 	String nombrePromocion;
 
-	public PromocionAbsoluta(ArrayList<Atraccion> atraccion) {
+	public PromocionAbsoluta(Atraccion [] atraccion) {
 		super(atraccion);
+	}
+	
+	public PromocionAbsoluta(int valorDesc, int tamanio) {
+		super(tamanio);
+		this.valorDesc = valorDesc;
 	}
 
 	public int getValorDesc() {
@@ -17,13 +19,6 @@ public class PromocionAbsoluta extends Promocion {
 
 	public double obtenerPrecioFinal(int i) {
 		return super.getCostoParcial(getAtracciones()) - getValorDesc();
-	}
-
-	public double bosqueNegroyMordor (ArrayList<Atraccion> atraccion) {
-		if (atraccion.contains(Mordor) && atraccion.contains(BosqueNegro)) {
-			valorDesc = 30;
-			nombrePromocion = "Bosque Negro y Mordor";
-		}
 	}
 
 	@Override

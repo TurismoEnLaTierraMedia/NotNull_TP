@@ -1,6 +1,7 @@
 package clases;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.io.*;
 
 public class Sistema {
@@ -23,6 +24,12 @@ public class Sistema {
 		this.informes = new ArrayList<InformeCompra>();
 	}
 
+	/**
+	 * Metodo que realiza la carga de los usuarios. Recibe como parametro la ruta
+	 * especificada del archivo.
+	 * 
+	 * @param rutaUsuarios
+	 */
 	public void cargaUsuarios(String rutaUsuarios) {
 		try {
 			archivo = new File(rutaUsuarios);
@@ -48,6 +55,12 @@ public class Sistema {
 		}
 	}
 
+	/**
+	 * Metodo que realiza la carga de las atracciones. Recibe como parametro la ruta
+	 * del archivo.
+	 * 
+	 * @param rutaAtracciones
+	 */
 	public void cargaAtracciones(String rutaAtracciones) {
 		try {
 			archivo = new File(rutaAtracciones);
@@ -58,7 +71,7 @@ public class Sistema {
 			while ((linea = br.readLine()) != null) {
 				String[] parametro = linea.split("-");
 				this.atracciones.add(new Atraccion(parametro[0], Integer.parseInt(parametro[1]),
-						Double.parseDouble(parametro[2]), Integer.parseInt(parametro[3]), null));
+						Double.parseDouble(parametro[2]), Integer.parseInt(parametro[3]), parametro[4]));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,33 +85,108 @@ public class Sistema {
 			}
 		}
 	}
-	
-//	private Atraccion [] arrayAtracciones (String [] parametro) {
-//		Atraccion [] atracciones = new Atraccion [parametro.length-1];
-//		
-//		return atracciones;
-//	}
-	
+
+	// CARGA DE PROMOCIONES - METODOS
+
+	/**
+	 * Este metodo devuelve una Atraccion que se encuentra la lista de atracciones.
+	 * El parametro corresponde al nombre de la atraccion -Basicamente recorre la
+	 * lista de atracciones, pidiendo su nombre y lo compara con el nombre pasado
+	 * por parametro
+	 * 
+	 * @param nombre
+	 * @return Atraccion
+	 */
+	private Atraccion convertirStringAAtraccion(String nombre) {
+		Atraccion result = null;
+		Iterator<Atraccion> atraccionIterator = this.getAtracciones().iterator();
+		while (atraccionIterator.hasNext()) {
+			Atraccion atraccionit = atraccionIterator.next();
+			if (nombre.equalsIgnoreCase(atraccionit.getNombre())) {
+				result = atraccionit;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Metodo que determina el tipo de promocion. Recibe como parametro un array de
+	 * Strings con los elementos del constructor.
+	 * <p>
+	 * Devuelve:
+	 * <ul>
+	 * <li>PromocionAbsoluta si el codigo es 1
+	 * <li>PromocionPorcentual si el codigo es 2
+	 * <li>PromocionAxB si el codigo es 3
+	 * <li>Lanza una excepcion si el codigo no es ninguno de los anteriores.</li>
+	 * </li></li></li>
+	 * </ul>
+	 *
+	 * 
+	 * @param
+	 * @return Promocion
+	 */
+	private Promocion determinarTipoPromocion(String[] parametro) {
+		if (Integer.parseInt(parametro[0]) == 1) {
+			return new PromocionAbsoluta(Integer.parseInt(parametro[0]), parametro.length - 2);
+		} else if (Integer.parseInt(parametro[0]) == 2) {
+			return new PromocionPorcentual(Integer.parseInt(parametro[0]), parametro.length - 2);
+		} else if (Integer.parseInt(parametro[0]) == 3) {
+			return new PromocionAxB(convertirStringAAtraccion(parametro[1]), parametro.length - 2);
+		} else {
+			throw new IllegalArgumentException("Codigo de tipo de promocion invalido."
+					+ " \n 1-Promocion absoluta \n 2-Promocion porcentual \n 3-Promocion AxB");
+		}
+
+	}
+
+	/**
+	 * Metodo que realiza la carga de las promociones. Se pasa como parametro la ruta del archivo con la lista.
+	 * @param rutaPromociones
+	 */
 	public void cargaPromociones(String rutaPromociones) {
 		try {
 			archivo = new File(rutaPromociones);
 			fr = new FileReader(archivo);
 			br = new BufferedReader(fr);
-			
+
 			String linea;
-			while((linea = br.readLine()) != null) {
-				String [] parametro = linea.split("-");
-				this.promociones.add(new PromocionAbsoluta(Integer.parseInt(parametro[0]), arrayAtracciones(parametro)));
+			while ((linea = br.readLine()) != null) {
+				String[] parametro = linea.split("-");
+				Promocion promocionaAgregar = determinarTipoPromocion(parametro);
+				for (int i = 2; i < parametro.length; i++) {
+					promocionaAgregar.anadirAtraccion(convertirStringAAtraccion(parametro[i]));
+				}
+				this.promociones.add(promocionaAgregar);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (fr != null) {
+					fr.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 	}
 
 	public void cargarListas(String rutaUsuarios, String rutaAtracciones, String rutaPromociones) {
 		cargaUsuarios(rutaUsuarios);
 		cargaAtracciones(rutaAtracciones);
+		cargaPromociones(rutaPromociones);
+	}
+
+	public void recomendar(Usuario usu) {
+		Iterator<Atraccion> atraccionesIterator = this.getAtracciones().iterator();
+
+		while (atraccionesIterator.hasNext()) {
+			Atraccion atraccion = (Atraccion) atraccionesIterator.next();
+
+		}
+
 	}
 
 	public ArrayList<Usuario> getUsuarios() {
@@ -108,7 +196,9 @@ public class Sistema {
 	public ArrayList<Atraccion> getAtracciones() {
 		return atracciones;
 	}
-	
-	
+
+	public ArrayList<Promocion> getPromociones() {
+		return promociones;
+	}
 
 }

@@ -9,12 +9,12 @@ public class Atraccion {
 	private int cupo;
 	private Tipo_De_Atraccion tipo;
 
-	public Atraccion(String nombre, int costoDeVisita, double duracion, int cupo, Tipo_De_Atraccion tipo) {
+	public Atraccion(String nombre, int costoDeVisita, double duracion, int cupo, String tipo) {
 		this.nombre = nombre;
 		this.costoDeVisita = costoDeVisita;
 		this.duracion = duracion;
 		this.cupo = cupo;
-		this.tipo = tipo;
+		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
 	}
 
 	public String getNombre() {
