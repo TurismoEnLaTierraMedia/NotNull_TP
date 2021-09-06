@@ -1,17 +1,14 @@
 package clases;
 
-
 public class PromocionPorcentual extends Promocion {
 	private int porcenDesc;
 
-	public PromocionPorcentual(int porcenDesc, Atraccion [] atraccion) {
-		super(atraccion);
-		this.porcenDesc = porcenDesc;
+	public PromocionPorcentual(Tipo_De_Atraccion tipo, String pack, double valorDesc, Atraccion[] atraccion) {
+		super(tipo, pack, valorDesc, atraccion);
 	}
-	
-	public PromocionPorcentual(int porcenDesc, int tamanio) {
+
+	public PromocionPorcentual(Integer tamanio) {
 		super(tamanio);
-		this.porcenDesc = porcenDesc;
 	}
 
 	public int getPorcenDesc() {

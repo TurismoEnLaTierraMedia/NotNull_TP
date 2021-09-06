@@ -3,31 +3,47 @@ package clases;
 public abstract class Promocion {
 
 	protected Atraccion[] atraccion;
+	protected Tipo_De_Atraccion tipo;
 	protected int indice;
+	protected double valorDesc;
+	String pack;
 
-	public Promocion(Atraccion [] atraccion) {
+	public Promocion(Tipo_De_Atraccion tipo, String pack, double valorDesc, Atraccion[] atraccion) {
+		this.atraccion = atraccion;
+		this.valorDesc = valorDesc;
+		this.indice = 0;
+		this.pack = pack;
+		this.tipo = tipo;
+	}
+
+	public Promocion(String pack, Atraccion[] atraccion) {
 		this.atraccion = atraccion;
 		this.indice = 0;
+		this.pack = pack;
 	}
-	
+
 	public Promocion(Integer tamanio) {
 		this.atraccion = new Atraccion[tamanio];
 		this.indice = 0;
 	}
-	
-	public void anadirAtraccion(Atraccion atraccion) {
+
+	public void anadirAtraccion(Atraccion atraccion) throws NoEsMismoTipoException, NoHayMasCupoException {
+		if (atraccion.getTipo() != this.tipo)
+			throw new NoEsMismoTipoException("¡Las atracciones deben ser del mismo tipo!");
+		if (atraccion.tieneCupo() == false)
+			throw new NoHayMasCupoException("La atraccion no posee cupo disponible");
 		this.atraccion[indice] = atraccion;
 		indice++;
 	}
 
-	public Atraccion [] getAtracciones() {
+	public Atraccion[] getAtracciones() {
 		return this.atraccion;
 	}
 
-	public double getCostoParcial(Atraccion [] atraccion) {
+	public double getCostoParcial(Atraccion[] atraccion) {
 		double costoTotal = 0;
-		for (Atraccion atracciones : atraccion) {
-			costoTotal += atracciones.getCostoDeVisita();
+		for (Atraccion atracc : atraccion) {
+			costoTotal += atracc.getCostoDeVisita();
 		}
 		return costoTotal;
 	}

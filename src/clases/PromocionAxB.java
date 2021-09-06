@@ -3,14 +3,12 @@ package clases;
 public class PromocionAxB extends Promocion {
 	private Atraccion atraccionGratis;
 
-	public PromocionAxB(Atraccion atraccionGratis, Atraccion [] atraccion) {
-		super(atraccion);
-		this.atraccionGratis = atraccionGratis;
+	public PromocionAxB(Tipo_De_Atraccion tipo, String pack, double valorDesc, Atraccion[] atraccion) {
+		super(tipo, pack, valorDesc, atraccion);
 	}
-	
-	public PromocionAxB(Atraccion atraccionGratis, int tamanio) {
+
+	public PromocionAxB(Integer tamanio) {
 		super(tamanio);
-		this.atraccionGratis = atraccionGratis;
 	}
 
 	public Atraccion getAtraccionGratis() {
@@ -19,7 +17,8 @@ public class PromocionAxB extends Promocion {
 
 	@Override
 	public String toString() {
-		return "¡En horabuena!, por la compra del paquete usted recibe gratis la atracción: " + atraccionGratis;
+		return "¡En horabuena!, por la compra de las atracciones: " + atraccion + " usted recibe gratis la atracción: "
+				+ atraccionGratis;
 	}
 
 }
