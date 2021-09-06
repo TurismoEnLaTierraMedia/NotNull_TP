@@ -1,8 +1,12 @@
 package clases;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Usuario {
+	
+	private ArrayList<Atraccion> comprasAtracciones = new ArrayList<>();
+	private ArrayList<Promocion> comprasPromociones = new ArrayList<>();
 
 	private String nombre;
 	private int presupuesto;
@@ -29,6 +33,25 @@ public class Usuario {
 	
 	public Tipo_De_Atraccion getPreferencia() {
 		return preferencia;
+	}
+	
+	public void comprarAtraccion(Atraccion atraccion) {
+		comprasAtracciones.add(atraccion);
+		this.presupuesto -= atraccion.getCostoDeVisita();
+		this.tiempoDisponible -= atraccion.getDuracion();	
+	}
+	
+	public void comprarPomocion(Promocion promocion) {
+		comprasPromociones.add(promocion);
+		this.presupuesto -= promocion.getCostoParcial(null);	
+	}
+	
+	public ArrayList<Atraccion> getComprasAtracciones() {
+		return comprasAtracciones;
+	}
+
+	public ArrayList<Promocion> getComprasPromociones() {
+		return comprasPromociones;
 	}
 
 	public double getTiempoDisponible() {
