@@ -5,13 +5,11 @@ public abstract class Promocion {
 	protected Atraccion[] atraccion;
 	protected Tipo_De_Atraccion tipo;
 	protected int indice;
-	protected double valorDesc;
+
 	String pack;
 
-	public Promocion(Tipo_De_Atraccion tipo, String pack, double valorDesc, Atraccion[] atraccion) {
+	public Promocion(Tipo_De_Atraccion tipo, String pack, Atraccion[] atraccion) {
 		this.atraccion = atraccion;
-		this.valorDesc = valorDesc;
-		this.indice = 0;
 		this.pack = pack;
 		this.tipo = tipo;
 	}

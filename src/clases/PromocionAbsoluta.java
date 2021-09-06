@@ -2,12 +2,15 @@ package clases;
 
 public class PromocionAbsoluta extends Promocion {
 
+	private int valorDesc;
+
 	public PromocionAbsoluta(Integer tamanio) {
 		super(tamanio);
 	}
 
-	public PromocionAbsoluta(Tipo_De_Atraccion tipo, String pack, double valorDesc, Atraccion[] atraccion) {
-		super(tipo, pack, valorDesc, atraccion);
+	public PromocionAbsoluta(Tipo_De_Atraccion tipo, String pack, int valorDesc, Atraccion[] atraccion) {
+		super(tipo, pack, atraccion);
+		this.valorDesc = valorDesc;
 	}
 
 	public double getValorDesc() {

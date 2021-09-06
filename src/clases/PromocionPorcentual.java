@@ -1,22 +1,23 @@
 package clases;
 
 public class PromocionPorcentual extends Promocion {
-	private int porcenDesc;
+	private int valorDesc;
 
-	public PromocionPorcentual(Tipo_De_Atraccion tipo, String pack, double valorDesc, Atraccion[] atraccion) {
-		super(tipo, pack, valorDesc, atraccion);
+	public PromocionPorcentual(Tipo_De_Atraccion tipo, String pack, int valorDesc, Atraccion[] atraccion) {
+		super(tipo, pack, atraccion);
+		this.valorDesc = valorDesc;
 	}
 
 	public PromocionPorcentual(Integer tamanio) {
 		super(tamanio);
 	}
 
-	public int getPorcenDesc() {
-		return this.porcenDesc;
+	public int getValorDesc() {
+		return this.valorDesc;
 	}
 
 	public double obtenerMontoDescontado() {
-		return super.getCostoParcial(getAtracciones()) * (getPorcenDesc() / 100);
+		return super.getCostoParcial(getAtracciones()) * (getValorDesc() / 100);
 	}
 
 	public double obtenerPrecioFinal() {
@@ -25,8 +26,8 @@ public class PromocionPorcentual extends Promocion {
 
 	@Override
 	public String toString() {
-		return "¡Buenas noticias!. Recibiste un descuento porcentual de" + this.obtenerMontoDescontado()
-				+ "el costo final por tu compra es de " + this.obtenerPrecioFinal();
+		return "¡Buenas noticias!." + "Con la compra del pack: " + pack + " Recibiste un descuento porcentual de"
+				+ this.obtenerMontoDescontado() + "el costo final por tu compra es de " + this.obtenerPrecioFinal();
 	}
 
 }
