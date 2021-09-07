@@ -27,6 +27,18 @@ public abstract class Promocion {
 		this.pack = pack;
 	}
 
+	public Tipo_De_Atraccion getTipo() {
+		return tipo;
+	}
+
+	public double getTiempoTotal(Atraccion[] atraccion) {
+		double tiempoTotal = 0;
+		for (Atraccion atracc : atraccion) {
+			tiempoTotal += atracc.getDuracion();
+		}
+		return tiempoTotal;
+	}
+
 	public void anadirAtraccion(Atraccion atraccion) throws NoEsMismoTipoException, NoHayMasCupoException {
 		if (atraccion.getTipo() != this.tipo)
 			throw new NoEsMismoTipoException("¡Las atracciones deben ser del mismo tipo!");
