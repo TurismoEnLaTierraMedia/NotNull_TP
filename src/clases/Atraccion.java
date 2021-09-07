@@ -14,7 +14,7 @@ public class Atraccion {
 		this.costoDeVisita = costoDeVisita;
 		this.duracion = duracion;
 		this.cupo = cupo;
-		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
+		this.setTipo(tipo);
 	}
 
 	public String getNombre() {
@@ -53,8 +53,13 @@ public class Atraccion {
 		return tipo;
 	}
 
-	public void setTipo(Tipo_De_Atraccion tipo) {
-		this.tipo = tipo;
+	public void setTipo(String tipo) {
+		try {
+			this.tipo = Tipo_De_Atraccion.valueOf(tipo.toUpperCase().replace("Ó", "O"));
+
+		} catch (IllegalArgumentException ex) {
+			System.out.println(tipo + " no corresponde con un tipo de atracción");
+		}
 	}
 
 	@Override
@@ -63,9 +68,9 @@ public class Atraccion {
 	}
 
 	public boolean tieneCupo() {
-		return this.cupo>0;
+		return this.cupo > 0;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
