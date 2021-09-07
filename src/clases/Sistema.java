@@ -128,11 +128,11 @@ public class Sistema {
 	 */
 	private Promocion determinarTipoPromocion(String[] parametro) {
 		if (Integer.parseInt(parametro[0]) == 1) {
-			return new PromocionAbsoluta(Integer.parseInt(parametro[0]), parametro.length - 2);
+			return new PromocionAbsoluta(parametro[1], parametro[2], Integer.parseInt(parametro[3]), parametro.length - 4);
 		} else if (Integer.parseInt(parametro[0]) == 2) {
-			return new PromocionPorcentual(Integer.parseInt(parametro[0]), parametro.length - 2);
+			return new PromocionPorcentual(parametro[1], parametro[2], Integer.parseInt(parametro[3]), parametro.length - 4);
 		} else if (Integer.parseInt(parametro[0]) == 3) {
-			return new PromocionAxB(convertirStringAAtraccion(parametro[1]), parametro.length - 2);
+			return new PromocionAxB(parametro[1], parametro[2], convertirStringAAtraccion(parametro[3]), parametro.length - 4);
 		} else {
 			throw new IllegalArgumentException("Codigo de tipo de promocion invalido."
 					+ " \n 1-Promocion absoluta \n 2-Promocion porcentual \n 3-Promocion AxB");
@@ -154,7 +154,7 @@ public class Sistema {
 			while ((linea = br.readLine()) != null) {
 				String[] parametro = linea.split("-");
 				Promocion promocionaAgregar = determinarTipoPromocion(parametro);
-				for (int i = 2; i < parametro.length; i++) {
+				for (int i = 4; i < parametro.length; i++) {
 					promocionaAgregar.anadirAtraccion(convertirStringAAtraccion(parametro[i]));
 				}
 				this.promociones.add(promocionaAgregar);
@@ -178,16 +178,23 @@ public class Sistema {
 		cargaAtracciones(rutaAtracciones);
 		cargaPromociones(rutaPromociones);
 	}
+	
+	
+	
+	public void recomendar(Usuario usu, Atraccion atrac) {
+		
+	}
 
-	public void recomendar(Usuario usu) {
-		Iterator<Atraccion> atraccionesIterator = this.getAtracciones().iterator();
-
-		while (atraccionesIterator.hasNext()) {
-			Atraccion atraccion = (Atraccion) atraccionesIterator.next();
-
-		}
+	public boolean recomendar(Usuario usu, Promocion promo) {
+		//if(usu.getPreferencia().equals(promo.getTipo())
+		return true;
 
 	}
+	
+	public void concretarCompra(String respuesta) {
+		
+	}
+	
 
 	public ArrayList<Usuario> getUsuarios() {
 		return usuarios;
