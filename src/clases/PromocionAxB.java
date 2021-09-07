@@ -3,13 +3,14 @@ package clases;
 public class PromocionAxB extends Promocion {
 	private Atraccion atraccionGratis;
 
-	public PromocionAxB(Tipo_De_Atraccion tipo, String pack, Atraccion atraccGratis, Atraccion[] atraccion) {
+	public PromocionAxB(String tipo, String pack, Atraccion atraccGratis, Atraccion[] atraccion) {
 		super(tipo, pack, atraccion);
 		this.atraccionGratis = atraccGratis;
 	}
 
-	public PromocionAxB(Integer tamanio) {
-		super(tamanio);
+	public PromocionAxB(String tipo, String pack, Atraccion atraccGratis, Integer tamanio) {
+		super(tipo, pack, tamanio);
+		this.atraccionGratis = atraccGratis;
 	}
 
 	public Atraccion getAtraccionGratis() {

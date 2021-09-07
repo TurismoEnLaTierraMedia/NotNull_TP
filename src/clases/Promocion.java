@@ -8,10 +8,10 @@ public abstract class Promocion {
 
 	String pack;
 
-	public Promocion(Tipo_De_Atraccion tipo, String pack, Atraccion[] atraccion) {
+	public Promocion(String tipo, String pack, Atraccion[] atraccion) {
 		this.atraccion = atraccion;
 		this.pack = pack;
-		this.tipo = tipo;
+		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
 	}
 
 	public Promocion(String pack, Atraccion[] atraccion) {
@@ -20,9 +20,11 @@ public abstract class Promocion {
 		this.pack = pack;
 	}
 
-	public Promocion(Integer tamanio) {
+	public Promocion(String tipo, String pack, Integer tamanio) {
 		this.atraccion = new Atraccion[tamanio];
 		this.indice = 0;
+		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
+		this.pack = pack;
 	}
 
 	public void anadirAtraccion(Atraccion atraccion) throws NoEsMismoTipoException, NoHayMasCupoException {

@@ -4,11 +4,12 @@ public class PromocionAbsoluta extends Promocion {
 
 	private int valorDesc;
 
-	public PromocionAbsoluta(Integer tamanio) {
-		super(tamanio);
+	public PromocionAbsoluta(String tipo, String pack, int valorDesc, Integer tamanio) {
+		super(tipo, pack, tamanio);
+		this.valorDesc = valorDesc;
 	}
 
-	public PromocionAbsoluta(Tipo_De_Atraccion tipo, String pack, int valorDesc, Atraccion[] atraccion) {
+	public PromocionAbsoluta(String tipo, String pack, int valorDesc, Atraccion[] atraccion) {
 		super(tipo, pack, atraccion);
 		this.valorDesc = valorDesc;
 	}

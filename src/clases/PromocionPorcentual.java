@@ -3,13 +3,14 @@ package clases;
 public class PromocionPorcentual extends Promocion {
 	private int valorDesc;
 
-	public PromocionPorcentual(Tipo_De_Atraccion tipo, String pack, int valorDesc, Atraccion[] atraccion) {
+	public PromocionPorcentual(String tipo, String pack, int valorDesc, Atraccion[] atraccion) {
 		super(tipo, pack, atraccion);
 		this.valorDesc = valorDesc;
 	}
 
-	public PromocionPorcentual(Integer tamanio) {
-		super(tamanio);
+	public PromocionPorcentual(String tipo, String pack, int valorDesc, Integer tamanio) {
+		super(tipo, pack, tamanio);
+		this.valorDesc = valorDesc;
 	}
 
 	public int getValorDesc() {
