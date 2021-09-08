@@ -40,7 +40,7 @@ public class Sistema {
 			while ((linea = br.readLine()) != null) {
 				String[] parametros = linea.split("-");
 				this.usuarios.add(new Usuario(parametros[0], Integer.parseInt(parametros[1]),
-						Double.parseDouble(parametros[2]), null));
+						Double.parseDouble(parametros[2]), parametros[3]));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -181,20 +181,40 @@ public class Sistema {
 	
 	
 	
-	public void recomendar(Usuario usu, Atraccion atrac) {
-		
+	public boolean recomendar(Usuario usu, Atraccion atrac) {
+		if (usu.getPreferencia().equals(atrac.getTipo())) {
+			if (usu.getPresupuesto() >= atrac.getCostoDeVisita() && usu.getTiempoDisponible() >= atrac.getDuracion()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean recomendar(Usuario usu, Promocion promo) {
-		//if(usu.getPreferencia().equals(promo.getTipo())
-		return true;
+		if (usu.getPreferencia().equals(promo.getTipo())) {
+			if (usu.getPresupuesto() >= promo.getCostoParcial() && usu.getTiempoDisponible() >= promo.getTiempoTotal()) {
+				return true;
+			}
+		}
+		return false;
 
 	}
 	
-	public void concretarCompra(String respuesta) {
-		
+	public void concretarCompra(Usuario usu, String respuesta, Promocion promo) {
+		if (respuesta.equalsIgnoreCase("si")) {
+			usu.comprarPomocion(promo);
+		}
 	}
 	
+	public void concretarCompra(Usuario usu, String respuesta, Atraccion atrac) {
+		if (respuesta.equalsIgnoreCase("si")) {
+			usu.comprarAtraccion(atrac);
+		}
+	}	
+	
+	public void añadirCompraAInformes(InformeCompra informe) {
+		informes.add(informe);
+	}
 
 	public ArrayList<Usuario> getUsuarios() {
 		return usuarios;
@@ -207,5 +227,11 @@ public class Sistema {
 	public ArrayList<Promocion> getPromociones() {
 		return promociones;
 	}
+
+	public ArrayList<InformeCompra> getInformes() {
+		return informes;
+	}
+	
+	
 
 }
