@@ -16,10 +16,20 @@ public class PromocionAxB extends Promocion {
 	public Atraccion getAtraccionGratis() {
 		return this.atraccionGratis;
 	}
+	
+	public String toStringArray () {
+		String atracciones = "";
+		for (Atraccion atracc : atraccion) {
+			atracciones += atracc.getNombre() + ", ";
+		}
+		return atracciones;
+	}
 
+	
+	
 	@Override
 	public String toString() {
-		return "¡En horabuena!, por la compra de las atracciones: " + atraccion + "del pack" + pack
+		return "¡En horabuena!, por la compra de las atracciones: " + toStringArray() + "del pack" + pack
 				+ " usted recibe gratis la atracción: " + atraccionGratis;
 	}
 
