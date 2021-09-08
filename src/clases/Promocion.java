@@ -31,9 +31,9 @@ public abstract class Promocion {
 		return tipo;
 	}
 
-	public double getTiempoTotal(Atraccion[] atraccion) {
+	public double getTiempoTotal() {
 		double tiempoTotal = 0;
-		for (Atraccion atracc : atraccion) {
+		for (Atraccion atracc : this.atraccion) {
 			tiempoTotal += atracc.getDuracion();
 		}
 		return tiempoTotal;
@@ -52,9 +52,9 @@ public abstract class Promocion {
 		return this.atraccion;
 	}
 
-	public double getCostoParcial(Atraccion[] atraccion) {
-		double costoTotal = 0;
-		for (Atraccion atracc : atraccion) {
+	public int getCostoParcial() {
+		int costoTotal = 0;
+		for (Atraccion atracc : this.atraccion) {
 			costoTotal += atracc.getCostoDeVisita();
 		}
 		return costoTotal;

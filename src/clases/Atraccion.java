@@ -66,6 +66,10 @@ public class Atraccion {
 		return this.cupo>0;
 	}
 	
+	public void reducirCupo() {
+		this.cupo--;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

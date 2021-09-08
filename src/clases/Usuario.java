@@ -15,11 +15,11 @@ public class Usuario {
 
 	
 
-	public Usuario(String nombre, int presupuesto, double tiempoDisponible, Tipo_De_Atraccion preferencia) {
+	public Usuario(String nombre, int presupuesto, double tiempoDisponible, String preferencia) {
 		this.nombre = nombre;
 		this.presupuesto = presupuesto;
 		this.tiempoDisponible = tiempoDisponible;
-		this.preferencia = preferencia;
+		this.preferencia = Tipo_De_Atraccion.valueOf(preferencia);
 	}
 
 	public String getNombre() {
@@ -43,7 +43,8 @@ public class Usuario {
 	
 	public void comprarPomocion(Promocion promocion) {
 		comprasPromociones.add(promocion);
-		this.presupuesto -= promocion.getCostoParcial(null);	
+		this.presupuesto -= promocion.getCostoParcial();
+		this.tiempoDisponible -= promocion.getTiempoTotal();
 	}
 	
 	public ArrayList<Atraccion> getComprasAtracciones() {

@@ -17,12 +17,12 @@ public class PromocionPorcentual extends Promocion {
 		return this.valorDesc;
 	}
 
-	public double obtenerMontoDescontado() {
-		return super.getCostoParcial(getAtracciones()) * (getValorDesc() / 100);
+	public int obtenerMontoDescontado() {
+		return super.getCostoParcial() * (getValorDesc() / 100);
 	}
 
-	public double obtenerPrecioFinal() {
-		return super.getCostoParcial(getAtracciones()) - obtenerMontoDescontado();
+	public int obtenerPrecioFinal() {
+		return super.getCostoParcial() - obtenerMontoDescontado();
 	}
 
 	@Override
