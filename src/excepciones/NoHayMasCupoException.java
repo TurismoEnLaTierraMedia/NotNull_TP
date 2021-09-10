@@ -1,4 +1,4 @@
-package clases;
+package excepciones;
 
 public class NoHayMasCupoException extends Exception {
 
