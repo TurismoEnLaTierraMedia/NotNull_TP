@@ -14,7 +14,8 @@ public class Atraccion {
 		this.costoDeVisita = costoDeVisita;
 		this.duracion = duracion;
 		this.cupo = cupo;
-		this.setTipo(tipo);
+		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
+//		this.setTipo(tipo);
 	}
 
 	public String getNombre() {

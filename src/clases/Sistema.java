@@ -17,6 +17,9 @@ public class Sistema {
 	private BufferedReader br;
 	private FileReader fr;
 
+	// Creacion de archivos
+	private PrintWriter salida;
+
 	public Sistema() {
 		this.usuarios = new ArrayList<Usuario>();
 		this.atracciones = new ArrayList<Atraccion>();
@@ -128,11 +131,14 @@ public class Sistema {
 	 */
 	private Promocion determinarTipoPromocion(String[] parametro) {
 		if (Integer.parseInt(parametro[0]) == 1) {
-			return new PromocionAbsoluta(parametro[1], parametro[2], Integer.parseInt(parametro[3]), parametro.length - 4);
+			return new PromocionAbsoluta(parametro[1], parametro[2], Integer.parseInt(parametro[3]),
+					parametro.length - 4);
 		} else if (Integer.parseInt(parametro[0]) == 2) {
-			return new PromocionPorcentual(parametro[1], parametro[2], Integer.parseInt(parametro[3]), parametro.length - 4);
+			return new PromocionPorcentual(parametro[1], parametro[2], Integer.parseInt(parametro[3]),
+					parametro.length - 4);
 		} else if (Integer.parseInt(parametro[0]) == 3) {
-			return new PromocionAxB(parametro[1], parametro[2], convertirStringAAtraccion(parametro[3]), parametro.length - 4);
+			return new PromocionAxB(parametro[1], parametro[2], convertirStringAAtraccion(parametro[3]),
+					parametro.length - 4);
 		} else {
 			throw new IllegalArgumentException("Codigo de tipo de promocion invalido."
 					+ " \n 1-Promocion absoluta \n 2-Promocion porcentual \n 3-Promocion AxB");
@@ -141,7 +147,9 @@ public class Sistema {
 	}
 
 	/**
-	 * Metodo que realiza la carga de las promociones. Se pasa como parametro la ruta del archivo con la lista.
+	 * Metodo que realiza la carga de las promociones. Se pasa como parametro la
+	 * ruta del archivo con la lista.
+	 * 
 	 * @param rutaPromociones
 	 */
 	public void cargaPromociones(String rutaPromociones) {
@@ -178,9 +186,7 @@ public class Sistema {
 		cargaAtracciones(rutaAtracciones);
 		cargaPromociones(rutaPromociones);
 	}
-	
-	
-	
+
 	public boolean recomendar(Usuario usu, Atraccion atrac) {
 		if (usu.getPreferencia().equals(atrac.getTipo())) {
 			if (usu.getPresupuesto() >= atrac.getCostoDeVisita() && usu.getTiempoDisponible() >= atrac.getDuracion()) {
@@ -192,28 +198,54 @@ public class Sistema {
 
 	public boolean recomendar(Usuario usu, Promocion promo) {
 		if (usu.getPreferencia().equals(promo.getTipo())) {
-			if (usu.getPresupuesto() >= promo.getCostoParcial() && usu.getTiempoDisponible() >= promo.getTiempoTotal()) {
+			if (usu.getPresupuesto() >= promo.getCostoParcial()
+					&& usu.getTiempoDisponible() >= promo.getTiempoTotal()) {
 				return true;
 			}
 		}
 		return false;
 
 	}
-	
+
 	public void concretarCompra(Usuario usu, String respuesta, Promocion promo) {
 		if (respuesta.equalsIgnoreCase("si")) {
 			usu.comprarPomocion(promo);
 		}
 	}
-	
+
 	public void concretarCompra(Usuario usu, String respuesta, Atraccion atrac) {
 		if (respuesta.equalsIgnoreCase("si")) {
 			usu.comprarAtraccion(atrac);
 		}
-	}	
-	
+	}
+
 	public void añadirCompraAInformes(InformeCompra informe) {
 		informes.add(informe);
+	}
+
+	public void generarInformes() throws IOException{
+		Iterator<Usuario> usuarios = this.getUsuarios().iterator();
+		while (usuarios.hasNext()) {
+			Usuario usuario = (Usuario) usuarios.next();
+			Iterator<InformeCompra> informes = this.getInformes().iterator();
+//			salida = new PrintWriter(new FileWriter(usuario.getNombre()) + ".txt");		
+			salida = new PrintWriter(usuario.getNombre() + ".txt");	
+			String datos = usuario.toString();
+			String movimientos = "";
+			while (informes.hasNext()) {
+				InformeCompra informeCompra = (InformeCompra) informes.next();
+				
+				if (informeCompra.getUsuario().equals(usuario)) {
+				  movimientos += informeCompra.toString() + "\n";
+				}
+			}
+			
+			salida.println(datos);
+			salida.println(movimientos);
+			salida.close();
+			
+		}
+		
 	}
 
 	public ArrayList<Usuario> getUsuarios() {
@@ -231,7 +263,5 @@ public class Sistema {
 	public ArrayList<InformeCompra> getInformes() {
 		return informes;
 	}
-	
-	
 
 }

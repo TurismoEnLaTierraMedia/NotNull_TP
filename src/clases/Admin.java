@@ -1,5 +1,6 @@
 package clases;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -8,7 +9,7 @@ public class Admin {
 	private static String msgBienvenida(String nombre) {
 		return "Bienvenido " + nombre + "\n" + "Tenemos algunas ofertas para ti";
 	}
-	
+
 	private static String datosUsuario(Usuario usu) {
 		return "Monedas: " + usu.getPresupuesto() + " - Tiempo disponible: " + usu.getTiempoDisponible();
 	}
@@ -70,8 +71,9 @@ public class Admin {
 			// con todas
 			// las transacciones del usuario.
 			// s1.generarItinerario(usuActual);
-			
-			//Al terminar con un usuario, debo resetear los iteradores de Promocion y Atraccion
+
+			// Al terminar con un usuario, debo resetear los iteradores de Promocion y
+			// Atraccion
 			System.out.println(datosUsuario(usuActual));
 			promocionIterator = s1.getPromociones().iterator();
 			atraccionIterator = s1.getAtracciones().iterator();
@@ -79,7 +81,13 @@ public class Admin {
 
 		// Terminado todo el proceso, se genera un archivo de salida para cada usuario
 		// con sus transacciones.
-		// s1.generarInformes();
+		
+		try {
+			s1.generarInformes();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Iterator<InformeCompra> informeIterator = s1.getInformes().iterator();
 
