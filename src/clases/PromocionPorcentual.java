@@ -1,15 +1,17 @@
 package clases;
 
+import java.util.ArrayList;
+
 public class PromocionPorcentual extends Promocion {
 	private int valorDesc;
 
-	public PromocionPorcentual(String tipo, String pack, int valorDesc, Atraccion[] atraccion) {
+	public PromocionPorcentual(String tipo, String pack, int valorDesc, ArrayList<Atraccion> atraccion) {
 		super(tipo, pack, atraccion);
 		this.valorDesc = valorDesc;
 	}
 
-	public PromocionPorcentual(String tipo, String pack, int valorDesc, Integer tamanio) {
-		super(tipo, pack, tamanio);
+	public PromocionPorcentual(String tipo, String pack, int valorDesc) {
+		super(tipo, pack);
 		this.valorDesc = valorDesc;
 	}
 

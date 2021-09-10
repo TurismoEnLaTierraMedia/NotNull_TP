@@ -1,31 +1,32 @@
 package clases;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import excepciones.NoEsMismoTipoException;
 import excepciones.NoHayMasCupoException;
 
 public abstract class Promocion {
 
-	protected Atraccion[] atraccion;
+	protected ArrayList<Atraccion> atraccion;
 	protected Tipo_De_Atraccion tipo;
 	protected int indice;
 
-	String pack;
+	protected String pack;
 
-	public Promocion(String tipo, String pack, Atraccion[] atraccion) {
+	public Promocion(String tipo, String pack, ArrayList<Atraccion> atraccion) {
 		this.atraccion = atraccion;
 		this.pack = pack;
 		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
 	}
 
-	public Promocion(String pack, Atraccion[] atraccion) {
+	public Promocion(String pack, ArrayList<Atraccion> atraccion) {
 		this.atraccion = atraccion;
-		this.indice = 0;
 		this.pack = pack;
 	}
 
-	public Promocion(String tipo, String pack, Integer tamanio) {
-		this.atraccion = new Atraccion[tamanio];
-		this.indice = 0;
+	public Promocion(String tipo, String pack) {
+		this.atraccion = new ArrayList<Atraccion>();
 		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
 		this.pack = pack;
 	}
@@ -36,8 +37,10 @@ public abstract class Promocion {
 
 	public double getTiempoTotal() {
 		double tiempoTotal = 0;
-		for (Atraccion atracc : this.atraccion) {
-			tiempoTotal += atracc.getDuracion();
+		Iterator<Atraccion> atraccionesIterator = this.atraccion.iterator();
+		while (atraccionesIterator.hasNext()) {
+			Atraccion atraccion = atraccionesIterator.next();
+			tiempoTotal += atraccion.getDuracion();
 		}
 		return tiempoTotal;
 	}
@@ -47,18 +50,20 @@ public abstract class Promocion {
 			throw new NoEsMismoTipoException("¡Las atracciones deben ser del mismo tipo!");
 		if (atraccion.tieneCupo() == false)
 			throw new NoHayMasCupoException("La atraccion no posee cupo disponible");
-		this.atraccion[indice] = atraccion;
+		this.atraccion.add(atraccion);
 		indice++;
 	}
 
-	public Atraccion[] getAtracciones() {
+	public ArrayList<Atraccion> getAtracciones() {
 		return this.atraccion;
 	}
 
 	public int getCostoParcial() {
 		int costoTotal = 0;
-		for (Atraccion atracc : this.atraccion) {
-			costoTotal += atracc.getCostoDeVisita();
+		Iterator<Atraccion> atraccionesIterator = this.atraccion.iterator();
+		while (atraccionesIterator.hasNext()) {
+			Atraccion atraccion = atraccionesIterator.next();
+			costoTotal += atraccion.getDuracion();
 		}
 		return costoTotal;
 	}
