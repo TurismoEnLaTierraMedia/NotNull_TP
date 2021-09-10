@@ -181,6 +181,13 @@ public class Sistema {
 		}
 	}
 
+	/**
+	 * Metodo que hace algo
+	 * 
+	 * @param rutaUsuarios
+	 * @param rutaAtracciones
+	 * @param rutaPromociones
+	 */
 	public void cargarListas(String rutaUsuarios, String rutaAtracciones, String rutaPromociones) {
 		cargaUsuarios(rutaUsuarios);
 		cargaAtracciones(rutaAtracciones);
@@ -196,6 +203,12 @@ public class Sistema {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param usu
+	 * @param promo
+	 * @return
+	 */
 	public boolean recomendar(Usuario usu, Promocion promo) {
 		if (usu.getPreferencia().equals(promo.getTipo())) {
 			if (usu.getPresupuesto() >= promo.getCostoParcial()

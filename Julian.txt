@@ -1,4 +1,3 @@
 Usuario [nombre=Julian, presupuesto=12, tiempoDisponible=0.5, preferencia=Degustacion]
-CompraAtraccion [atraccion=Atraccion La Comarca: Costo de visita: 3, duracion: 6.5, cupo: 150, tipo: Degustacion]
-CompraAtraccion [atraccion=Atraccion Lothlorien: Costo de visita: 35, duracion: 1.0, cupo: 30, tipo: Degustacion]
+CompraPromocion [promocion=¡Buenas noticias!. Por la compra del paquete: Pack Degustacion Usted ha recibido un descuento de 36. El costo final de su recorrido es de: 2]
 

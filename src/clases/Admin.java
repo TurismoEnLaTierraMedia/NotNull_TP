@@ -55,7 +55,7 @@ public class Admin {
 			while (atraccionIterator.hasNext()) {
 				Atraccion atraccion = atraccionIterator.next();
 				// Chequeo si la atraccion cumple con las preferencias del usuario
-				if (s1.recomendar(usuActual, atraccion)) {
+				if (s1.recomendar(usuActual, atraccion) && !usuActual.chequearAtraccionEnPromociones(atraccion)) {
 					System.out.println(atraccion.toString());
 					System.out.println("Escriba Si/No");
 					String respuesta = sc1.nextLine();

@@ -1,6 +1,3 @@
-Usuario [nombre=Leandro, presupuesto=268, tiempoDisponible=38.0, preferencia=Paisaje]
+Usuario [nombre=Leandro, presupuesto=290, tiempoDisponible=45.5, preferencia=Paisaje]
 CompraPromocion [promocion=¡En horabuena!, por la compra de las atracciones: Minas Tirith, Abismo de Helm, del packPack Paisaje usted recibe gratis la atracción: Atraccion Erebor: Costo de visita: 12, duracion: 3.0, cupo: 32, tipo: Paisaje]
-CompraAtraccion [atraccion=Atraccion Erebor: Costo de visita: 12, duracion: 3.0, cupo: 32, tipo: Paisaje]
-CompraAtraccion [atraccion=Atraccion Minas Tirith: Costo de visita: 5, duracion: 2.5, cupo: 25, tipo: Paisaje]
-CompraAtraccion [atraccion=Atraccion Abismo de Helm: Costo de visita: 5, duracion: 2.0, cupo: 15, tipo: Paisaje]
 
