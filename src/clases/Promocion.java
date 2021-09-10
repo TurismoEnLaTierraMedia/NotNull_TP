@@ -1,5 +1,8 @@
 package clases;
 
+import excepciones.NoEsMismoTipoException;
+import excepciones.NoHayMasCupoException;
+
 public abstract class Promocion {
 
 	protected Atraccion[] atraccion;
