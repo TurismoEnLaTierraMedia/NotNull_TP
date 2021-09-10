@@ -1,4 +1,3 @@
 Usuario [nombre=Cristian, presupuesto=4, tiempoDisponible=0.0, preferencia=Aventura]
 CompraPromocion [promocion=¡Buenas noticias!.Con la compra del pack: Pack Aventura Recibiste un descuento porcentual de0el costo final por tu compra es de 13]
 CompraAtraccion [atraccion=Atraccion Bosque Negro: Costo de visita: 3, duracion: 4.0, cupo: 12, tipo: Aventura]
-

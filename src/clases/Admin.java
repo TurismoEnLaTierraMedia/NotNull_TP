@@ -43,7 +43,7 @@ public class Admin {
 					String respuesta = sc1.nextLine();
 					s1.concretarCompra(usuActual, respuesta, promocion);
 					if (respuesta.equalsIgnoreCase("si")) {
-						s1.añadirCompraAInformes(new CompraPromocion(promocion, usuActual));
+						s1.aniadirCompraAInformes(new CompraPromocion(promocion, usuActual));
 					}
 
 				}
@@ -61,7 +61,7 @@ public class Admin {
 					String respuesta = sc1.nextLine();
 					s1.concretarCompra(usuActual, respuesta, atraccion);
 					if (respuesta.equalsIgnoreCase("si")) {
-						s1.añadirCompraAInformes(new CompraAtraccion(atraccion, usuActual));
+						s1.aniadirCompraAInformes(new CompraAtraccion(atraccion, usuActual));
 					}
 
 				}

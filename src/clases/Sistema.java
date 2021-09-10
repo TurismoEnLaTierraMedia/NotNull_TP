@@ -219,7 +219,7 @@ public class Sistema {
 		}
 	}
 
-	public void añadirCompraAInformes(InformeCompra informe) {
+	public void aniadirCompraAInformes(InformeCompra informe) {
 		informes.add(informe);
 	}
 
