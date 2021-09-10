@@ -40,7 +40,7 @@ public class Sistema {
 			while ((linea = br.readLine()) != null) {
 				String[] parametros = linea.split("-");
 				this.usuarios.add(new Usuario(parametros[0], Integer.parseInt(parametros[1]),
-						Double.parseDouble(parametros[2]), null));
+						Double.parseDouble(parametros[2]), parametros[3]));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,11 +128,11 @@ public class Sistema {
 	 */
 	private Promocion determinarTipoPromocion(String[] parametro) {
 		if (Integer.parseInt(parametro[0]) == 1) {
-			return new PromocionAbsoluta(Integer.parseInt(parametro[0]), parametro.length - 2);
+			return new PromocionAbsoluta(parametro[1], parametro[2], Integer.parseInt(parametro[3]), parametro.length - 4);
 		} else if (Integer.parseInt(parametro[0]) == 2) {
-			return new PromocionPorcentual(Integer.parseInt(parametro[0]), parametro.length - 2);
+			return new PromocionPorcentual(parametro[1], parametro[2], Integer.parseInt(parametro[3]), parametro.length - 4);
 		} else if (Integer.parseInt(parametro[0]) == 3) {
-			return new PromocionAxB(convertirStringAAtraccion(parametro[1]), parametro.length - 2);
+			return new PromocionAxB(parametro[1], parametro[2], convertirStringAAtraccion(parametro[3]), parametro.length - 4);
 		} else {
 			throw new IllegalArgumentException("Codigo de tipo de promocion invalido."
 					+ " \n 1-Promocion absoluta \n 2-Promocion porcentual \n 3-Promocion AxB");
@@ -154,7 +154,7 @@ public class Sistema {
 			while ((linea = br.readLine()) != null) {
 				String[] parametro = linea.split("-");
 				Promocion promocionaAgregar = determinarTipoPromocion(parametro);
-				for (int i = 2; i < parametro.length; i++) {
+				for (int i = 4; i < parametro.length; i++) {
 					promocionaAgregar.anadirAtraccion(convertirStringAAtraccion(parametro[i]));
 				}
 				this.promociones.add(promocionaAgregar);
@@ -178,15 +178,42 @@ public class Sistema {
 		cargaAtracciones(rutaAtracciones);
 		cargaPromociones(rutaPromociones);
 	}
-
-	public void recomendar(Usuario usu) {
-		Iterator<Atraccion> atraccionesIterator = this.getAtracciones().iterator();
-
-		while (atraccionesIterator.hasNext()) {
-			Atraccion atraccion = (Atraccion) atraccionesIterator.next();
-
+	
+	
+	
+	public boolean recomendar(Usuario usu, Atraccion atrac) {
+		if (usu.getPreferencia().equals(atrac.getTipo())) {
+			if (usu.getPresupuesto() >= atrac.getCostoDeVisita() && usu.getTiempoDisponible() >= atrac.getDuracion()) {
+				return true;
+			}
 		}
+		return false;
+	}
 
+	public boolean recomendar(Usuario usu, Promocion promo) {
+		if (usu.getPreferencia().equals(promo.getTipo())) {
+			if (usu.getPresupuesto() >= promo.getCostoParcial() && usu.getTiempoDisponible() >= promo.getTiempoTotal()) {
+				return true;
+			}
+		}
+		return false;
+
+	}
+	
+	public void concretarCompra(Usuario usu, String respuesta, Promocion promo) {
+		if (respuesta.equalsIgnoreCase("si")) {
+			usu.comprarPomocion(promo);
+		}
+	}
+	
+	public void concretarCompra(Usuario usu, String respuesta, Atraccion atrac) {
+		if (respuesta.equalsIgnoreCase("si")) {
+			usu.comprarAtraccion(atrac);
+		}
+	}	
+	
+	public void añadirCompraAInformes(InformeCompra informe) {
+		informes.add(informe);
 	}
 
 	public ArrayList<Usuario> getUsuarios() {
@@ -200,5 +227,11 @@ public class Sistema {
 	public ArrayList<Promocion> getPromociones() {
 		return promociones;
 	}
+
+	public ArrayList<InformeCompra> getInformes() {
+		return informes;
+	}
+	
+	
 
 }

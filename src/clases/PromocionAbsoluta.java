@@ -14,12 +14,12 @@ public class PromocionAbsoluta extends Promocion {
 		this.valorDesc = valorDesc;
 	}
 
-	public double getValorDesc() {
+	public int getValorDesc() {
 		return this.valorDesc;
 	}
 
-	public double obtenerPrecioFinal() {
-		return super.getCostoParcial(getAtracciones()) - getValorDesc();
+	public int obtenerPrecioFinal() {
+		return super.getCostoParcial() - getValorDesc();
 	}
 
 	@Override
