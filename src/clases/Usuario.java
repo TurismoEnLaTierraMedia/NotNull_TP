@@ -1,6 +1,7 @@
 package clases;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class Usuario {
@@ -26,13 +27,29 @@ public class Usuario {
 		return nombre;
 	}
 
-	public double getPresupuesto() {
+	public int getPresupuesto() {
 		return presupuesto;
 	}
 
 	
 	public Tipo_De_Atraccion getPreferencia() {
 		return preferencia;
+	}
+	
+	public boolean chequearAtraccionEnPromociones(Atraccion atraccion) {
+		Iterator<Promocion> promociones = this.getComprasPromociones().iterator();
+		while (promociones.hasNext()) {
+			Promocion promocion = (Promocion) promociones.next();
+			
+			Atraccion[] atraccionesDePromociones = promocion.getAtracciones();
+			for (int i = 0; i < atraccionesDePromociones.length; i++) {
+				if (atraccion.equals(atraccionesDePromociones[i])) {
+					return true;
+				}
+			}
+			
+		}
+		return false;
 	}
 	
 	public void comprarAtraccion(Atraccion atraccion) {
