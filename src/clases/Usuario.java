@@ -88,8 +88,8 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [nombre=" + nombre + ", presupuesto=" + presupuesto + ", tiempoDisponible=" + tiempoDisponible
-				+ ", preferencia=" + preferencia + "]";
+		return "Usuario: " + nombre + "| Monedero: " + presupuesto + "| Tiempo Disponible: " + tiempoDisponible
+				+ "| Preferencia: " + preferencia;
 	}
 
 	@Override
