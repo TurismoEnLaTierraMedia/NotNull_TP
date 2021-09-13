@@ -93,7 +93,7 @@ public abstract class Promocion {
 		Iterator<Atraccion> atraccionesIterator = this.atraccion.iterator();
 		while (atraccionesIterator.hasNext()) {
 			Atraccion atraccion = atraccionesIterator.next();
-			costoTotal += atraccion.getDuracion();
+			costoTotal += atraccion.getCostoDeVisita();
 		}
 		return costoTotal;
 	}

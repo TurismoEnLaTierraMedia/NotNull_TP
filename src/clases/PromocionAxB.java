@@ -49,8 +49,8 @@ public class PromocionAxB extends Promocion {
 
 	@Override
 	public String toString() {
-		return "¡En horabuena!, por la compra de las atracciones: " + toStringArray() + " del pack" + pack
-				+ " usted recibe gratis la atracción: " + atraccionGratis;
+		return "Por la compra de las atracciones: " + toStringArray() + " del pack " + pack
+				+ ". Usted recibe gratis la atracción: " + atraccionGratis;
 	}
 
 }
