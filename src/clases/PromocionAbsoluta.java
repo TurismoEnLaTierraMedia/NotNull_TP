@@ -19,9 +19,11 @@ public class PromocionAbsoluta extends Promocion {
 	public int getValorDesc() {
 		return this.valorDesc;
 	}
-
+	
+	@Override
 	public int obtenerPrecioFinal() {
-		return super.getCostoParcial() - getValorDesc();
+		int result = super.obtenerPrecioFinal();
+		return result - this.valorDesc;
 	}
 
 	@Override

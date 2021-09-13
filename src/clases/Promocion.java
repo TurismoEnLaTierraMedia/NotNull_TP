@@ -10,7 +10,6 @@ public abstract class Promocion {
 
 	protected ArrayList<Atraccion> atraccion;
 	protected Tipo_De_Atraccion tipo;
-	protected int indice;
 
 	protected String pack;
 
@@ -44,6 +43,10 @@ public abstract class Promocion {
 		}
 		return tiempoTotal;
 	}
+	
+	public String getNombre() {
+		return this.pack;
+	}
 
 	public void anadirAtraccion(Atraccion atraccion) throws NoEsMismoTipoException, NoHayMasCupoException {
 		if (atraccion.getTipo() != this.tipo)
@@ -51,14 +54,13 @@ public abstract class Promocion {
 		if (atraccion.tieneCupo() == false)
 			throw new NoHayMasCupoException("La atraccion no posee cupo disponible");
 		this.atraccion.add(atraccion);
-		indice++;
 	}
 
 	public ArrayList<Atraccion> getAtracciones() {
 		return this.atraccion;
 	}
 
-	public int getCostoParcial() {
+	public int obtenerPrecioFinal() {
 		int costoTotal = 0;
 		Iterator<Atraccion> atraccionesIterator = this.atraccion.iterator();
 		while (atraccionesIterator.hasNext()) {

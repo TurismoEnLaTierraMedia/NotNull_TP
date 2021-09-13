@@ -43,6 +43,12 @@ public class PromocionAxB extends Promocion {
 		}
 		return atracciones;
 	}
+	
+	@Override
+	public int obtenerPrecioFinal() {
+		int result = super.obtenerPrecioFinal();
+		return result - this.atraccionGratis.getCostoDeVisita();
+	}
 
 	@Override
 	public String toString() {
