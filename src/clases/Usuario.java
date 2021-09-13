@@ -41,9 +41,14 @@ public class Usuario {
 		while (promociones.hasNext()) {
 			Promocion promocion = (Promocion) promociones.next();
 			
-			Atraccion[] atraccionesDePromociones = promocion.getAtracciones();
-			for (int i = 0; i < atraccionesDePromociones.length; i++) {
-				if (atraccion.equals(atraccionesDePromociones[i])) {
+			ArrayList<Atraccion> atraccionesDePromociones = promocion.getAtracciones();
+//			for (int i = 0; i < atraccionesDePromociones.length; i++) {
+//				if (atraccion.equals(atraccionesDePromociones[i])) {
+//					return true;
+//				}
+//			}
+			for (int i = 0; i < atraccionesDePromociones.size(); i++) {
+				if (atraccion.equals(atraccionesDePromociones.get(i))) {
 					return true;
 				}
 			}
@@ -60,7 +65,7 @@ public class Usuario {
 	
 	public void comprarPomocion(Promocion promocion) {
 		comprasPromociones.add(promocion);
-		this.presupuesto -= promocion.getCostoParcial();
+		this.presupuesto -= promocion.obtenerPrecioFinal();
 		this.tiempoDisponible -= promocion.getTiempoTotal();
 	}
 	
@@ -74,6 +79,11 @@ public class Usuario {
 
 	public double getTiempoDisponible() {
 		return tiempoDisponible;
+	}
+	
+	public Itinerario generarItinerario() {
+		Itinerario miItinerario = new Itinerario(this, this.getComprasPromociones(), this.getComprasAtracciones());
+		return miItinerario;
 	}
 
 	@Override
