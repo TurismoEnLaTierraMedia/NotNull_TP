@@ -131,14 +131,11 @@ public class Sistema {
 	 */
 	private Promocion determinarTipoPromocion(String[] parametro) {
 		if (Integer.parseInt(parametro[0]) == 1) {
-			return new PromocionAbsoluta(parametro[1], parametro[2], Integer.parseInt(parametro[3]),
-					parametro.length - 4);
+			return new PromocionAbsoluta(parametro[1], parametro[2], Integer.parseInt(parametro[3]));
 		} else if (Integer.parseInt(parametro[0]) == 2) {
-			return new PromocionPorcentual(parametro[1], parametro[2], Integer.parseInt(parametro[3]),
-					parametro.length - 4);
+			return new PromocionPorcentual(parametro[1], parametro[2], Integer.parseInt(parametro[3]));
 		} else if (Integer.parseInt(parametro[0]) == 3) {
-			return new PromocionAxB(parametro[1], parametro[2], convertirStringAAtraccion(parametro[3]),
-					parametro.length - 4);
+			return new PromocionAxB(parametro[1], parametro[2], convertirStringAAtraccion(parametro[3]));
 		} else {
 			throw new IllegalArgumentException("Codigo de tipo de promocion invalido."
 					+ " \n 1-Promocion absoluta \n 2-Promocion porcentual \n 3-Promocion AxB");
@@ -211,7 +208,7 @@ public class Sistema {
 	 */
 	public boolean recomendar(Usuario usu, Promocion promo) {
 		if (usu.getPreferencia().equals(promo.getTipo())) {
-			if (usu.getPresupuesto() >= promo.getCostoParcial()
+			if (usu.getPresupuesto() >= promo.obtenerPrecioFinal()
 					&& usu.getTiempoDisponible() >= promo.getTiempoTotal()) {
 				return true;
 			}
@@ -220,45 +217,73 @@ public class Sistema {
 
 	}
 
-	public void concretarCompra(Usuario usu, String respuesta, Promocion promo) {
+	public boolean concretarCompra(Usuario usu, String respuesta, Promocion promo) {
 		if (respuesta.equalsIgnoreCase("si")) {
 			usu.comprarPomocion(promo);
+			return true;
 		}
+		return false;
 	}
 
-	public void concretarCompra(Usuario usu, String respuesta, Atraccion atrac) {
+	public boolean concretarCompra(Usuario usu, String respuesta, Atraccion atrac) {
 		if (respuesta.equalsIgnoreCase("si")) {
 			usu.comprarAtraccion(atrac);
+			return true;
 		}
+		return false;
 	}
 
 	public void aniadirCompraAInformes(InformeCompra informe) {
 		informes.add(informe);
 	}
 
-	public void generarInformes() throws IOException{
+	public void generarInformes() throws IOException {
 		Iterator<Usuario> usuarios = this.getUsuarios().iterator();
 		while (usuarios.hasNext()) {
 			Usuario usuario = (Usuario) usuarios.next();
 			Iterator<InformeCompra> informes = this.getInformes().iterator();
-//			salida = new PrintWriter(new FileWriter(usuario.getNombre()) + ".txt");		
-			salida = new PrintWriter(usuario.getNombre() + ".txt");	
+			salida = new PrintWriter(usuario.getNombre() + ".txt");
 			String datos = usuario.toString();
 			String movimientos = "";
+			int costoTotal = 0;
+			double tiempoTotal = 0;
 			while (informes.hasNext()) {
 				InformeCompra informeCompra = (InformeCompra) informes.next();
-				
+
 				if (informeCompra.getUsuario().equals(usuario)) {
-				  movimientos += informeCompra.toString() + "\n";
+					movimientos += informeCompra.toString() + "\n";
+					if (informeCompra instanceof CompraAtraccion) {
+						costoTotal += ((CompraAtraccion) informeCompra).getAtraccion().getCostoDeVisita();
+						tiempoTotal += ((CompraAtraccion) informeCompra).getAtraccion().getDuracion();
+					}
+					if (informeCompra instanceof CompraPromocion) {
+//						if (((CompraPromocion) informeCompra).getPromocion() instanceof PromocionAxB) {
+//							PromocionAxB promoAxB = (PromocionAxB)((CompraPromocion) informeCompra).getPromocion();
+//							costoTotal += promoAxB.getCostoTotal();
+//						}
+//						if(((CompraPromocion) informeCompra).getPromocion() instanceof PromocionAbsoluta) {
+//							PromocionAbsoluta promoAbs = (PromocionAbsoluta)((CompraPromocion) informeCompra).getPromocion();
+//							costoTotal += promoAbs.obtenerPrecioFinal();
+//						}
+//						if(((CompraPromocion) informeCompra).getPromocion() instanceof PromocionPorcentual) {
+//							PromocionPorcentual promoPorc = (PromocionPorcentual)((CompraPromocion) informeCompra).getPromocion();
+//							costoTotal += promoPorc.obtenerPrecioFinal();
+//						}
+						costoTotal += ((CompraPromocion) informeCompra).getPromocion().obtenerPrecioFinal();
+						tiempoTotal += ((CompraPromocion) informeCompra).getPromocion().getTiempoTotal();
+					}
 				}
 			}
-			
+
 			salida.println(datos);
 			salida.println(movimientos);
+			salida.println("Resumen de compra");
+			salida.println("-------------------------------");
+			salida.println("Costo total: " + costoTotal + " - Tiempo requerido: " + tiempoTotal);
 			salida.close();
-			
+
 		}
-		
+
 	}
 
 	public ArrayList<Usuario> getUsuarios() {

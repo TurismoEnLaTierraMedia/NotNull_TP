@@ -1,3 +1,6 @@
-Usuario [nombre=Julian, presupuesto=12, tiempoDisponible=0.5, preferencia=Degustacion]
-CompraPromocion [promocion=¡Buenas noticias!. Por la compra del paquete: Pack Degustacion Usted ha recibido un descuento de 36. El costo final de su recorrido es de: 2]
+Usuario [nombre=Julian, presupuesto=79, tiempoDisponible=0.5, preferencia=Degustacion]
+CompraPromocion [promocion=¡Buenas noticias!. Por la compra del paquete: Pack Degustacion Usted ha recibido un descuento de 36. El costo final de su recorrido es de: -29]
 
+Resumen de compra
+-------------------------------
+Costo total: -29 - Tiempo requerido: 7.5

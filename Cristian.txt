@@ -1,3 +1,6 @@
-Usuario [nombre=Cristian, presupuesto=7, tiempoDisponible=4.0, preferencia=Aventura]
-CompraPromocion [promocion=¡Buenas noticias!.Con la compra del pack: Pack Aventura Recibiste un descuento porcentual de0el costo final por tu compra es de 13]
+Usuario [nombre=Cristian, presupuesto=14, tiempoDisponible=4.0, preferencia=Aventura]
+CompraPromocion [promocion=¡Buenas noticias!.Con la compra del pack: Pack Aventura Recibiste un descuento porcentual de0el costo final por tu compra es de 6]
 
+Resumen de compra
+-------------------------------
+Costo total: 6 - Tiempo requerido: 6.0
