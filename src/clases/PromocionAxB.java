@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class PromocionAxB extends Promocion {
+
+	// Atributos
 	private Atraccion atraccionGratis;
 
-	// crear costo total y parcial (que no sume el costo de la atracc gratis)
-
+	// Constructores
 	public PromocionAxB(String tipo, String pack, Atraccion atraccGratis, ArrayList<Atraccion> atraccion) {
 		super(tipo, pack, atraccion);
 		this.atraccionGratis = atraccGratis;
@@ -23,16 +24,12 @@ public class PromocionAxB extends Promocion {
 		return this.atraccionGratis;
 	}
 
-	public int getCostoTotal() {
-		int costoTotal = 0;
-		Iterator<Atraccion> atraccionesIterator = this.atraccion.iterator();
-		while (atraccionesIterator.hasNext()) {
-			Atraccion atraccion = atraccionesIterator.next();
-			costoTotal += atraccion.getDuracion();
-		}
-		costoTotal -= atraccionGratis.getCostoDeVisita();
-		return costoTotal;
-	}
+	/**
+	 * Método toString para mostrar por consola la lista de atracciones compradas
+	 * por la cual se obtiene una atracción gratis.
+	 * 
+	 * @return
+	 */
 
 	public String toStringArray() {
 		String atracciones = "";
@@ -43,7 +40,7 @@ public class PromocionAxB extends Promocion {
 		}
 		return atracciones;
 	}
-	
+
 	@Override
 	public int obtenerPrecioFinal() {
 		int result = super.obtenerPrecioFinal();
@@ -52,7 +49,7 @@ public class PromocionAxB extends Promocion {
 
 	@Override
 	public String toString() {
-		return "¡En horabuena!, por la compra de las atracciones: " + toStringArray() + "del pack" + pack
+		return "¡En horabuena!, por la compra de las atracciones: " + toStringArray() + " del pack" + pack
 				+ " usted recibe gratis la atracción: " + atraccionGratis;
 	}
 

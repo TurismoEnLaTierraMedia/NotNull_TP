@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 public class PromocionAbsoluta extends Promocion {
 
+	// Atributos
 	private int valorDesc;
 
+	// Constructores
 	public PromocionAbsoluta(String tipo, String pack, int valorDesc) {
 		super(tipo, pack);
 		this.valorDesc = valorDesc;
@@ -19,7 +21,7 @@ public class PromocionAbsoluta extends Promocion {
 	public int getValorDesc() {
 		return this.valorDesc;
 	}
-	
+
 	@Override
 	public int obtenerPrecioFinal() {
 		int result = super.obtenerPrecioFinal();
