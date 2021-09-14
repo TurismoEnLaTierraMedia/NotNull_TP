@@ -88,6 +88,26 @@ public abstract class Promocion {
 	 * @return int
 	 */
 
+	public boolean hayCupo() {
+		Iterator<Atraccion> atraccionesIterator = this.atraccion.iterator();
+		while (atraccionesIterator.hasNext()) {
+			Atraccion atraccion = atraccionesIterator.next();
+			if (!atraccion.tieneCupo()) {
+				return false;
+			}
+
+		}
+		return true;
+	}
+
+	public void reducirCupo() {
+		Iterator<Atraccion> atraccionesIterator = this.atraccion.iterator();
+		while (atraccionesIterator.hasNext()) {
+			Atraccion atraccion = atraccionesIterator.next();
+			atraccion.reducirCupo();
+		}
+	}
+
 	public int obtenerPrecioFinal() {
 		int costoTotal = 0;
 		Iterator<Atraccion> atraccionesIterator = this.atraccion.iterator();

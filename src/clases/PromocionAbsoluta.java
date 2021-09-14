@@ -31,8 +31,9 @@ public class PromocionAbsoluta extends Promocion {
 	@Override
 	public String toString() {
 
-		return " Por la compra del paquete: " + pack + ". Usted recibe un descuento de " + valorDesc
-				+ ". El costo final de su recorrido pasa a ser: " + this.obtenerPrecioFinal();
+		return " Por la compra del paquete: " + pack + ". Usted recibe un descuento de: " + valorDesc
+				+ " monedas. El costo final por las atracciones incluídas pasa a ser de " + this.obtenerPrecioFinal()
+				+ " monedas";
 	}
 
 }

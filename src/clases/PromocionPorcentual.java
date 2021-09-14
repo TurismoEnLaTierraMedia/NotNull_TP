@@ -23,7 +23,7 @@ public class PromocionPorcentual extends Promocion {
 	}
 
 	public int obtenerMontoDescontado() {
-		return super.obtenerPrecioFinal() * (getValorDesc() / 100);
+		return (int) (super.obtenerPrecioFinal() * (double) getValorDesc() / 100);
 	}
 
 	public int obtenerPrecioFinal() {
@@ -33,8 +33,9 @@ public class PromocionPorcentual extends Promocion {
 
 	@Override
 	public String toString() {
-		return "Con la compra del pack: " + pack + ". Usted recibe un descuento porcentual de: "
-				+ this.obtenerMontoDescontado() + " el costo final pasa a ser: " + this.obtenerPrecioFinal();
+		return "Con la compra del pack: " + pack + ". Usted recibe un descuento del " + this.getValorDesc()
+				+ "%, el costo final por las atracciones incluídas pasa a ser: " + this.obtenerPrecioFinal()
+				+ " monedas";
 	}
 
 }
