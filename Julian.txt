@@ -1,6 +1,6 @@
 Usuario: Julian| Monedero: 17| Tiempo Disponible: 0.5| Preferencia: Degustacion
 
-CompraPromocion [promocion= Por la compra del paquete: Absoluta Degustacion. Usted recibe un descuento de: 5 monedas. El costo final por las atracciones incluídas pasa a ser de 33 monedas]
+Compra Promocion [Promocion:  Por la compra del paquete: Absoluta Degustacion. Usted recibe un descuento de: 5 monedas. El costo final por las atracciones incluídas pasa a ser de 33 monedas]
 
 
 Resumen de compra

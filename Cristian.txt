@@ -1,9 +1,5 @@
-Usuario: Cristian| Monedero: 5| Tiempo Disponible: 1.5| Preferencia: Aventura
-
-CompraPromocion [promocion=Con la compra del pack: Porcentual de Aventuras. Usted recibe un descuento del 30%, el costo final por las atracciones incluídas pasa a ser: 10 monedas]
-CompraAtraccion [atraccion=Atraccion Minas Tirith: Costo de visita: 5, duracion: 2.5, cupo: 23, tipo: Paisaje]
+Usuario: Cristian| Monedero: 20| Tiempo Disponible: 10.0| Preferencia: Aventura
 
 
-Resumen de compra
--------------------------------
-Costo total: 15 - Tiempo requerido: 8.5
+
+Este usuario no ha realizado compras
