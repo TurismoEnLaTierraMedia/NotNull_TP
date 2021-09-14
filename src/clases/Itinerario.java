@@ -34,7 +34,7 @@ public class Itinerario {
 			Promocion promocion = (Promocion) iterator.next();
 			this.totalPagar += promocion.obtenerPrecioFinal();
 		}
-		
+
 	}
 
 	protected double getTiempoNecesario() {
@@ -61,11 +61,9 @@ public class Itinerario {
 		return promocionesCompradas;
 	}
 
-
 	protected List<Atraccion> getAtraccionesCompradas() {
 		return atraccionesCompradas;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -86,9 +84,9 @@ public class Itinerario {
 
 	@Override
 	public String toString() {
-		return "Itinerario [totalPagar=" + totalPagar + ", tiempoNecesario=" + tiempoNecesario + ", usuario=" + usuario
-				+ ", promocionesCompradas=" + promocionesCompradas + ", atraccionesCompradas=" + atraccionesCompradas
-				+ "]";
+		return "Itinerario --> Total a pagar: " + totalPagar + ", Tiempo necesario: "
+				+ tiempoNecesario + ", Usuario: " + usuario + ", Promociones compradas: "
+				+ promocionesCompradas + ", Atracciones Compradas" + atraccionesCompradas;
 	}
 
 }

@@ -23,7 +23,7 @@ public class CompraPromocion extends InformeCompra {
 
 	@Override
 	public String toString() {
-		return "CompraPromocion [promocion=" + promocion + "]";
+		return "Compra Promocion [Promocion: " + promocion + "]";
 	}
 
 }

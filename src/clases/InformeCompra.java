@@ -22,6 +22,6 @@ public class InformeCompra {
 //	No agregue equals porque no estaba implementado en usuario;
 	@Override
 	public String toString() {
-		return "InformeCompra [usuario=" + usuario + "]";
+		return "Informe de Compra [Usuario: " + usuario + "]";
 	}
 }
