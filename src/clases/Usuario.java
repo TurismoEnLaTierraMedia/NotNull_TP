@@ -36,6 +36,13 @@ public class Usuario {
 		return preferencia;
 	}
 	
+	/**
+	 * Método que revisa las promociones adquiridas por el usuario,
+	 * para no ofrecer atracciones que ya se encuentren en las mismas. 
+	 * @param atraccion
+	 * @return boolean
+	 */
+	
 	public boolean chequearAtraccionEnPromociones(Atraccion atraccion) {
 		Iterator<Promocion> promociones = this.getComprasPromociones().iterator();
 		while (promociones.hasNext()) {
@@ -57,11 +64,25 @@ public class Usuario {
 		return false;
 	}
 	
+	/**
+	 * Añade una Atracción a la lista de atraciones compradas
+	 * por el usuario, y modifica los atributos correspondientes
+	 * (presupuesto y tiempo disponible)
+	 * @param atraccion
+	 */
+	
 	public void comprarAtraccion(Atraccion atraccion) {
 		comprasAtracciones.add(atraccion);
 		this.presupuesto -= atraccion.getCostoDeVisita();
 		this.tiempoDisponible -= atraccion.getDuracion();	
 	}
+	
+	/**
+	 * Añade una Promoción a la lista de promociones compradas
+	 * por el usuario y modifica los atributos correspondientes
+	 * (presupuesto y tiempo disponible)
+	 * @param promocion
+	 */
 	
 	public void comprarPomocion(Promocion promocion) {
 		comprasPromociones.add(promocion);
@@ -80,6 +101,12 @@ public class Usuario {
 	public double getTiempoDisponible() {
 		return tiempoDisponible;
 	}
+	
+	/**
+	 * Guarda las compras realizadas por el usuario para incluirlas en el
+	 * archivo final.
+	 * @return miItinerario
+	 */
 	
 	public Itinerario generarItinerario() {
 		Itinerario miItinerario = new Itinerario(this, this.getComprasPromociones(), this.getComprasAtracciones());
