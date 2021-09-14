@@ -14,20 +14,24 @@ public abstract class Promocion {
 	protected String pack;
 
 	// Constructores
-	public Promocion(String tipo, String pack, ArrayList<Atraccion> atraccion) {
-		this.atraccion = atraccion;
-		this.pack = pack;
-		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
-	}
-
-	public Promocion(String pack, ArrayList<Atraccion> atraccion) {
-		this.atraccion = atraccion;
-		this.pack = pack;
-	}
 
 	public Promocion(String tipo, String pack) {
 		this.atraccion = new ArrayList<Atraccion>();
+		setTipo(tipo);
+		setPack(pack);
+	}
+
+	// Setters
+
+	private void setTipo(String tipo) {
+		if (tipo == "")
+			throw new Error("El sistema debe recibir dato tipo de las atracciones incluídas para validar la promoción");
 		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
+	}
+
+	private void setPack(String pack) {
+		if (pack == "")
+			throw new Error("El sistema debe recibir el nombre del pack para validar la promoción");
 		this.pack = pack;
 	}
 
@@ -40,6 +44,8 @@ public abstract class Promocion {
 	public String getNombre() {
 		return this.pack;
 	}
+
+	// Métodos
 
 	/**
 	 * Método que retorna una variable de tipo double que represtenta la suma de las

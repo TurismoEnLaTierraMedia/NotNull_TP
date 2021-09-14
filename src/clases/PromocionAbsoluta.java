@@ -1,26 +1,33 @@
 package clases;
 
-import java.util.ArrayList;
-
 public class PromocionAbsoluta extends Promocion {
 
 	// Atributos
+
 	private int valorDesc;
 
 	// Constructores
+
 	public PromocionAbsoluta(String tipo, String pack, int valorDesc) {
 		super(tipo, pack);
+		setValorDesc(valorDesc);
+	}
+
+	// Setters
+
+	private void setValorDesc(int valorDesc) {
+		if (valorDesc <= 0)
+			throw new Error("El sistema debe recibir un valor de descuento positivo para validar la promoción");
 		this.valorDesc = valorDesc;
 	}
 
-	public PromocionAbsoluta(String tipo, String pack, int valorDesc, ArrayList<Atraccion> atraccion) {
-		super(tipo, pack, atraccion);
-		this.valorDesc = valorDesc;
-	}
+	// Getters
 
 	public int getValorDesc() {
 		return this.valorDesc;
 	}
+
+	// Métodos
 
 	@Override
 	public int obtenerPrecioFinal() {
