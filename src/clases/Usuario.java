@@ -85,6 +85,10 @@ public class Usuario {
 		Itinerario miItinerario = new Itinerario(this, this.getComprasPromociones(), this.getComprasAtracciones());
 		return miItinerario;
 	}
+	
+	public boolean comproAlgo() {
+		return !this.getComprasAtracciones().isEmpty() && !this.getComprasPromociones().isEmpty();
+	}
 
 	@Override
 	public String toString() {

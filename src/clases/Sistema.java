@@ -1,7 +1,10 @@
 package clases;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+
 import java.io.*;
 
 public class Sistema {
@@ -27,6 +30,42 @@ public class Sistema {
 		this.informes = new ArrayList<InformeCompra>();
 	}
 
+	private boolean archivoVacio(File archivo) {
+		return archivo.length() == 0;
+	}
+	
+	private void revisarParametrosConstructorUsuario(String [] parametros) throws NumberFormatException{
+		try {
+			int monedas = Integer.parseInt(parametros[1]);
+			double tiempo = Double.parseDouble(parametros[2]);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();;
+		}
+	}
+	
+	public boolean usuarioTieneSuficienteDineroYTiempoParaAtracciones(Usuario usu) {
+		Iterator<Atraccion> atraccionesIterator = this.getAtracciones().iterator();
+		while (atraccionesIterator.hasNext()) {
+			Atraccion atraccion = (Atraccion) atraccionesIterator.next();
+			if (this.puedeComprar(usu, atraccion)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean usuarioTieneSuficienteDineroYTiempoParaRecomendar(Usuario usu) {
+		Iterator<Promocion> promocionesIterator = this.getPromociones().iterator();
+		while (promocionesIterator.hasNext()) {
+			Promocion promocion = (Promocion) promocionesIterator.next();
+			if(this.puedeComprar(usu, promocion)) {
+				return true;
+			}
+		}
+		return this.usuarioTieneSuficienteDineroYTiempoParaAtracciones(usu);
+		
+	}
+
 	/**
 	 * Metodo que realiza la carga de los usuarios. Recibe como parametro la ruta
 	 * especificada del archivo.
@@ -36,12 +75,15 @@ public class Sistema {
 	public void cargaUsuarios(String rutaUsuarios) {
 		try {
 			archivo = new File(rutaUsuarios);
+			if (this.archivoVacio(archivo)) {
+				throw new Error("El archivo" + rutaUsuarios + " esta vacio");
+			}
 			fr = new FileReader(archivo);
 			br = new BufferedReader(fr);
-
 			String linea;
 			while ((linea = br.readLine()) != null) {
 				String[] parametros = linea.split("-");
+				revisarParametrosConstructorUsuario(parametros);
 				this.usuarios.add(new Usuario(parametros[0], Integer.parseInt(parametros[1]),
 						Double.parseDouble(parametros[2]), parametros[3]));
 			}
@@ -67,6 +109,9 @@ public class Sistema {
 	public void cargaAtracciones(String rutaAtracciones) {
 		try {
 			archivo = new File(rutaAtracciones);
+			if (this.archivoVacio(archivo)) {
+				throw new Error("El archivo" + rutaAtracciones + " esta vacio");
+			}
 			fr = new FileReader(archivo);
 			br = new BufferedReader(fr);
 
@@ -87,6 +132,8 @@ public class Sistema {
 				e2.printStackTrace();
 			}
 		}
+		// Terminada la carga de las atracciones, ordeno la lista
+		Collections.sort(this.atracciones, new OrdenablePorPrecioYTiempo());
 	}
 
 	// CARGA DE PROMOCIONES - METODOS
@@ -108,6 +155,9 @@ public class Sistema {
 			if (nombre.equalsIgnoreCase(atraccionit.getNombre())) {
 				result = atraccionit;
 			}
+		}
+		if(result == null) {
+			throw new Error("No se encontro la atraccion" + nombre + "en la lista de atracciones");
 		}
 		return result;
 	}
@@ -152,6 +202,9 @@ public class Sistema {
 	public void cargaPromociones(String rutaPromociones) {
 		try {
 			archivo = new File(rutaPromociones);
+			if (this.archivoVacio(archivo)) {
+				throw new Error("El archivo" + rutaPromociones + " esta vacio");
+			}
 			fr = new FileReader(archivo);
 			br = new BufferedReader(fr);
 
@@ -190,12 +243,18 @@ public class Sistema {
 		cargaAtracciones(rutaAtracciones);
 		cargaPromociones(rutaPromociones);
 	}
+	
+	public boolean puedeComprar(Usuario usu, Promocion promo) {
+		return usu.getPresupuesto() >= promo.obtenerPrecioFinal() && usu.getTiempoDisponible() >= promo.getTiempoTotal();
+	}
+
+	public boolean puedeComprar(Usuario usu, Atraccion atrac) {
+		return usu.getPresupuesto() >= atrac.getCostoDeVisita() && usu.getTiempoDisponible() >= atrac.getDuracion();
+	}
 
 	public boolean recomendar(Usuario usu, Atraccion atrac) {
-		if (usu.getPreferencia().equals(atrac.getTipo())) {
-			if (usu.getPresupuesto() >= atrac.getCostoDeVisita() && usu.getTiempoDisponible() >= atrac.getDuracion()) {
-				return true;
-			}
+		if (usu.getPreferencia().equals(atrac.getTipo()) && atrac.tieneCupo()) {
+			return this.puedeComprar(usu, atrac);
 		}
 		return false;
 	}
@@ -220,6 +279,7 @@ public class Sistema {
 	public boolean concretarCompra(Usuario usu, String respuesta, Promocion promo) {
 		if (respuesta.equalsIgnoreCase("si")) {
 			usu.comprarPomocion(promo);
+			promo.reducirCupo();
 			return true;
 		}
 		return false;
@@ -228,6 +288,7 @@ public class Sistema {
 	public boolean concretarCompra(Usuario usu, String respuesta, Atraccion atrac) {
 		if (respuesta.equalsIgnoreCase("si")) {
 			usu.comprarAtraccion(atrac);
+			atrac.reducirCupo();
 			return true;
 		}
 		return false;
@@ -257,33 +318,56 @@ public class Sistema {
 						tiempoTotal += ((CompraAtraccion) informeCompra).getAtraccion().getDuracion();
 					}
 					if (informeCompra instanceof CompraPromocion) {
-//						if (((CompraPromocion) informeCompra).getPromocion() instanceof PromocionAxB) {
-//							PromocionAxB promoAxB = (PromocionAxB)((CompraPromocion) informeCompra).getPromocion();
-//							costoTotal += promoAxB.getCostoTotal();
-//						}
-//						if(((CompraPromocion) informeCompra).getPromocion() instanceof PromocionAbsoluta) {
-//							PromocionAbsoluta promoAbs = (PromocionAbsoluta)((CompraPromocion) informeCompra).getPromocion();
-//							costoTotal += promoAbs.obtenerPrecioFinal();
-//						}
-//						if(((CompraPromocion) informeCompra).getPromocion() instanceof PromocionPorcentual) {
-//							PromocionPorcentual promoPorc = (PromocionPorcentual)((CompraPromocion) informeCompra).getPromocion();
-//							costoTotal += promoPorc.obtenerPrecioFinal();
-//						}
 						costoTotal += ((CompraPromocion) informeCompra).getPromocion().obtenerPrecioFinal();
 						tiempoTotal += ((CompraPromocion) informeCompra).getPromocion().getTiempoTotal();
 					}
 				}
 			}
-
 			salida.println(datos);
+			salida.println("");
 			salida.println(movimientos);
-			salida.println("Resumen de compra");
-			salida.println("-------------------------------");
-			salida.println("Costo total: " + costoTotal + " - Tiempo requerido: " + tiempoTotal);
+			salida.println("");
+			if (costoTotal != 0 && tiempoTotal != 0) {
+				salida.println("Resumen de compra");
+				salida.println("-------------------------------");
+				salida.println("Costo total: " + costoTotal + " - Tiempo requerido: " + tiempoTotal);
+			} else {
+				salida.println("Este usuario no ha realizado compras");
+			}
 			salida.close();
-
 		}
 
+	}
+
+	public String pedirItinerario(Usuario usu) {
+		String datosUsuario = "Itinerario de " + usu.getNombre() + "\n";
+		if (this.usuarios.contains(usu)) {
+			Itinerario itinerarioUsuario = usu.generarItinerario();
+
+			if (!itinerarioUsuario.getPromocionesCompradas().isEmpty()) {
+				datosUsuario += "Promociones Compradas" + "\n";
+			}
+			for (Iterator<Promocion> iterator = itinerarioUsuario.getPromocionesCompradas().iterator(); iterator
+					.hasNext();) {
+				Promocion promocion = (Promocion) iterator.next();
+				datosUsuario += "-" + promocion.getNombre() + "\n";
+			}
+
+			if (!itinerarioUsuario.getAtraccionesCompradas().isEmpty()) {
+				datosUsuario += "Atracciones Compradas" + "\n";
+			}
+			for (Iterator<Atraccion> iterator = itinerarioUsuario.getAtraccionesCompradas().iterator(); iterator
+					.hasNext();) {
+				Atraccion atraccion = (Atraccion) iterator.next();
+				datosUsuario += "-" + atraccion.getNombre() + "\n";
+			}
+
+			datosUsuario += "\n" + "Costo Final: " + itinerarioUsuario.getTotalPagar() + " Tiempo requerido: "
+					+ itinerarioUsuario.getTiempoNecesario();
+		} else {
+			throw new IllegalArgumentException("Este usuario no esta en la lista");
+		}
+		return datosUsuario;
 	}
 
 	public ArrayList<Usuario> getUsuarios() {

@@ -1,8 +1,15 @@
-Usuario [nombre=Leandro, presupuesto=278, tiempoDisponible=42.5, preferencia=Paisaje]
-CompraAtraccion [atraccion=Atraccion Erebor: Costo de visita: 12, duracion: 3.0, cupo: 32, tipo: Paisaje]
-CompraAtraccion [atraccion=Atraccion Minas Tirith: Costo de visita: 5, duracion: 2.5, cupo: 25, tipo: Paisaje]
-CompraAtraccion [atraccion=Atraccion Abismo de Helm: Costo de visita: 5, duracion: 2.0, cupo: 15, tipo: Paisaje]
+Usuario: Leandro| Monedero: 202| Tiempo Disponible: 26.0| Preferencia: Paisaje
+
+Compra de Atraccion [Atraccion: Atraccion Erebor: Costo de visita: 12, duracion: 3.0, cupo: 31, tipo: Paisaje]
+Compra de Atraccion [Atraccion: Atraccion Minas Tirith: Costo de visita: 5, duracion: 2.5, cupo: 24, tipo: Paisaje]
+Compra de Atraccion [Atraccion: Atraccion Abismo de Helm: Costo de visita: 5, duracion: 2.0, cupo: 14, tipo: Paisaje]
+Compra de Atraccion [Atraccion: Atraccion Lothlorien: Costo de visita: 35, duracion: 1.0, cupo: 28, tipo: Degustacion]
+Compra de Atraccion [Atraccion: Atraccion Mordor: Costo de visita: 25, duracion: 3.0, cupo: 3, tipo: Aventura]
+Compra de Atraccion [Atraccion: Atraccion Moria: Costo de visita: 10, duracion: 2.0, cupo: 5, tipo: Aventura]
+Compra de Atraccion [Atraccion: Atraccion La Comarca: Costo de visita: 3, duracion: 6.5, cupo: 148, tipo: Degustacion]
+Compra de Atraccion [Atraccion: Atraccion Bosque Negro: Costo de visita: 3, duracion: 4.0, cupo: 11, tipo: Aventura]
+
 
 Resumen de compra
 -------------------------------
-Costo total: 22 - Tiempo requerido: 7.5
+Costo total: 98 - Tiempo requerido: 24.0
