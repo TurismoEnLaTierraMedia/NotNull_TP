@@ -2,11 +2,15 @@ package clases;
 
 import java.util.Comparator;
 
-public class OrdenablePorPrecio implements Comparator<Atraccion> {
+public class OrdenablePorPrecioYTiempo implements Comparator<Atraccion> {
 
 	@Override
 	public int compare(Atraccion o1, Atraccion o2) {
-		return Integer.compare(o1.getCostoDeVisita(), o2.getCostoDeVisita());
+		int comparacion = Integer.compare(o2.getCostoDeVisita(), o1.getCostoDeVisita());
+//		if(comparacion == 0) {
+//			comparacion = Double.compare(o2.getDuracion(), o1.getDuracion());
+//		}
+		return comparacion;
 	}
 
 
