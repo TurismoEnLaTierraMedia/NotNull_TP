@@ -2,6 +2,7 @@ package clases;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 import java.io.*;
@@ -29,6 +30,42 @@ public class Sistema {
 		this.informes = new ArrayList<InformeCompra>();
 	}
 
+	private boolean archivoVacio(File archivo) {
+		return archivo.length() == 0;
+	}
+	
+	private void revisarParametrosConstructorUsuario(String [] parametros) throws NumberFormatException{
+		try {
+			int monedas = Integer.parseInt(parametros[1]);
+			double tiempo = Double.parseDouble(parametros[2]);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();;
+		}
+	}
+	
+	public boolean usuarioTieneSuficienteDineroYTiempoParaAtracciones(Usuario usu) {
+		Iterator<Atraccion> atraccionesIterator = this.getAtracciones().iterator();
+		while (atraccionesIterator.hasNext()) {
+			Atraccion atraccion = (Atraccion) atraccionesIterator.next();
+			if (this.puedeComprar(usu, atraccion)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean usuarioTieneSuficienteDineroYTiempoParaRecomendar(Usuario usu) {
+		Iterator<Promocion> promocionesIterator = this.getPromociones().iterator();
+		while (promocionesIterator.hasNext()) {
+			Promocion promocion = (Promocion) promocionesIterator.next();
+			if(this.puedeComprar(usu, promocion)) {
+				return true;
+			}
+		}
+		return this.usuarioTieneSuficienteDineroYTiempoParaAtracciones(usu);
+		
+	}
+
 	/**
 	 * Metodo que realiza la carga de los usuarios. Recibe como parametro la ruta
 	 * especificada del archivo.
@@ -38,12 +75,15 @@ public class Sistema {
 	public void cargaUsuarios(String rutaUsuarios) {
 		try {
 			archivo = new File(rutaUsuarios);
+			if (this.archivoVacio(archivo)) {
+				throw new Error("El archivo" + rutaUsuarios + " esta vacio");
+			}
 			fr = new FileReader(archivo);
 			br = new BufferedReader(fr);
-
 			String linea;
 			while ((linea = br.readLine()) != null) {
 				String[] parametros = linea.split("-");
+				revisarParametrosConstructorUsuario(parametros);
 				this.usuarios.add(new Usuario(parametros[0], Integer.parseInt(parametros[1]),
 						Double.parseDouble(parametros[2]), parametros[3]));
 			}
@@ -69,6 +109,9 @@ public class Sistema {
 	public void cargaAtracciones(String rutaAtracciones) {
 		try {
 			archivo = new File(rutaAtracciones);
+			if (this.archivoVacio(archivo)) {
+				throw new Error("El archivo" + rutaAtracciones + " esta vacio");
+			}
 			fr = new FileReader(archivo);
 			br = new BufferedReader(fr);
 
@@ -90,7 +133,7 @@ public class Sistema {
 			}
 		}
 		// Terminada la carga de las atracciones, ordeno la lista
-		Collections.sort(this.atracciones, new OrdenablePorPrecio().reversed());
+		Collections.sort(this.atracciones, new OrdenablePorPrecioYTiempo());
 	}
 
 	// CARGA DE PROMOCIONES - METODOS
@@ -112,6 +155,9 @@ public class Sistema {
 			if (nombre.equalsIgnoreCase(atraccionit.getNombre())) {
 				result = atraccionit;
 			}
+		}
+		if(result == null) {
+			throw new Error("No se encontro la atraccion" + nombre + "en la lista de atracciones");
 		}
 		return result;
 	}
@@ -156,6 +202,9 @@ public class Sistema {
 	public void cargaPromociones(String rutaPromociones) {
 		try {
 			archivo = new File(rutaPromociones);
+			if (this.archivoVacio(archivo)) {
+				throw new Error("El archivo" + rutaPromociones + " esta vacio");
+			}
 			fr = new FileReader(archivo);
 			br = new BufferedReader(fr);
 
@@ -195,13 +244,17 @@ public class Sistema {
 		cargaPromociones(rutaPromociones);
 	}
 	
+	public boolean puedeComprar(Usuario usu, Promocion promo) {
+		return usu.getPresupuesto() >= promo.obtenerPrecioFinal() && usu.getTiempoDisponible() >= promo.getTiempoTotal();
+	}
+
 	public boolean puedeComprar(Usuario usu, Atraccion atrac) {
 		return usu.getPresupuesto() >= atrac.getCostoDeVisita() && usu.getTiempoDisponible() >= atrac.getDuracion();
 	}
 
 	public boolean recomendar(Usuario usu, Atraccion atrac) {
 		if (usu.getPreferencia().equals(atrac.getTipo()) && atrac.tieneCupo()) {
-				return this.puedeComprar(usu, atrac);
+			return this.puedeComprar(usu, atrac);
 		}
 		return false;
 	}
@@ -278,7 +331,7 @@ public class Sistema {
 				salida.println("Resumen de compra");
 				salida.println("-------------------------------");
 				salida.println("Costo total: " + costoTotal + " - Tiempo requerido: " + tiempoTotal);
-			}else {
+			} else {
 				salida.println("Este usuario no ha realizado compras");
 			}
 			salida.close();
