@@ -12,6 +12,7 @@ public class AtraccionTest {
 	public void creacionAtraccionesTest() {
 		Atraccion Moria = new Atraccion("Moria", 10, 2, 6, "Deguación");
 		Atraccion Moria1 = new Atraccion("Moria", 10, 2, 6, "degustación");
+		Atraccion Moria2 = new Atraccion("Moria", 10, 2, 6, "degustacion");
 //		Atraccion MinasTirith = new Atraccion("Minas Tirith", 5, 2.5, 25, Tipo_De_Atraccion.PAISAJE);
 //		Atraccion LaComarca = new Atraccion("La Comarca", 3, 6.5, 150, Tipo_De_Atraccion.DEGUSTACION);
 //		Atraccion Mordor = new Atraccion("Mordor", 25, 3, 4, Tipo_De_Atraccion.AVENTURA);
