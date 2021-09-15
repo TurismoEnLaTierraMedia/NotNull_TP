@@ -87,7 +87,7 @@ public class Usuario {
 	}
 	
 	public boolean comproAlgo() {
-		return !this.getComprasAtracciones().isEmpty() && !this.getComprasPromociones().isEmpty();
+		return !this.getComprasAtracciones().isEmpty() || !this.getComprasPromociones().isEmpty();
 	}
 
 	@Override

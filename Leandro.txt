@@ -1,15 +1,11 @@
-Usuario: Leandro| Monedero: 202| Tiempo Disponible: 26.0| Preferencia: Paisaje
+Usuario: Leandro| Monedero: 250| Tiempo Disponible: 27.5| Preferencia: Paisaje
 
-Compra de Atraccion [Atraccion: Atraccion Erebor: Costo de visita: 12, duracion: 3.0, cupo: 31, tipo: Paisaje]
-Compra de Atraccion [Atraccion: Atraccion Minas Tirith: Costo de visita: 5, duracion: 2.5, cupo: 24, tipo: Paisaje]
-Compra de Atraccion [Atraccion: Atraccion Abismo de Helm: Costo de visita: 5, duracion: 2.0, cupo: 14, tipo: Paisaje]
-Compra de Atraccion [Atraccion: Atraccion Lothlorien: Costo de visita: 35, duracion: 1.0, cupo: 28, tipo: Degustacion]
-Compra de Atraccion [Atraccion: Atraccion Mordor: Costo de visita: 25, duracion: 3.0, cupo: 3, tipo: Aventura]
-Compra de Atraccion [Atraccion: Atraccion Moria: Costo de visita: 10, duracion: 2.0, cupo: 5, tipo: Aventura]
+Compra Promocion [Promocion: Por la compra de las atracciones: Erebor, Minas Tirith, Abismo de Helm,  del pack Combo de Paisajes. Usted recibe gratis la atracción: Atraccion Erebor: Costo de visita: 12, duracion: 3.0, cupo: 30, tipo: Paisaje]
+Compra Promocion [Promocion: Con la compra del pack: Porcentual de Paisajes. Usted recibe un descuento del 30%, el costo final por las atracciones incluídas pasa a ser: 12 monedas]
+Compra de Atraccion [Atraccion: Atraccion Mordor: Costo de visita: 25, duracion: 3.0, cupo: 2, tipo: Aventura]
 Compra de Atraccion [Atraccion: Atraccion La Comarca: Costo de visita: 3, duracion: 6.5, cupo: 148, tipo: Degustacion]
-Compra de Atraccion [Atraccion: Atraccion Bosque Negro: Costo de visita: 3, duracion: 4.0, cupo: 11, tipo: Aventura]
 
 
 Resumen de compra
 -------------------------------
-Costo total: 98 - Tiempo requerido: 24.0
+Costo total: 50 - Tiempo requerido: 22.5
