@@ -26,7 +26,7 @@ public abstract class Promocion {
 	private void setTipo(String tipo) {
 		if (tipo == "")
 			throw new Error("El sistema debe recibir dato tipo de las atracciones incluídas para validar la promoción");
-		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
+		this.tipo = Tipo_De_Atraccion.valueOf(tipo.toUpperCase().replace("Ó", "O"));
 	}
 
 	private void setPack(String pack) {

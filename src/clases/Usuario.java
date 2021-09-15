@@ -20,7 +20,7 @@ public class Usuario {
 		this.nombre = nombre;
 		this.presupuesto = presupuesto;
 		this.tiempoDisponible = tiempoDisponible;
-		this.preferencia = Tipo_De_Atraccion.valueOf(preferencia);
+		this.preferencia = Tipo_De_Atraccion.valueOf(preferencia.toUpperCase().replace("Ó", "O"));
 	}
 
 	public String getNombre() {
