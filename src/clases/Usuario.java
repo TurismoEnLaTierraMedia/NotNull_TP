@@ -169,5 +169,10 @@ public class Usuario {
 				&& presupuesto == other.presupuesto
 				&& Double.doubleToLongBits(tiempoDisponible) == Double.doubleToLongBits(other.tiempoDisponible);
 	}
+<<<<<<< Updated upstream
 
 }
+=======
+	
+}
+>>>>>>> Stashed changes

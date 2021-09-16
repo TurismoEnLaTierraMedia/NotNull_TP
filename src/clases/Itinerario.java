@@ -8,8 +8,8 @@ public class Itinerario {
 	private double tiempoNecesario;
 	private int totalPagar;
 	private Usuario usuario;
-	List<Promocion> promocionesCompradas;
-	List<Atraccion> atraccionesCompradas;
+	private List<Promocion> promocionesCompradas;
+	private List<Atraccion> atraccionesCompradas;
 
 	public Itinerario(Usuario usuario, List<Promocion> promocionesCompradas,
 			List<Atraccion> atraccionesCompradas) {

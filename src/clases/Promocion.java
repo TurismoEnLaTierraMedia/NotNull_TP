@@ -24,9 +24,14 @@ public abstract class Promocion {
 	// Setters
 
 	private void setTipo(String tipo) {
-		if (tipo == "")
-			throw new Error("El sistema debe recibir dato tipo de las atracciones incluídas para validar la promoción");
-		this.tipo = Tipo_De_Atraccion.valueOf(tipo.toUpperCase().replace("Ó", "O"));
+		try {
+			// Convierte el String en mayúscula
+			// Si degustación tiene tilde, la cambia. Es la única tilde que admite
+			this.tipo = Tipo_De_Atraccion.valueOf(tipo.toUpperCase().replace("Ó", "O"));
+
+		} catch (IllegalArgumentException ex) {
+			System.out.println(tipo + " no corresponde con un tipo de atracción");
+		}
 	}
 
 	private void setPack(String pack) {
