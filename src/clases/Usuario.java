@@ -16,9 +16,12 @@ public class Usuario {
 
 	public Usuario(String nombre, int presupuesto, double tiempoDisponible, String preferencia) {
 		this.nombre = nombre;
+
 		this.setPresupuesto(presupuesto);
 		this.setTiempoDisponible(tiempoDisponible);
 		this.setPreferencia(preferencia);
+
+		
 	}
 
 	public String getNombre() {
@@ -139,7 +142,7 @@ public class Usuario {
 	}
 
 	public boolean comproAlgo() {
-		return !this.getComprasAtracciones().isEmpty() && !this.getComprasPromociones().isEmpty();
+		return !this.getComprasAtracciones().isEmpty() || !this.getComprasPromociones().isEmpty();
 	}
 
 	@Override

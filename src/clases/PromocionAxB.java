@@ -1,24 +1,30 @@
 package clases;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class PromocionAxB extends Promocion {
 
 	// Atributos
+
 	private Atraccion atraccionGratis;
 
 	// Constructores
-	public PromocionAxB(String tipo, String pack, Atraccion atraccGratis, ArrayList<Atraccion> atraccion) {
-		super(tipo, pack, atraccion);
-		this.atraccionGratis = atraccGratis;
-	}
 
 	public PromocionAxB(String tipo, String pack, Atraccion atraccGratis) {
 		super(tipo, pack);
-		this.atraccionGratis = atraccGratis;
+		setAtraccion(atraccGratis);
 		this.atraccion.add(atraccGratis);
 	}
+
+	// Setters
+
+	private void setAtraccion(Atraccion atraccGratis) {
+		if (atraccGratis == null)
+			throw new Error("El sistema debe recibir una atracción gratuita para validar la promoción");
+		this.atraccionGratis = atraccGratis;
+	}
+
+	// Getters
 
 	public Atraccion getAtraccionGratis() {
 		return this.atraccionGratis;
@@ -50,7 +56,7 @@ public class PromocionAxB extends Promocion {
 	@Override
 	public String toString() {
 		return "Por la compra de las atracciones: " + toStringArray() + " del pack " + pack
-				+ ". Usted recibe gratis la atracción: " + atraccionGratis;
+				+ ". Usted recibe gratis la atracción: " + atraccionGratis.getNombre();
 	}
 
 }

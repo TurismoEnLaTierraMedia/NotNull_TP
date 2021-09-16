@@ -1,0 +1,9 @@
+Usuario: Kevin| Monedero: 0| Tiempo Disponible: 5.5| Preferencia: Paisaje
+
+Compra de Atraccion [Atraccion: Atraccion Minas Tirith: Costo de visita: 5, duracion: 2.5, cupo: 21, tipo: Paisaje]
+Compra de Atraccion [Atraccion: Atraccion Abismo de Helm: Costo de visita: 5, duracion: 2.0, cupo: 12, tipo: Paisaje]
+
+
+Resumen de compra
+-------------------------------
+Costo total: 10 - Tiempo requerido: 4.5

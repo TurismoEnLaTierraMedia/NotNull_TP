@@ -2,7 +2,6 @@ package clases;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 
 import java.io.*;
@@ -30,19 +29,23 @@ public class Sistema {
 		this.informes = new ArrayList<InformeCompra>();
 	}
 
+	/**
+	 * Metodo que devuelve verdadero si el archivo pasado por parametro esta vacio.
+	 * 
+	 * @param archivo
+	 * @return true si el archivo esta vacio
+	 */
 	private boolean archivoVacio(File archivo) {
 		return archivo.length() == 0;
 	}
-	
-	private void revisarParametrosConstructorUsuario(String [] parametros) throws NumberFormatException{
-		try {
-			int monedas = Integer.parseInt(parametros[1]);
-			double tiempo = Double.parseDouble(parametros[2]);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();;
-		}
-	}
-	
+
+	/**
+	 * Metodo que chequea si el usuario pasado por parametro tiene suficiente dinero
+	 * y tiempo para comprar una atraccion.
+	 * 
+	 * @param usu el usuario a revisar
+	 * @return boolean
+	 */
 	public boolean usuarioTieneSuficienteDineroYTiempoParaAtracciones(Usuario usu) {
 		Iterator<Atraccion> atraccionesIterator = this.getAtracciones().iterator();
 		while (atraccionesIterator.hasNext()) {
@@ -53,17 +56,24 @@ public class Sistema {
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Metodo que chequea si el usuario parado por parametro tiene suficiente dinero
+	 * y tiempo para comprar al menos una atraccion o promocion.
+	 * 
+	 * @param usu el usuario a revisar
+	 * @return boolean
+	 */
 	public boolean usuarioTieneSuficienteDineroYTiempoParaRecomendar(Usuario usu) {
 		Iterator<Promocion> promocionesIterator = this.getPromociones().iterator();
 		while (promocionesIterator.hasNext()) {
 			Promocion promocion = (Promocion) promocionesIterator.next();
-			if(this.puedeComprar(usu, promocion)) {
+			if (this.puedeComprar(usu, promocion)) {
 				return true;
 			}
 		}
 		return this.usuarioTieneSuficienteDineroYTiempoParaAtracciones(usu);
-		
+
 	}
 
 	/**
@@ -83,12 +93,19 @@ public class Sistema {
 			String linea;
 			while ((linea = br.readLine()) != null) {
 				String[] parametros = linea.split("-");
-				revisarParametrosConstructorUsuario(parametros);
-				this.usuarios.add(new Usuario(parametros[0], Integer.parseInt(parametros[1]),
-						Double.parseDouble(parametros[2]), parametros[3]));
+				try {
+					this.usuarios.add(new Usuario(parametros[0],Integer.parseInt(parametros[1]),
+							Double.parseDouble(parametros[2]), parametros[3]));
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+					System.err.println("No se pudo cargar al usuario " + parametros[0] + ". Error de parseo");
+				}
 			}
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
+			System.err.println("Parseo incorrecto");
 			e.printStackTrace();
+		} catch (Exception IO) {
+			IO.printStackTrace();
 		} finally {
 			try {
 				if (fr != null) {
@@ -118,9 +135,17 @@ public class Sistema {
 			String linea;
 			while ((linea = br.readLine()) != null) {
 				String[] parametro = linea.split("-");
-				this.atracciones.add(new Atraccion(parametro[0], Integer.parseInt(parametro[1]),
-						Double.parseDouble(parametro[2]), Integer.parseInt(parametro[3]), parametro[4]));
+				try {
+					this.atracciones.add(new Atraccion(parametro[0], Integer.parseInt(parametro[1]),
+							Double.parseDouble(parametro[2]), Integer.parseInt(parametro[3]), parametro[4]));
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+					System.err.println("No se pudo cargar la atraccion " + parametro[0] + ". Error de parseo");
+				}
 			}
+		} catch (NumberFormatException e) {
+			System.err.println("Parseo incorrecto");
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -156,8 +181,8 @@ public class Sistema {
 				result = atraccionit;
 			}
 		}
-		if(result == null) {
-			throw new Error("No se encontro la atraccion" + nombre + "en la lista de atracciones");
+		if (result == null) {
+			throw new IllegalArgumentException("No se encontro la atraccion " + nombre + "en la lista de atracciones");
 		}
 		return result;
 	}
@@ -181,11 +206,29 @@ public class Sistema {
 	 */
 	private Promocion determinarTipoPromocion(String[] parametro) {
 		if (Integer.parseInt(parametro[0]) == 1) {
-			return new PromocionAbsoluta(parametro[1], parametro[2], Integer.parseInt(parametro[3]));
+			try {
+				return new PromocionAbsoluta(parametro[1], parametro[2], Integer.parseInt(parametro[3]));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				System.err.println("No se pudo cargar la promocion " + parametro[1] + ". Error de parseo.");
+				throw new NumberFormatException();
+			}
 		} else if (Integer.parseInt(parametro[0]) == 2) {
-			return new PromocionPorcentual(parametro[1], parametro[2], Integer.parseInt(parametro[3]));
+			try {
+				return new PromocionPorcentual(parametro[1], parametro[2], Integer.parseInt(parametro[3]));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				System.err.println("No se pudo cargar la promocion " + parametro[1] + ". Error de parseo.");
+				throw new NumberFormatException();
+			}
 		} else if (Integer.parseInt(parametro[0]) == 3) {
-			return new PromocionAxB(parametro[1], parametro[2], convertirStringAAtraccion(parametro[3]));
+			try {
+				return new PromocionAxB(parametro[1], parametro[2], convertirStringAAtraccion(parametro[3]));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				System.err.println("No se pudo cargar la promocion " + parametro[1] + ". Error de parseo.");
+				throw new NumberFormatException();
+			}
 		} else {
 			throw new IllegalArgumentException("Codigo de tipo de promocion invalido."
 					+ " \n 1-Promocion absoluta \n 2-Promocion porcentual \n 3-Promocion AxB");
@@ -211,13 +254,25 @@ public class Sistema {
 			String linea;
 			while ((linea = br.readLine()) != null) {
 				String[] parametro = linea.split("-");
-				Promocion promocionaAgregar = determinarTipoPromocion(parametro);
-				for (int i = 4; i < parametro.length; i++) {
-					promocionaAgregar.anadirAtraccion(convertirStringAAtraccion(parametro[i]));
+				try {
+					Promocion promocionaAgregar = determinarTipoPromocion(parametro);
+					for (int i = 4; i < parametro.length; i++) {
+						promocionaAgregar.anadirAtraccion(convertirStringAAtraccion(parametro[i]));
+					}
+					this.promociones.add(promocionaAgregar);
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+					System.err.println("No se pudo cargar la promocion " + parametro[2]);
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+					System.err.println("No se pudo cargar la promocion " + parametro[2]);
 				}
-				this.promociones.add(promocionaAgregar);
+
 			}
 
+		} catch (NumberFormatException e) {
+			System.err.println("Parseo incorrecto");
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -243,9 +298,10 @@ public class Sistema {
 		cargaAtracciones(rutaAtracciones);
 		cargaPromociones(rutaPromociones);
 	}
-	
+
 	public boolean puedeComprar(Usuario usu, Promocion promo) {
-		return usu.getPresupuesto() >= promo.obtenerPrecioFinal() && usu.getTiempoDisponible() >= promo.getTiempoTotal();
+		return usu.getPresupuesto() >= promo.obtenerPrecioFinal()
+				&& usu.getTiempoDisponible() >= promo.getTiempoTotal();
 	}
 
 	public boolean puedeComprar(Usuario usu, Atraccion atrac) {
@@ -287,6 +343,9 @@ public class Sistema {
 
 	public boolean concretarCompra(Usuario usu, String respuesta, Atraccion atrac) {
 		if (respuesta.equalsIgnoreCase("si")) {
+			if (usu.chequearAtraccionEnPromociones(atrac)) {
+				throw new IllegalArgumentException("La atraccion ya fue comprada");
+			}
 			usu.comprarAtraccion(atrac);
 			atrac.reducirCupo();
 			return true;

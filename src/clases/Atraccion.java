@@ -10,19 +10,20 @@ public class Atraccion {
 	private Tipo_De_Atraccion tipo;
 
 	public Atraccion(String nombre, int costoDeVisita, double duracion, int cupo, String tipo) {
-		this.nombre = nombre;
-		this.costoDeVisita = costoDeVisita;
-		this.duracion = duracion;
-		this.cupo = cupo;
-		this.tipo = Tipo_De_Atraccion.valueOf(tipo);
-//		this.setTipo(tipo);
+		this.setNombre(nombre);
+		this.setCostoDeVisita(costoDeVisita);
+		this.setDuracion(duracion);
+		this.setCupo(cupo);
+		this.setTipo(tipo);
 	}
 
 	public String getNombre() {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	private void setNombre(String nombre) {
+		if (nombre == "")
+			throw new Error("La atracción debe tener nombre");
 		this.nombre = nombre;
 	}
 
@@ -30,7 +31,9 @@ public class Atraccion {
 		return costoDeVisita;
 	}
 
-	public void setCostoDeVisita(int costoDeVisita) {
+	private void setCostoDeVisita(int costoDeVisita) {
+		if (costoDeVisita < 0)
+			throw new Error("El costo no puede ser menor a 0");
 		this.costoDeVisita = costoDeVisita;
 	}
 
@@ -38,7 +41,9 @@ public class Atraccion {
 		return duracion;
 	}
 
-	public void setDuracion(double duracion) {
+	private void setDuracion(double duracion) {
+		if (duracion <= 0)
+			throw new Error("La duración debe ser mayor a 0");
 		this.duracion = duracion;
 	}
 
@@ -46,7 +51,9 @@ public class Atraccion {
 		return cupo;
 	}
 
-	public void setCupo(int cupo) {
+	private void setCupo(int cupo) {
+		if (cupo < 0)
+			throw new Error("El cupo no puede ser menor a 0");
 		this.cupo = cupo;
 	}
 
@@ -54,7 +61,7 @@ public class Atraccion {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	private void setTipo(String tipo) {
 		try {
 			this.tipo = Tipo_De_Atraccion.valueOf(tipo.toUpperCase().replace("Ó", "O"));
 
@@ -63,18 +70,19 @@ public class Atraccion {
 		}
 	}
 
+	public boolean tieneCupo() {
+		return this.cupo > 0;
+	}
+
+	public void reducirCupo() {
+		this.cupo--;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(costoDeVisita, cupo, duracion, nombre, tipo);
 	}
 
-	public boolean tieneCupo() {
-		return this.cupo > 0;
-	}
-	
-	public void reducirCupo() {
-		this.cupo--;
-	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

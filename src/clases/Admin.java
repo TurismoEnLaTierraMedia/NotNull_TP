@@ -1,6 +1,7 @@
 package clases;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -32,8 +33,12 @@ public class Admin {
 			if (s1.recomendar(usuActual, promocion)) {
 				// Si cumple, le pregunto si desea comprarla
 				System.out.println(promocion.toString());
-				System.out.println("Escriba Si/No");
-				String respuesta = obtenerInput(sc1.next().toUpperCase());
+				String respuesta;
+				do {
+					System.out.println("Escriba Si/No");
+					respuesta = sc1.next().toUpperCase();
+				} while(!(respuesta.equals("SI") || respuesta.equals("NO")));
+
 				System.out.println("");
 				if (s1.concretarCompra(usuActual, respuesta, promocion)) {
 					s1.aniadirCompraAInformes(new CompraPromocion(promocion, usuActual));
@@ -44,22 +49,7 @@ public class Admin {
 			}
 		}
 	}
-
-	private static String obtenerInput(String respuesta) {
-		Scanner scanner = new Scanner(System.in);
-
-		if (!respuesta.equals("SI") && !respuesta.equals("NO")) {
-			while (true) {
-				System.out.println("Tipeo incorrecto (SI/NO):");
-				respuesta = scanner.next().toUpperCase();
-				if (respuesta.equals("SI") || respuesta.equals("NO")) {
-					break;
-				}
-			}
-		}
-		return respuesta;
-	}
-
+	
 	/**
 	 * Metodo que oferta las atracciones restantes que no hayan cumplido con
 	 * 
@@ -72,11 +62,14 @@ public class Admin {
 			Scanner sc1) {
 		while (atraccionIterator.hasNext()) {
 			Atraccion atraccion = (Atraccion) atraccionIterator.next();
-			if (!s1.recomendar(usuActual, atraccion) && !usuActual.chequearAtraccionEnPromociones(atraccion)
+			if (!usuActual.chequearAtraccionEnPromociones(atraccion)
 					&& s1.puedeComprar(usuActual, atraccion)) {
 				System.out.println(atraccion.toString());
-				System.out.println("Escriba Si/No");
-				String respuesta = obtenerInput(sc1.next().toUpperCase());
+				String respuesta;
+				do {
+					System.out.println("Escriba Si/No");
+					respuesta = sc1.next().toUpperCase();
+				} while(!(respuesta.equals("SI") || respuesta.equals("NO")));
 				if (s1.concretarCompra(usuActual, respuesta, atraccion)) {
 					s1.aniadirCompraAInformes(new CompraAtraccion(atraccion, usuActual));
 					System.out.println("Compra exitosa");
@@ -88,21 +81,34 @@ public class Admin {
 
 	private static void ofrecerAtracciones(Usuario usuActual, Iterator<Atraccion> atraccionIterator, Sistema s1,
 			Scanner sc1) {
+		ArrayList<Atraccion> atraccionesTipoDistinto = new ArrayList<>();
+		//Recorro lista entera
 		while (atraccionIterator.hasNext()) {
 			Atraccion atraccion = atraccionIterator.next();
 			// Chequeo si la atraccion cumple con las preferencias del usuario
 			if (s1.recomendar(usuActual, atraccion) && !usuActual.chequearAtraccionEnPromociones(atraccion)) {
 				System.out.println(atraccion.toString());
-				System.out.println("Escriba Si/No");
-				String respuesta = obtenerInput(sc1.next().toUpperCase());
+				String respuesta;
+				do {
+					System.out.println("Escriba Si/No");
+					respuesta = sc1.next().toUpperCase();
+				} while(!(respuesta.equals("SI") || respuesta.equals("NO")));
 				if (s1.concretarCompra(usuActual, respuesta, atraccion)) {
 					s1.aniadirCompraAInformes(new CompraAtraccion(atraccion, usuActual));
 					System.out.println("Compra exitosa");
 					System.out.println("");
 				}
 
+			} else {
+				//Si no es del mismo tipo que la preferencia del usuario, la guardo para despues.
+				atraccionesTipoDistinto.add(atraccion);
 			}
+			
+			
 		}
+		//Terminado la oferta de atracciones con mismo tipo, le ofrecemos el resto
+		Iterator<Atraccion> atraccionesTipoDistintoIterator = atraccionesTipoDistinto.iterator();
+		ofrecerResto(usuActual, atraccionesTipoDistintoIterator, s1, sc1);
 	}
 
 	public static void main(String[] args) {
@@ -120,30 +126,24 @@ public class Admin {
 		// Aqui va a ir recorriendo usuario por usuario
 		while (usuarioIterator.hasNext()) {
 			Usuario usuActual = (Usuario) usuarioIterator.next();
+			//Si el usuario tiene dinero y tiempo para comprar al menos una atraccion o promocion, entra, sino se le informa.
 			if (s1.usuarioTieneSuficienteDineroYTiempoParaRecomendar(usuActual)) {
 				System.out.println(msgBienvenida(usuActual.getNombre()));
 				// Recorrido de promociones
 
 				ofrecerPromociones(usuActual, promocionIterator, s1, sc1);
-
-				// Testeando modularizacion de codigo, borrar ofrecerPromociones() si algo sale
-				// mal y restaurar este bloque de comentarios
+				
 				// Terminada la oferta de promociones, le ofertamos las atracciones.
 				if (s1.usuarioTieneSuficienteDineroYTiempoParaAtracciones(usuActual)) {
-					System.out.println("Tambien le ofrecemos las siguientes atracciones");
+					System.out.println("Le ofrecemos las siguientes atracciones");
 				}
 
 				ofrecerAtracciones(usuActual, atraccionIterator, s1, sc1);
-				atraccionIterator = s1.getAtracciones().iterator();
-				ofrecerResto(usuActual, atraccionIterator, s1, sc1);
 				// Terminado el proceso, antes de pasar al siguiente. Se genera un itinerario
-				// con todas
-				// las transacciones del usuario.
-				// s1.generarItinerario(usuActual);
+				// con todas las transacciones del usuario.
 
-				// Al terminar con un usuario, debo resetear los iteradores de Promocion y
-				// Atraccion
 				System.out.println("");
+				//Si el usuario compro algo, imprime un resumen, de no ser asi, le informa.
 				if (usuActual.comproAlgo()) {
 					System.out.println("Gracias por su tiempo, aqui tiene un resumen de sus transacciones");
 					System.out.println("");
@@ -159,7 +159,7 @@ public class Admin {
 						+ ".\n Lamentamos informarle que no dispone de Dinero o Tiempo suficiente para comprar.");
 				System.out.println("");
 			}
-
+			// Al terminar con un usuario, debo resetear los iteradores de Promocion y Atraccion
 			promocionIterator = s1.getPromociones().iterator();
 			atraccionIterator = s1.getAtracciones().iterator();
 		}
@@ -173,6 +173,7 @@ public class Admin {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("Generados informes de salida con todos los datos");
 
 	}
 
