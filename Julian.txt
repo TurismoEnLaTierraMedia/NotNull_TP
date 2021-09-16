@@ -1,5 +1,8 @@
-Usuario: Julian| Monedero: 50| Tiempo Disponible: 8.0| Preferencia: Degustacion
+Usuario: Julian| Monedero: 40| Tiempo Disponible: 2.0| Preferencia: AVENTURA
+
+Compra Promocion [Promocion: Con la compra del pack: Porcentual de Aventuras. Usted recibe un descuento del 30%, el costo final por las atracciones incluídas pasa a ser: 10 monedas]
 
 
-
-Este usuario no ha realizado compras
+Resumen de compra
+-------------------------------
+Costo total: 10 - Tiempo requerido: 6.0

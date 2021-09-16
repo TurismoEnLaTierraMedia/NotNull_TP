@@ -1,9 +1,9 @@
-Usuario: Gandalf| Monedero: 70| Tiempo Disponible: 0.0| Preferencia: Paisaje
+Usuario: Gandalf| Monedero: 90| Tiempo Disponible: 0.5| Preferencia: PAISAJE
 
-Compra de Atraccion [Atraccion: Atraccion Abismo de Helm: Costo de visita: 5, duracion: 2.0, cupo: 12, tipo: Paisaje]
-Compra de Atraccion [Atraccion: Atraccion Mordor: Costo de visita: 25, duracion: 3.0, cupo: 2, tipo: Aventura]
+Compra de Atraccion [Atraccion: Atraccion Minas Tirith: Costo de visita: 5, duracion: 2.5, cupo: 21, tipo: PAISAJE]
+Compra de Atraccion [Atraccion: Atraccion Abismo de Helm: Costo de visita: 5, duracion: 2.0, cupo: 13, tipo: PAISAJE]
 
 
 Resumen de compra
 -------------------------------
-Costo total: 30 - Tiempo requerido: 5.0
+Costo total: 10 - Tiempo requerido: 4.5

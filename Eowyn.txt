@@ -1,6 +1,6 @@
-Usuario: Eowyn| Monedero: 0| Tiempo Disponible: 6.0| Preferencia: Aventura
+Usuario: Eowyn| Monedero: 0| Tiempo Disponible: 6.0| Preferencia: AVENTURA
 
-Compra de Atraccion [Atraccion: Atraccion Moria: Costo de visita: 10, duracion: 2.0, cupo: 3, tipo: Aventura]
+Compra de Atraccion [Atraccion: Atraccion Moria: Costo de visita: 10, duracion: 2.0, cupo: 2, tipo: AVENTURA]
 
 
 Resumen de compra

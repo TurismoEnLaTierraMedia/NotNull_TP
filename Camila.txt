@@ -1,10 +1,9 @@
-Usuario: Camila| Monedero: 12| Tiempo Disponible: 5.0| Preferencia: Aventura
+Usuario: Camila| Monedero: 0| Tiempo Disponible: 14.5| Preferencia: AVENTURA
 
-Compra Promocion [Promocion: Con la compra del pack: Porcentual de Aventuras. Usted recibe un descuento del 30%, el costo final por las atracciones incluídas pasa a ser: 10 monedas]
-Compra de Atraccion [Atraccion: Atraccion Minas Tirith: Costo de visita: 5, duracion: 2.5, cupo: 21, tipo: Paisaje]
-Compra de Atraccion [Atraccion: Atraccion La Comarca: Costo de visita: 3, duracion: 6.5, cupo: 148, tipo: Degustacion]
+Compra de Atraccion [Atraccion: Atraccion Mordor: Costo de visita: 25, duracion: 3.0, cupo: 2, tipo: AVENTURA]
+Compra de Atraccion [Atraccion: Atraccion Minas Tirith: Costo de visita: 5, duracion: 2.5, cupo: 21, tipo: PAISAJE]
 
 
 Resumen de compra
 -------------------------------
-Costo total: 18 - Tiempo requerido: 15.0
+Costo total: 30 - Tiempo requerido: 5.5

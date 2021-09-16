@@ -1,4 +1,4 @@
-Usuario: Cristian| Monedero: 10| Tiempo Disponible: 4.0| Preferencia: Aventura
+Usuario: Cristian| Monedero: 10| Tiempo Disponible: 4.0| Preferencia: AVENTURA
 
 Compra Promocion [Promocion: Con la compra del pack: Porcentual de Aventuras. Usted recibe un descuento del 30%, el costo final por las atracciones incluídas pasa a ser: 10 monedas]
 
