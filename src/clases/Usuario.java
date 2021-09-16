@@ -33,7 +33,7 @@ public class Usuario {
 	}
 
 	private void setPresupuesto(int presupuesto) {
-		if (presupuesto <= 0) {
+		if (presupuesto < 0) {
 			throw new IllegalArgumentException("No se permiten números negativos");
 		} else {
 			this.presupuesto = presupuesto;
