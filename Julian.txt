@@ -1,8 +1,9 @@
-Usuario: Julian| Monedero: 40| Tiempo Disponible: 2.0| Preferencia: AVENTURA
+Usuario: Julian| Monedero: 5| Tiempo Disponible: 1.0| Preferencia: AVENTURA
 
 Compra Promocion [Promocion: Con la compra del pack: Porcentual de Aventuras. Usted recibe un descuento del 30%, el costo final por las atracciones incluídas pasa a ser: 10 monedas]
+Compra de Atraccion [Atraccion: Atraccion Lothlorien: Costo de visita: 35, duracion: 1.0, cupo: 28, tipo: DEGUSTACION]
 
 
 Resumen de compra
 -------------------------------
-Costo total: 10 - Tiempo requerido: 6.0
+Costo total: 45 - Tiempo requerido: 7.0

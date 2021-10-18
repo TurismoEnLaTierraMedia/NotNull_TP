@@ -1,8 +1,9 @@
-Usuario: Cristian| Monedero: 10| Tiempo Disponible: 4.0| Preferencia: AVENTURA
+Usuario: Cristian| Monedero: 5| Tiempo Disponible: 2.0| Preferencia: AVENTURA
 
 Compra Promocion [Promocion: Con la compra del pack: Porcentual de Aventuras. Usted recibe un descuento del 30%, el costo final por las atracciones incluídas pasa a ser: 10 monedas]
+Compra de Atraccion [Atraccion: Atraccion Abismo de Helm: Costo de visita: 5, duracion: 2.0, cupo: 13, tipo: PAISAJE]
 
 
 Resumen de compra
 -------------------------------
-Costo total: 10 - Tiempo requerido: 6.0
+Costo total: 15 - Tiempo requerido: 8.0

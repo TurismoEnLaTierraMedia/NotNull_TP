@@ -1,0 +1,30 @@
+{
+	"folders": {},
+	"connections": {
+		"sqlite_jdbc-17c51bd3f07-5cd8f9045a5f67e8": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "Musical.db",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"database": "G:\\Eclipse\\Proyectos\\SQL001_Biblioteca_Musical\\Musical.db",
+				"url": "jdbc:sqlite:G:\\Eclipse\\Proyectos\\SQL001_Biblioteca_Musical\\Musical.db",
+				"type": "dev",
+				"auth-model": "native",
+				"handlers": {}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}

@@ -37,7 +37,7 @@ public class Admin {
 				do {
 					System.out.println("Escriba Si/No");
 					respuesta = sc1.next().toUpperCase();
-				} while(!(respuesta.equals("SI") || respuesta.equals("NO")));
+				} while (!(respuesta.equals("SI") || respuesta.equals("NO")));
 
 				System.out.println("");
 				if (s1.concretarCompra(usuActual, respuesta, promocion)) {
@@ -49,7 +49,7 @@ public class Admin {
 			}
 		}
 	}
-	
+
 	/**
 	 * Metodo que oferta las atracciones restantes que no hayan cumplido con
 	 * 
@@ -62,14 +62,13 @@ public class Admin {
 			Scanner sc1) {
 		while (atraccionIterator.hasNext()) {
 			Atraccion atraccion = (Atraccion) atraccionIterator.next();
-			if (!usuActual.chequearAtraccionEnPromociones(atraccion)
-					&& s1.puedeComprar(usuActual, atraccion)) {
+			if (!usuActual.chequearAtraccionEnPromociones(atraccion) && s1.puedeComprar(usuActual, atraccion)) {
 				System.out.println(atraccion.toString());
 				String respuesta;
 				do {
 					System.out.println("Escriba Si/No");
 					respuesta = sc1.next().toUpperCase();
-				} while(!(respuesta.equals("SI") || respuesta.equals("NO")));
+				} while (!(respuesta.equals("SI") || respuesta.equals("NO")));
 				if (s1.concretarCompra(usuActual, respuesta, atraccion)) {
 					s1.aniadirCompraAInformes(new CompraAtraccion(atraccion, usuActual));
 					System.out.println("Compra exitosa");
@@ -82,7 +81,7 @@ public class Admin {
 	private static void ofrecerAtracciones(Usuario usuActual, Iterator<Atraccion> atraccionIterator, Sistema s1,
 			Scanner sc1) {
 		ArrayList<Atraccion> atraccionesTipoDistinto = new ArrayList<>();
-		//Recorro lista entera
+		// Recorro lista entera
 		while (atraccionIterator.hasNext()) {
 			Atraccion atraccion = atraccionIterator.next();
 			// Chequeo si la atraccion cumple con las preferencias del usuario
@@ -92,7 +91,7 @@ public class Admin {
 				do {
 					System.out.println("Escriba Si/No");
 					respuesta = sc1.next().toUpperCase();
-				} while(!(respuesta.equals("SI") || respuesta.equals("NO")));
+				} while (!(respuesta.equals("SI") || respuesta.equals("NO")));
 				if (s1.concretarCompra(usuActual, respuesta, atraccion)) {
 					s1.aniadirCompraAInformes(new CompraAtraccion(atraccion, usuActual));
 					System.out.println("Compra exitosa");
@@ -100,13 +99,13 @@ public class Admin {
 				}
 
 			} else {
-				//Si no es del mismo tipo que la preferencia del usuario, la guardo para despues.
+				// Si no es del mismo tipo que la preferencia del usuario, la guardo para
+				// despues.
 				atraccionesTipoDistinto.add(atraccion);
 			}
-			
-			
+
 		}
-		//Terminado la oferta de atracciones con mismo tipo, le ofrecemos el resto
+		// Terminado la oferta de atracciones con mismo tipo, le ofrecemos el resto
 		Iterator<Atraccion> atraccionesTipoDistintoIterator = atraccionesTipoDistinto.iterator();
 		ofrecerResto(usuActual, atraccionesTipoDistintoIterator, s1, sc1);
 	}
@@ -126,13 +125,14 @@ public class Admin {
 		// Aqui va a ir recorriendo usuario por usuario
 		while (usuarioIterator.hasNext()) {
 			Usuario usuActual = (Usuario) usuarioIterator.next();
-			//Si el usuario tiene dinero y tiempo para comprar al menos una atraccion o promocion, entra, sino se le informa.
+			// Si el usuario tiene dinero y tiempo para comprar al menos una atraccion o
+			// promocion, entra, sino se le informa.
 			if (s1.usuarioTieneSuficienteDineroYTiempoParaRecomendar(usuActual)) {
 				System.out.println(msgBienvenida(usuActual.getNombre()));
 				// Recorrido de promociones
 
 				ofrecerPromociones(usuActual, promocionIterator, s1, sc1);
-				
+
 				// Terminada la oferta de promociones, le ofertamos las atracciones.
 				if (s1.usuarioTieneSuficienteDineroYTiempoParaAtracciones(usuActual)) {
 					System.out.println("Le ofrecemos las siguientes atracciones");
@@ -143,7 +143,7 @@ public class Admin {
 				// con todas las transacciones del usuario.
 
 				System.out.println("");
-				//Si el usuario compro algo, imprime un resumen, de no ser asi, le informa.
+				// Si el usuario compro algo, imprime un resumen, de no ser asi, le informa.
 				if (usuActual.comproAlgo()) {
 					System.out.println("Gracias por su tiempo, aqui tiene un resumen de sus transacciones");
 					System.out.println("");
@@ -159,7 +159,8 @@ public class Admin {
 						+ ".\n Lamentamos informarle que no dispone de Dinero o Tiempo suficiente para comprar.");
 				System.out.println("");
 			}
-			// Al terminar con un usuario, debo resetear los iteradores de Promocion y Atraccion
+			// Al terminar con un usuario, debo resetear los iteradores de Promocion y
+			// Atraccion
 			promocionIterator = s1.getPromociones().iterator();
 			atraccionIterator = s1.getAtracciones().iterator();
 		}

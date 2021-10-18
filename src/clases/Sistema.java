@@ -94,7 +94,7 @@ public class Sistema {
 			while ((linea = br.readLine()) != null) {
 				String[] parametros = linea.split("-");
 				try {
-					this.usuarios.add(new Usuario(parametros[0],Integer.parseInt(parametros[1]),
+					this.usuarios.add(new Usuario(parametros[0], Integer.parseInt(parametros[1]),
 							Double.parseDouble(parametros[2]), parametros[3]));
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
