@@ -5,9 +5,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import jdbc.ConnectionProvider;
+import jdbc.CreadorBaseDeDatos;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class Admin {
 
-	private static String msgBienvenida(String nombre) {
+	private static String msgBienvenida(String nombre) throws SQLException {
 		return "Bienvenido " + nombre + "\n";
 	}
 
@@ -110,7 +116,8 @@ public class Admin {
 		ofrecerResto(usuActual, atraccionesTipoDistintoIterator, s1, sc1);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
+		CreadorBaseDeDatos.crearBaseDeDatos();
 		Sistema s1 = new Sistema();
 		Scanner sc1 = new Scanner(System.in);
 
