@@ -5,9 +5,12 @@ import java.util.Collections;
 
 import clases.Atraccion;
 import clases.OrdenablePorPrecioYTiempo;
+import clases.Tipo_De_Atraccion;
 import clases.Usuario;
 import dao.AtraccionDAO;
 import dao.FactoryDAO;
+import dao.TipoAtraccionDAO;
+import dao.TipoAtraccionDAOImpl;
 import dao.UsuarioDAO;
 
 import java.io.BufferedReader;
@@ -31,12 +34,13 @@ public class CreadorBaseDeDatos {
 				+ " cupo INTEGER NOT NULL,\n" + " tipo TEXT NOT NULL,\n" + "UNIQUE(nombre)" + ");";
 
 		String tablaPromocion = "CREATE TABLE IF NOT EXISTS promociones (\n"
+				+ " id_promocion INTEGER PRIMARY KEY,\n"
 				+ " codigoTipoPromocion INTEGER NOT NULL,\n" + " TipoAtraccionPromocion TEXT NOT NULL,\n"
 				+ " nombre TEXT NOT NULL,\n" + " costo INTEGER,\n" + " id_listaAtracciones INTEGER NOT NULL,\n"
 				+ "UNIQUE(nombre)" + ");";
 
 		String tablaTipoAtraccion = "CREATE TABLE IF NOT EXISTS tipoAtracciones (\n" + " id INTEGER NOT NULL,\n"
-				+ " nombre TEXT NOT NULL" + ");";
+				+ " nombre TEXT NOT NULL,\n" + "UNIQUE(nombre)" + ");";
 
 		String tablaItinerario = "CREATE TABLE IF NOT EXISTS itinerarios (\n"
 				+ " id_itinerario INTEGER PRIMARY KEY AUTOINCREMENT,\n" + " id_usuario INTEGER NOT NULL,\n"
@@ -141,11 +145,20 @@ public class CreadorBaseDeDatos {
 	private static void cargaListaAtraccionesPromocion() {
 
 	}
+	
+	private static void cargaTipoAtraccion() throws SQLException{
+		TipoAtraccionDAO TatraccDAO = FactoryDAO.getTipoAtraccionDAO();
+		Tipo_De_Atraccion[] tipos = Tipo_De_Atraccion.values();
+		
+		for (int i = 0; i < tipos.length; i++) {
+			TatraccDAO.insert(tipos[i]);
+		}
+	}
 
-	public static void cargarEjemplos() {
+	public static void cargarEjemplos() throws SQLException {
 		cargaUsuarios("ListaDeUsuarios");
-		;
 		cargaAtraccion("ListaDeAtracciones");
+		cargaTipoAtraccion();
 	}
 
 	public static void crearBaseDeDatos() throws SQLException {
