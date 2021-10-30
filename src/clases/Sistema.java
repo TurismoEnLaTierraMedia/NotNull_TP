@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+import dao.AtraccionDAO;
+import dao.FactoryDAO;
+import dao.ItinerarioDAO;
+import dao.UsuarioDAO;
+
 import java.io.*;
+import java.sql.SQLException;
 
 public class Sistema {
 
@@ -75,46 +81,19 @@ public class Sistema {
 		return this.usuarioTieneSuficienteDineroYTiempoParaAtracciones(usu);
 
 	}
-
+	
 	/**
-	 * Metodo que realiza la carga de los usuarios. Recibe como parametro la ruta
-	 * especificada del archivo.
+	 * Metodo que realiza la carga de los usuarios desde la base de datos.
 	 * 
-	 * @param rutaUsuarios
 	 */
-	public void cargaUsuarios(String rutaUsuarios) {
-		try {
-			archivo = new File(rutaUsuarios);
-			if (this.archivoVacio(archivo)) {
-				throw new Error("El archivo" + rutaUsuarios + " esta vacio");
-			}
-			fr = new FileReader(archivo);
-			br = new BufferedReader(fr);
-			String linea;
-			while ((linea = br.readLine()) != null) {
-				String[] parametros = linea.split("-");
-				try {
-					this.usuarios.add(new Usuario(parametros[0], Integer.parseInt(parametros[1]),
-							Double.parseDouble(parametros[2]), parametros[3]));
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
-					System.err.println("No se pudo cargar al usuario " + parametros[0] + ". Error de parseo");
-				}
-			}
-		} catch (NumberFormatException e) {
-			System.err.println("Parseo incorrecto");
-			e.printStackTrace();
-		} catch (Exception IO) {
-			IO.printStackTrace();
-		} finally {
-			try {
-				if (fr != null) {
-					fr.close();
-				}
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
+	public void nuevaCargaUsuarios() throws SQLException{
+		UsuarioDAO usuDAO = FactoryDAO.getUsuarioDAO();
+		this.usuarios = (ArrayList<Usuario>)usuDAO.findAll();
+	}
+	
+	public void nuevaCargaAtracciones() throws SQLException{
+		AtraccionDAO atraccDAO = FactoryDAO.getAtraccionDAO();
+		this.atracciones = (ArrayList<Atraccion>)atraccDAO.findAll();
 	}
 
 	/**
@@ -293,8 +272,8 @@ public class Sistema {
 	 * @param rutaAtracciones
 	 * @param rutaPromociones
 	 */
-	public void cargarListas(String rutaUsuarios, String rutaAtracciones, String rutaPromociones) {
-		cargaUsuarios(rutaUsuarios);
+	public void cargarListas(String rutaUsuarios, String rutaAtracciones, String rutaPromociones) throws SQLException{
+		nuevaCargaUsuarios();
 		cargaAtracciones(rutaAtracciones);
 		cargaPromociones(rutaPromociones);
 	}
@@ -427,6 +406,44 @@ public class Sistema {
 			throw new IllegalArgumentException("Este usuario no esta en la lista");
 		}
 		return datosUsuario;
+	}
+
+	private void actualizarUsuarios() throws SQLException {
+		UsuarioDAO usuDAO = FactoryDAO.getUsuarioDAO();
+		Iterator<Usuario> usuarioIterator = this.getUsuarios().iterator();
+		while (usuarioIterator.hasNext()) {
+			Usuario usuario = (Usuario) usuarioIterator.next();
+			usuDAO.update(usuario);
+		}
+	}
+
+	private void actualizarAtracciones() throws SQLException {
+		AtraccionDAO atracDAO = FactoryDAO.getAtraccionDAO();
+		Iterator<Atraccion> atraccionIterator = this.getAtracciones().iterator();
+		while (atraccionIterator.hasNext()) {
+			Atraccion atraccion = (Atraccion) atraccionIterator.next();
+			atracDAO.update(atraccion);
+		}
+	}
+	
+	private void actualizarItinerario() throws SQLException {
+		ItinerarioDAO itineDAO = FactoryDAO.getItinerarioDAO();
+		Iterator<Usuario> usuIterator = this.getUsuarios().iterator();
+		while (usuIterator.hasNext()) {
+			Usuario usuario = (Usuario) usuIterator.next();
+			itineDAO.update(usuario.generarItinerario());
+		}
+	}
+	
+	private void actualizarPromociones() throws SQLException {
+		
+	}
+
+	public void actualizarBaseDeDatos() throws SQLException {
+		this.actualizarUsuarios();
+		this.actualizarAtracciones();
+		this.actualizarItinerario();
+		this.actualizarPromociones();
 	}
 
 	public ArrayList<Usuario> getUsuarios() {

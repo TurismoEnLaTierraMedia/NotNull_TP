@@ -121,7 +121,8 @@ public class Admin {
 		Sistema s1 = new Sistema();
 		Scanner sc1 = new Scanner(System.in);
 
-		s1.cargaUsuarios("ListaDeUsuarios");
+		//s1.cargaUsuarios("ListaDeUsuarios");
+		s1.nuevaCargaUsuarios();
 		s1.cargaAtracciones("ListaDeAtracciones");
 		s1.cargaPromociones("ListaDePromociones");
 
@@ -177,11 +178,13 @@ public class Admin {
 
 		try {
 			s1.generarInformes();
+			System.out.println("Generados informes de salida con todos los datos");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Generados informes de salida con todos los datos");
+		
+		s1.actualizarBaseDeDatos();
 
 	}
 
