@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.io.*;
+import java.sql.SQLException;
 
 import clases.Atraccion;
 import clases.OrdenablePorPrecioYTiempo;
@@ -77,11 +78,11 @@ public class SistemaTest {
 	}
 
 	@Test
-	public void cargaUsuariosTest() {
+	public void cargaUsuariosTest() throws SQLException{
 		Sistema s1 = new Sistema();
 		ArrayList<Usuario> usuarios = obtenerListaUsuarios("ListaDeUsuarios");
 
-		s1.cargaUsuarios("ListaDeUsuarios");
+		s1.nuevaCargaUsuarios();
 		Assert.assertEquals(s1.getUsuarios(), usuarios);
 	}
 
@@ -94,7 +95,7 @@ public class SistemaTest {
 	}
 
 	@Test
-	public void metodosVariosTest() {
+	public void metodosVariosTest() throws SQLException{
 		Sistema s1 = new Sistema();
 		Usuario usu = new Usuario("Probador", 500, 500, "Aventura");
 		Atraccion atrac = new Atraccion("Probaneor", 100, 100, 100, "Aventura");
@@ -112,18 +113,6 @@ public class SistemaTest {
 		Assert.assertEquals(99, atrac.getCupo());
 		Assert.assertTrue(usu.getComprasAtracciones().contains(atrac));
 
-	}
-
-	@Test(expected = Error.class)
-	public void cargaArchivosVaciosTest() {
-		Sistema s1 = new Sistema();
-		s1.cargaUsuarios("PruebaArchivoVacio.txt");
-	}
-
-	@Test
-	public void cargaUsuariosParametrosIncorrectosTest(){
-		Sistema s1 = new Sistema();
-		s1.cargaUsuarios("PruebaUsuarios.txt");
 	}
 
 }
