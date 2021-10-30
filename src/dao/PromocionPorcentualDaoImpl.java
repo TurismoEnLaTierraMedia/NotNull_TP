@@ -57,55 +57,58 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 
 	@Override
 	public int insert(Promocion t) throws SQLException {
-		try {
-			String sql = "INSERT INTO PROMOCIONES (TIPO, PACK, VALOR DE DESCUENTO) VALUES (?, ?, ?)";
-			Connection conn = ConnectionProvider.getConnection();
-
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, PromocionPorcentual.getTipo());
-			statement.setString(2, PromocionPorcentual.getNombre());
-			statement.setInt(3, PromocionPorcentual.getValorDesc());
-			int rows = statement.executeUpdate();
-
-			return rows;
-		} catch (Exception e) {
-			throw new MissingDataException(e);
-		}
+//		try {
+//			String sql = "INSERT INTO PROMOCIONES (TIPO, PACK, VALOR DE DESCUENTO) VALUES (?, ?, ?)";
+//			Connection conn = ConnectionProvider.getConnection();
+//
+//			PreparedStatement statement = conn.prepareStatement(sql);
+//			statement.setString(1, PromocionPorcentual.getTipo());
+//			statement.setString(2, PromocionPorcentual.getNombre());
+//			statement.setInt(3, PromocionPorcentual.getValorDesc());
+//			int rows = statement.executeUpdate();
+//
+//			return rows;
+//		} catch (Exception e) {
+//			throw new MissingDataException(e);
+//		}
+		return 0;
 	}
 
 	@Override
 	public int update(Promocion t) throws SQLException {
-		try {
-			String sql = "UPDATE PROMOCIONES SET TIPO = ? PACK = ? VALOR DE DESCUENTO = ? WHERE ID = ?";
-			Connection conn = ConnectionProvider.getConnection();
-
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, PromocionPorcentual.getTipo());
-			statement.setString(2, PromocionPorcentual.getNombre());
-			statement.setInt(3, PromocionPorcentual.getValorDesc());
-			int rows = statement.executeUpdate();
-
-			return rows;
-		} catch (Exception e) {
-			throw new MissingDataException(e);
-		}
+//		try {
+//			String sql = "UPDATE PROMOCIONES SET TIPO = ? PACK = ? VALOR DE DESCUENTO = ? WHERE ID = ?";
+//			Connection conn = ConnectionProvider.getConnection();
+//
+//			PreparedStatement statement = conn.prepareStatement(sql);
+//			statement.setString(1, PromocionPorcentual.getTipo());
+//			statement.setString(2, PromocionPorcentual.getNombre());
+//			statement.setInt(3, PromocionPorcentual.getValorDesc());
+//			int rows = statement.executeUpdate();
+//
+//			return rows;
+//		} catch (Exception e) {
+//			throw new MissingDataException(e);
+//		}
+		return 0;
 	}
 	
 
 	@Override
 	public int delete(Promocion t) throws SQLException {
-		try {
-			String sql = "DELETE FROM PROMOCIONES WHERE ID = ?";
-			Connection conn = ConnectionProvider.getConnection();
-
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, PromocionPorcentual.getNombre());
-			int rows = statement.executeUpdate();
-
-			return rows;
-		} catch (Exception e) {
-			throw new MissingDataException(e);
-		}
+//		try {
+//			String sql = "DELETE FROM PROMOCIONES WHERE ID = ?";
+//			Connection conn = ConnectionProvider.getConnection();
+//
+//			PreparedStatement statement = conn.prepareStatement(sql);
+//			statement.setString(1, PromocionPorcentual.getNombre());
+//			int rows = statement.executeUpdate();
+//
+//			return rows;
+//		} catch (Exception e) {
+//			throw new MissingDataException(e);
+//		}
+		return 0;
 	}
 
 }

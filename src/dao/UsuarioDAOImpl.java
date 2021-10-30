@@ -33,7 +33,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	
 	//Ver tema id
 	private Usuario aUsuario(ResultSet resultados) throws SQLException {
-		return new Usuario(resultados.getString(2), Integer.parseInt(resultados.getString(3)),
+		return new Usuario(Integer.parseInt(resultados.getString(1)), resultados.getString(2), Integer.parseInt(resultados.getString(3)),
 				Double.parseDouble(resultados.getString(4)), resultados.getString(5));
 	}
 

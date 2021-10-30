@@ -21,4 +21,8 @@ public class FactoryDAO {
 		return new ItinerarioDAOImpl();
 	}
 
+	public static ItinerarioAtraccionesCompradasDAO getItinerarioAtraccionesCompradasDAO() {
+		return new ItinerarioAtraccionesCompradasDAOImpl();
+	}
+
 }

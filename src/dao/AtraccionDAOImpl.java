@@ -32,7 +32,7 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 	}
 
 	private Atraccion aAtraccion(ResultSet resultados) throws SQLException {
-		return new Atraccion(resultados.getString(2), Integer.parseInt(resultados.getString(3)),
+		return new Atraccion(resultados.getInt(1),resultados.getString(2), Integer.parseInt(resultados.getString(3)),
 				Double.parseDouble(resultados.getString(4)), Integer.parseInt(resultados.getString(5)),
 				resultados.getString(6));
 	}
