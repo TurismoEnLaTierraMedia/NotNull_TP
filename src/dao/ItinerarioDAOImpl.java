@@ -2,18 +2,40 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import clases.Itinerario;
+import clases.Usuario;
 import jdbc.ConnectionProvider;
 
 public class ItinerarioDAOImpl implements ItinerarioDAO {
 
 	@Override
 	public List<Itinerario> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			String sql = "SELECT * FROM usuarios";
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			ResultSet resultados = statement.executeQuery();
+
+			List<Itinerario> usuarios = new ArrayList<Itinerario>();
+			while (resultados.next()) {
+				usuarios.add(aItinerario(resultados));
+			}
+
+			return usuarios;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+	
+	private Itinerario aItinerario(ResultSet resultados) throws SQLException{
+		UsuarioDAO usuDAO = FactoryDAO.getUsuarioDAO();
+		
+		return new Itinerario(usuDAO.encontrarUsuario(resultados.getInt(1)), null, null, resultados.getInt(4), resultados.getDouble(5));
 	}
 
 	@Override

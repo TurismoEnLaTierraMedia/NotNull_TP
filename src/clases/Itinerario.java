@@ -10,6 +10,15 @@ public class Itinerario {
 	private Usuario usuario;
 	private List<Promocion> promocionesCompradas;
 	private List<Atraccion> atraccionesCompradas;
+	
+	public Itinerario(Usuario usuario, List<Promocion> promocionesCompradas,
+			List<Atraccion> atraccionesCompradas, int totalPagar, double tiempoNecesario) {
+		this.usuario = usuario;
+		this.promocionesCompradas = promocionesCompradas;
+		this.atraccionesCompradas = atraccionesCompradas;
+		this.totalPagar = totalPagar;
+		this.tiempoNecesario = tiempoNecesario;
+	}
 
 	public Itinerario(Usuario usuario, List<Promocion> promocionesCompradas,
 			List<Atraccion> atraccionesCompradas) {

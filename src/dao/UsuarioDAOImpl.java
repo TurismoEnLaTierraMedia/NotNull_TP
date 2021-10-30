@@ -86,4 +86,19 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		return 0;
 	}
 
+	@Override
+	public Usuario encontrarUsuario(int id) {
+		try {
+			String sql = "SELECT * FROM usuarios WHERE usuario_id = ?";
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, id);
+			ResultSet resultados = statement.executeQuery();
+
+			return aUsuario(resultados);
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
 }
