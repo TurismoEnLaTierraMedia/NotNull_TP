@@ -1,9 +1,0 @@
-Usuario: Camila| Monedero: 0| Tiempo Disponible: 14.5| Preferencia: AVENTURA
-
-Compra de Atraccion [Atraccion: Atraccion Mordor: Costo de visita: 25, duracion: 3.0, cupo: 2, tipo: AVENTURA]
-Compra de Atraccion [Atraccion: Atraccion Minas Tirith: Costo de visita: 5, duracion: 2.5, cupo: 21, tipo: PAISAJE]
-
-
-Resumen de compra
--------------------------------
-Costo total: 30 - Tiempo requerido: 5.5
