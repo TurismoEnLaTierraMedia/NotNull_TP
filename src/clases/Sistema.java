@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import dao.AtraccionDAO;
 import dao.FactoryDAO;
+import dao.ItinerarioAtraccionesCompradasDAO;
 import dao.ItinerarioDAO;
 import dao.UsuarioDAO;
 
@@ -428,10 +429,17 @@ public class Sistema {
 	
 	private void actualizarItinerario() throws SQLException {
 		ItinerarioDAO itineDAO = FactoryDAO.getItinerarioDAO();
+		ItinerarioAtraccionesCompradasDAO itineAtraccDAO = FactoryDAO.getItinerarioAtraccionesCompradasDAO();
 		Iterator<Usuario> usuIterator = this.getUsuarios().iterator();
 		while (usuIterator.hasNext()) {
 			Usuario usuario = (Usuario) usuIterator.next();
-			itineDAO.update(usuario.generarItinerario());
+			Itinerario usuItinerario = usuario.generarItinerario();
+			Iterator<Atraccion> atracciones = usuItinerario.getAtraccionesCompradas().iterator();
+			itineDAO.insert(usuItinerario);
+			while (atracciones.hasNext()) {
+				Atraccion atraccion = (Atraccion) atracciones.next();
+				itineAtraccDAO.insert(atraccion);
+			}
 		}
 	}
 	

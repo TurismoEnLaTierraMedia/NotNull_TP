@@ -9,19 +9,29 @@ public class Usuario {
 	private ArrayList<Atraccion> comprasAtracciones = new ArrayList<>();
 	private ArrayList<Promocion> comprasPromociones = new ArrayList<>();
 
+	private int idbasededatos;
 	private String nombre;
 	private int presupuesto;
 	private double tiempoDisponible;
 	private Tipo_De_Atraccion preferencia;
-
-	public Usuario(String nombre, int presupuesto, double tiempoDisponible, String preferencia) {
+	
+	public Usuario(int idbasededatos, String nombre, int presupuesto, double tiempoDisponible, String preferencia) {
+		this.idbasededatos = idbasededatos;
 		this.nombre = nombre;
-
 		this.setPresupuesto(presupuesto);
 		this.setTiempoDisponible(tiempoDisponible);
 		this.setPreferencia(preferencia);
+	}
 
-		
+	public Usuario(String nombre, int presupuesto, double tiempoDisponible, String preferencia) {
+		this.nombre = nombre;
+		this.setPresupuesto(presupuesto);
+		this.setTiempoDisponible(tiempoDisponible);
+		this.setPreferencia(preferencia);
+	}
+	
+	public int getID() {
+		return this.idbasededatos;
 	}
 
 	public String getNombre() {

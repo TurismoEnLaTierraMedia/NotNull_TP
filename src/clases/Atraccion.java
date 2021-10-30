@@ -3,11 +3,21 @@ package clases;
 import java.util.Objects;
 
 public class Atraccion {
+	private int idBaseDeDatos;
 	private String nombre;
 	private int costoDeVisita;
 	private double duracion;
 	private int cupo;
 	private Tipo_De_Atraccion tipo;
+	
+	public Atraccion(int idBaseDeDatos, String nombre, int costoDeVisita, double duracion, int cupo, String tipo) {
+		this.idBaseDeDatos = idBaseDeDatos;
+		this.setNombre(nombre);
+		this.setCostoDeVisita(costoDeVisita);
+		this.setDuracion(duracion);
+		this.setCupo(cupo);
+		this.setTipo(tipo);
+	}
 
 	public Atraccion(String nombre, int costoDeVisita, double duracion, int cupo, String tipo) {
 		this.setNombre(nombre);
@@ -15,6 +25,10 @@ public class Atraccion {
 		this.setDuracion(duracion);
 		this.setCupo(cupo);
 		this.setTipo(tipo);
+	}
+	
+	public int getID() {
+		return this.idBaseDeDatos;
 	}
 
 	public String getNombre() {

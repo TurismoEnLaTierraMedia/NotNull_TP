@@ -20,7 +20,7 @@ public class Itinerario {
 		setTiempoNecesario(tiempoNecesario);
 	}
 
-	protected int getTotalPagar() {
+	public int getTotalPagar() {
 		return totalPagar;
 	}
 
@@ -37,7 +37,7 @@ public class Itinerario {
 
 	}
 
-	protected double getTiempoNecesario() {
+	public double getTiempoNecesario() {
 		return tiempoNecesario;
 	}
 
@@ -53,15 +53,15 @@ public class Itinerario {
 		}
 	}
 
-	protected Usuario getUsuario() {
+	public Usuario getUsuario() {
 		return usuario;
 	}
 
-	protected List<Promocion> getPromocionesCompradas() {
+	public List<Promocion> getPromocionesCompradas() {
 		return promocionesCompradas;
 	}
 
-	protected List<Atraccion> getAtraccionesCompradas() {
+	public List<Atraccion> getAtraccionesCompradas() {
 		return atraccionesCompradas;
 	}
 
