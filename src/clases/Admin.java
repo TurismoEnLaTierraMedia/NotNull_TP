@@ -123,7 +123,7 @@ public class Admin {
 
 		//s1.cargaUsuarios("ListaDeUsuarios");
 		s1.nuevaCargaUsuarios();
-		s1.cargaAtracciones("ListaDeAtracciones");
+		s1.nuevaCargaAtracciones();
 		s1.cargaPromociones("ListaDePromociones");
 
 		Iterator<Usuario> usuarioIterator = s1.getUsuarios().iterator();
