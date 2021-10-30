@@ -22,24 +22,32 @@ public class CreadorBaseDeDatos {
 	private static FileReader fr;
 
 	private static void crearTablas(Connection connection) throws SQLException {
-		String tablaUsuario = "CREATE TABLE IF NOT EXISTS usuarios (\n" + " usuario_id INTEGER PRIMARY KEY, \n" + " nombre TEXT NOT NULL,\n"
-				+ "	presupuesto INTEGER NOT NULL DEFAULT 0,\n" + " tiempodisponible REAL NOT NULL,\n"
-				+ "preferencia TEXT NOT NULL,\n" + " UNIQUE(nombre)" + ");";
+		String tablaUsuario = "CREATE TABLE IF NOT EXISTS usuarios (\n" + " usuario_id INTEGER PRIMARY KEY, \n"
+				+ " nombre TEXT NOT NULL,\n" + "	presupuesto INTEGER NOT NULL DEFAULT 0,\n"
+				+ " tiempodisponible REAL NOT NULL,\n" + "preferencia TEXT NOT NULL,\n" + " UNIQUE(nombre)" + ");";
 
-		String tablaAtraccion = "CREATE TABLE IF NOT EXISTS atracciones (\n" + " atraccion_id INTEGER PRIMARY KEY, \n" + " nombre TEXT NOT NULL,\n"
-				+ " costo INTEGER NOT NULL DEFAULT 0,\n" + " tiempo REAL NOT NULL,\n" + " cupo INTEGER NOT NULL,\n"
-				+ " tipo TEXT NOT NULL,\n" + "UNIQUE(nombre)" + ");";
-		
-		String tablaPromocion = "CREATE TABLE IF NOT EXISTS promociones (\n" + " codigoTipoPromocion INTEGER NOT NULL,\n"
-				+ " TipoAtraccionPromocion TEXT NOT NULL,\n" + " nombre TEXT NOT NULL,\n" + " costo INTEGER,\n"
-				+ " id_listaAtracciones INTEGER NOT NULL,\n" + "UNIQUE(nombre)" + ");";
-		
+		String tablaAtraccion = "CREATE TABLE IF NOT EXISTS atracciones (\n" + " atraccion_id INTEGER PRIMARY KEY, \n"
+				+ " nombre TEXT NOT NULL,\n" + " costo INTEGER NOT NULL DEFAULT 0,\n" + " tiempo REAL NOT NULL,\n"
+				+ " cupo INTEGER NOT NULL,\n" + " tipo TEXT NOT NULL,\n" + "UNIQUE(nombre)" + ");";
+
+		String tablaPromocion = "CREATE TABLE IF NOT EXISTS promociones (\n"
+				+ " codigoTipoPromocion INTEGER NOT NULL,\n" + " TipoAtraccionPromocion TEXT NOT NULL,\n"
+				+ " nombre TEXT NOT NULL,\n" + " costo INTEGER,\n" + " id_listaAtracciones INTEGER NOT NULL,\n"
+				+ "UNIQUE(nombre)" + ");";
+
 		String tablaTipoAtraccion = "CREATE TABLE IF NOT EXISTS tipoAtracciones (\n" + " id INTEGER NOT NULL,\n"
 				+ " nombre TEXT NOT NULL" + ");";
-		
-		String tablaItinerario = "CREATE TABLE IF NOT EXISTS itinerarios (\n" + " id_usuario INTEGER NOT NULL,\n"
-				+ " id_promocionesCompradas INTEGER,\n" + " id_atraccionesCompradas INTEGER,\n" + " tiempoTotal REAL NOT NULL,\n"
-				+ " costoTotal INTEGER NOT NULL" + ");";
+
+		String tablaItinerario = "CREATE TABLE IF NOT EXISTS itinerarios (\n"
+				+ " id_itinerario INTEGER PRIMARY KEY AUTOINCREMENT,\n" + " id_usuario INTEGER NOT NULL,\n"
+				+ " tiempoTotal REAL NOT NULL,\n" + " costoTotal INTEGER NOT NULL" + ");";
+
+		String tablaItinerarioPromocionesCompradas = "CREATE TABLE IF NOT EXISTS itinerarios_promocionescompradas (\n"
+				+ " id_promocionesCompradas INTEGER NOT NULL,\n" + "id_promocion INTEGER NOT NULL" + ");";
+
+		String tablaItinerarioAtraccionesCompradas = "CREATE TABLE IF NOT EXISTS itinerarios_atraccionescompradas (\n"
+				+ " id_atraccionescompradas INTEGER NOT NULL,\n " + " id_atraccion INTEGER NOT NULL,\n"
+				+ "FOREIGN KEY (id_atraccionescompradas) REFERENCES itinerarios (id_itinerario)" + ");";
 
 		Statement stmt = connection.createStatement();
 		stmt.execute(tablaUsuario);
@@ -47,12 +55,14 @@ public class CreadorBaseDeDatos {
 		stmt.execute(tablaPromocion);
 		stmt.execute(tablaTipoAtraccion);
 		stmt.execute(tablaItinerario);
+		stmt.execute(tablaItinerarioAtraccionesCompradas);
+		stmt.execute(tablaItinerarioPromocionesCompradas);
 	}
-	
+
 	private static void cargaUsuarios(String rutaUsuarios) {
-		UsuarioDAO usuDAO= FactoryDAO.getUsuarioDAO();
+		UsuarioDAO usuDAO = FactoryDAO.getUsuarioDAO();
 		try {
-			
+
 			archivo = new File(rutaUsuarios);
 			if (archivo.length() == 0) {
 				throw new Error("El archivo" + rutaUsuarios + " esta vacio");
@@ -86,7 +96,7 @@ public class CreadorBaseDeDatos {
 			}
 		}
 	}
-	
+
 	private static void cargaAtraccion(String rutaAtracciones) {
 		AtraccionDAO atraccDAO = FactoryDAO.getAtraccionDAO();
 		try {
@@ -123,17 +133,18 @@ public class CreadorBaseDeDatos {
 			}
 		}
 	}
-	
+
 	private static void cargaPromocion() {
-		
+
 	}
-	
-	private static void cargaListaAtraccionesPromocion(){
-		
+
+	private static void cargaListaAtraccionesPromocion() {
+
 	}
-	
+
 	public static void cargarEjemplos() {
-		cargaUsuarios("ListaDeUsuarios");;
+		cargaUsuarios("ListaDeUsuarios");
+		;
 		cargaAtraccion("ListaDeAtracciones");
 	}
 
