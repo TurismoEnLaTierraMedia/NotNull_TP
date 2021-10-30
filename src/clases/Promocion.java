@@ -12,6 +12,7 @@ public abstract class Promocion {
 	protected ArrayList<Atraccion> atraccion;
 	protected Tipo_De_Atraccion tipo;
 	protected String pack;
+	protected int id;
 
 	// Constructores
 
@@ -19,6 +20,11 @@ public abstract class Promocion {
 		this.atraccion = new ArrayList<Atraccion>();
 		setTipo(tipo);
 		setPack(pack);
+	}
+	
+	public Promocion (int id, String tipo, String pack) {
+		this(tipo,pack);
+		this.id = id;
 	}
 
 	// Setters

@@ -12,12 +12,10 @@ import clases.PromocionPorcentual;
 import jdbc.ConnectionProvider;
 
 public class PromocionPorcentualDaoImpl implements PromocionDAO {
-	
-	
-	private PromocionPorcentual toPromocionPorcentual (ResultSet resultados) throws SQLException {
+
+	private PromocionPorcentual toPromocionPorcentual(ResultSet resultados) throws SQLException {
 		return new PromocionPorcentual(resultados.getString(2), resultados.getString(3), resultados.getInt(5));
 	}
-	
 
 	@Override
 	public List<Promocion> findAll() throws SQLException {
@@ -37,7 +35,7 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 			throw new MissingDataException(e);
 		}
 	}
-	
+
 	@Override
 	public int countAll() throws SQLException {
 		try {
@@ -57,57 +55,36 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 
 	@Override
 	public int insert(Promocion t) throws SQLException {
-//		try {
-//			String sql = "INSERT INTO PROMOCIONES (TIPO, PACK, VALOR DE DESCUENTO) VALUES (?, ?, ?)";
-//			Connection conn = ConnectionProvider.getConnection();
-//
-//			PreparedStatement statement = conn.prepareStatement(sql);
-//			statement.setString(1, PromocionPorcentual.getTipo());
-//			statement.setString(2, PromocionPorcentual.getNombre());
-//			statement.setInt(3, PromocionPorcentual.getValorDesc());
-//			int rows = statement.executeUpdate();
-//
-//			return rows;
-//		} catch (Exception e) {
-//			throw new MissingDataException(e);
-//		}
-		return 0;
+		PromocionPorcentual promoPorc = (PromocionPorcentual) t;
+		
+		try {
+			String sql = "INSERT INTO PROMOCIONES (codigoTipoPromocion,TipoAtraccionPromocion,nombre,costo,id_listaAtracciones) VALUES (?, ?, ?, ?, ?)";
+			Connection conn = ConnectionProvider.getConnection();
+
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			// id_promocion, codigoTipoPromocion, TipoAtraccionPromocion, nombre, costo,
+			// id_listaAtracciones
+			statement.setInt(1, 1);
+			statement.setString(2, promoPorc.getTipo().toString());
+			statement.setString(3, promoPorc.getNombre());
+			statement.setInt(4, promoPorc.obtenerPrecioFinal());
+			statement.setInt(5,0);
+			int rows = statement.executeUpdate();
+
+			return rows;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
 	}
 
 	@Override
 	public int update(Promocion t) throws SQLException {
-//		try {
-//			String sql = "UPDATE PROMOCIONES SET TIPO = ? PACK = ? VALOR DE DESCUENTO = ? WHERE ID = ?";
-//			Connection conn = ConnectionProvider.getConnection();
-//
-//			PreparedStatement statement = conn.prepareStatement(sql);
-//			statement.setString(1, PromocionPorcentual.getTipo());
-//			statement.setString(2, PromocionPorcentual.getNombre());
-//			statement.setInt(3, PromocionPorcentual.getValorDesc());
-//			int rows = statement.executeUpdate();
-//
-//			return rows;
-//		} catch (Exception e) {
-//			throw new MissingDataException(e);
-//		}
 		return 0;
 	}
-	
 
 	@Override
 	public int delete(Promocion t) throws SQLException {
-//		try {
-//			String sql = "DELETE FROM PROMOCIONES WHERE ID = ?";
-//			Connection conn = ConnectionProvider.getConnection();
-//
-//			PreparedStatement statement = conn.prepareStatement(sql);
-//			statement.setString(1, PromocionPorcentual.getNombre());
-//			int rows = statement.executeUpdate();
-//
-//			return rows;
-//		} catch (Exception e) {
-//			throw new MissingDataException(e);
-//		}
 		return 0;
 	}
 

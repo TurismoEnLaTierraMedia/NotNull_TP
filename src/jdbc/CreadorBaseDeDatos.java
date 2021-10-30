@@ -2,13 +2,19 @@ package jdbc;
 
 import java.sql.Statement;
 import java.util.Collections;
+import java.util.Iterator;
 
 import clases.Atraccion;
 import clases.OrdenablePorPrecioYTiempo;
+import clases.Promocion;
+import clases.PromocionAbsoluta;
+import clases.PromocionAxB;
+import clases.PromocionPorcentual;
 import clases.Tipo_De_Atraccion;
 import clases.Usuario;
 import dao.AtraccionDAO;
 import dao.FactoryDAO;
+import dao.PromocionDAO;
 import dao.TipoAtraccionDAO;
 import dao.TipoAtraccionDAOImpl;
 import dao.UsuarioDAO;
@@ -33,8 +39,7 @@ public class CreadorBaseDeDatos {
 				+ " nombre TEXT NOT NULL,\n" + " costo INTEGER NOT NULL DEFAULT 0,\n" + " tiempo REAL NOT NULL,\n"
 				+ " cupo INTEGER NOT NULL,\n" + " tipo TEXT NOT NULL,\n" + "UNIQUE(nombre)" + ");";
 
-		String tablaPromocion = "CREATE TABLE IF NOT EXISTS promociones (\n"
-				+ " id_promocion INTEGER PRIMARY KEY,\n"
+		String tablaPromocion = "CREATE TABLE IF NOT EXISTS promociones (\n" + " id_promocion INTEGER PRIMARY KEY,\n"
 				+ " codigoTipoPromocion INTEGER NOT NULL,\n" + " TipoAtraccionPromocion TEXT NOT NULL,\n"
 				+ " nombre TEXT NOT NULL,\n" + " costo INTEGER,\n" + " id_listaAtracciones INTEGER NOT NULL,\n"
 				+ "UNIQUE(nombre)" + ");";
@@ -138,18 +143,12 @@ public class CreadorBaseDeDatos {
 		}
 	}
 
-	private static void cargaPromocion() {
-
-	}
-
-	private static void cargaListaAtraccionesPromocion() {
-
-	}
 	
-	private static void cargaTipoAtraccion() throws SQLException{
+
+	private static void cargaTipoAtraccion() throws SQLException {
 		TipoAtraccionDAO TatraccDAO = FactoryDAO.getTipoAtraccionDAO();
 		Tipo_De_Atraccion[] tipos = Tipo_De_Atraccion.values();
-		
+
 		for (int i = 0; i < tipos.length; i++) {
 			TatraccDAO.insert(tipos[i]);
 		}
@@ -159,12 +158,61 @@ public class CreadorBaseDeDatos {
 		cargaUsuarios("ListaDeUsuarios");
 		cargaAtraccion("ListaDeAtracciones");
 		cargaTipoAtraccion();
+		cargaPromocion("ListaDePromociones");
 	}
 
 	public static void crearBaseDeDatos() throws SQLException {
 		Connection connection = ConnectionProvider.getConnection();
 		crearTablas(connection);
 		cargarEjemplos();
+	}
+	
+		
+	
+	public static void cargaPromocion(String rutaPromociones) throws SQLException {
+		PromocionDAO promDao = FactoryDAO.getPromocionPorcentualDao();
+		
+		try {
+			archivo = new File(rutaPromociones);
+			if (archivo.length() == 0) {
+				throw new Error("El archivo" + rutaPromociones + " esta vacio");
+			}
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+
+			String linea;
+			while ((linea = br.readLine()) != null) {
+				String[] parametro = linea.split("-");
+				try {
+					Promocion promocionaAgregar = new PromocionPorcentual(parametro[1], parametro [2], Integer.parseInt(parametro [3]));
+//					for (int i = 4; i < parametro.length; i++) {
+//						promocionaAgregar.anadirAtraccion(convertirStringAAtraccion(parametro[i]));
+//					}
+					promDao.insert(promocionaAgregar);
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+					System.err.println("No se pudo cargar la promocion " + parametro[2]);
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+					System.err.println("No se pudo cargar la promocion " + parametro[2]);
+				}
+
+			}
+
+		} catch (NumberFormatException e) {
+			System.err.println("Parseo incorrecto");
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (fr != null) {
+					fr.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
 
 }
