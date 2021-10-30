@@ -1,5 +1,7 @@
 package dao;
 
+
+
 public class FactoryDAO {
 	public static UsuarioDAO getUsuarioDAO() {
 		return new UsuarioDAOImpl();
@@ -23,6 +25,10 @@ public class FactoryDAO {
 
 	public static ItinerarioAtraccionesCompradasDAO getItinerarioAtraccionesCompradasDAO() {
 		return new ItinerarioAtraccionesCompradasDAOImpl();
+	}
+
+	public static PromocionDAO getPromocionPorcentualDao() {
+		return new PromocionPorcentualDaoImpl();
 	}
 
 }
