@@ -121,11 +121,15 @@ public class Admin {
 		Sistema s1 = new Sistema();
 		Scanner sc1 = new Scanner(System.in);
 
+		//vieja carga de datos desde archivos
 		//s1.cargaUsuarios("ListaDeUsuarios");
+		//s1.cargaAtracciones("ListaDeAtracciones");
+		//s1.cargaPromociones("ListaDePromociones");
+		
+		//Carga de listas desde la base de datos
 		s1.nuevaCargaUsuarios();
 		s1.nuevaCargaAtracciones();
 		s1.nuevaCargaPromociones();
-		//s1.cargaPromociones("ListaDePromociones");
 
 		Iterator<Usuario> usuarioIterator = s1.getUsuarios().iterator();
 		Iterator<Atraccion> atraccionIterator = s1.getAtracciones().iterator();

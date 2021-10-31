@@ -1,8 +1,0 @@
-Usuario: Kevin| Monedero: 7| Tiempo Disponible: 3.5| Preferencia: PAISAJE
-
-Compra de Atraccion [Atraccion: Atraccion La Comarca: Costo de visita: 3, duracion: 6.5, cupo: 148, tipo: DEGUSTACION]
-
-
-Resumen de compra
--------------------------------
-Costo total: 3 - Tiempo requerido: 6.5

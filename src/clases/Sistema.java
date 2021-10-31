@@ -449,16 +449,11 @@ public class Sistema {
 			}
 		}
 	}
-	
-	private void actualizarPromociones() throws SQLException {
-		
-	}
 
 	public void actualizarBaseDeDatos() throws SQLException {
 		this.actualizarUsuarios();
 		this.actualizarAtracciones();
 		this.actualizarItinerario();
-		this.actualizarPromociones();
 	}
 
 	public ArrayList<Usuario> getUsuarios() {
