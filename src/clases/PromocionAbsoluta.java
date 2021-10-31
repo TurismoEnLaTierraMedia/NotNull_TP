@@ -7,6 +7,11 @@ public class PromocionAbsoluta extends Promocion {
 	private int valorDesc;
 
 	// Constructores
+	
+	public PromocionAbsoluta(int id, String tipo, String pack, int valorDesc) {
+		super(id, tipo, pack);
+		setValorDesc(valorDesc);
+	}
 
 	public PromocionAbsoluta(String tipo, String pack, int valorDesc) {
 		super(tipo, pack);

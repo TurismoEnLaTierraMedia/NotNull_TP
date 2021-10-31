@@ -14,6 +14,7 @@ import clases.Tipo_De_Atraccion;
 import clases.Usuario;
 import dao.AtraccionDAO;
 import dao.FactoryDAO;
+import dao.ItinerarioAtraccionesCompradasDAO;
 import dao.PromocionDAO;
 import dao.PromocionListaAtraccionesDAO;
 import dao.TipoAtraccionDAO;
@@ -42,11 +43,11 @@ public class CreadorBaseDeDatos {
 
 		String tablaPromocion = "CREATE TABLE IF NOT EXISTS promociones (\n" + " id_promocion INTEGER PRIMARY KEY,\n"
 				+ " codigoTipoPromocion INTEGER NOT NULL,\n" + " TipoAtraccionPromocion TEXT NOT NULL,\n"
-				+ " nombre TEXT NOT NULL,\n" + " costo INTEGER,\n" + " id_listaAtracciones INTEGER,\n"
+				+ " nombre TEXT NOT NULL,\n" + " descuento INTEGER,\n" + " id_listaAtracciones INTEGER,\n"
 				+ " id_atraccionGratis INTEGER,\n" + "UNIQUE(nombre)" + ");";
 
 		String tablaAtraccionesDePromocion = "CREATE TABLE IF NOT EXISTS promociones_atracciones (\n"
-				+ "id_listaAtracciones INTEGER NOT NULL,\n" + "id_atraccion INTEGER NOT NULL,\n" 
+				+ "id_listaAtracciones INTEGER NOT NULL,\n" + "id_atraccion INTEGER NOT NULL,\n"
 				+ "FOREIGN KEY (id_listaAtracciones) REFERENCES promociones (id_promocion)" + ");";
 
 		String tablaTipoAtraccion = "CREATE TABLE IF NOT EXISTS tipoAtracciones (\n" + " id INTEGER NOT NULL,\n"
@@ -171,8 +172,41 @@ public class CreadorBaseDeDatos {
 		cargarEjemplos();
 	}
 
+	private static Promocion determinarTipoPromocion(String[] parametro) {
+		AtraccionDAO atraccDAO = FactoryDAO.getAtraccionDAO();
+		if (Integer.parseInt(parametro[0]) == 1) {
+			try {
+				return new PromocionAbsoluta(parametro[1], parametro[2], Integer.parseInt(parametro[3]));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				System.err.println("No se pudo cargar la promocion " + parametro[1] + ". Error de parseo.");
+				throw new NumberFormatException();
+			}
+		} else if (Integer.parseInt(parametro[0]) == 2) {
+			try {
+				return new PromocionPorcentual(parametro[1], parametro[2], Integer.parseInt(parametro[3]));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				System.err.println("No se pudo cargar la promocion " + parametro[1] + ". Error de parseo.");
+				throw new NumberFormatException();
+			}
+		} else if (Integer.parseInt(parametro[0]) == 3) {
+			try {
+				return new PromocionAxB(parametro[1], parametro[2], atraccDAO.encontrarAtraccion(parametro[3]));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				System.err.println("No se pudo cargar la promocion " + parametro[1] + ". Error de parseo.");
+				throw new NumberFormatException();
+			}
+		} else {
+			throw new IllegalArgumentException("Codigo de tipo de promocion invalido."
+					+ " \n 1-Promocion absoluta \n 2-Promocion porcentual \n 3-Promocion AxB");
+		}
+
+	}
+
 	public static void cargaPromocion(String rutaPromociones) throws SQLException {
-		PromocionDAO promDao = FactoryDAO.getPromocionPorcentualDao();
+		PromocionDAO promDao;
 		PromocionListaAtraccionesDAO listaAtraccionesDAO = FactoryDAO.getPromocionListaAtraccionesDAO();
 		AtraccionDAO atraccDAO = FactoryDAO.getAtraccionDAO();
 
@@ -188,9 +222,18 @@ public class CreadorBaseDeDatos {
 			while ((linea = br.readLine()) != null) {
 				String[] parametro = linea.split("-");
 				try {
-					Promocion promocionaAgregar = new PromocionPorcentual(parametro[1], parametro[2],
-							Integer.parseInt(parametro[3]));
-					promDao.insert(promocionaAgregar);					
+					if (Integer.parseInt(parametro[0]) == 1) {
+						promDao = FactoryDAO.getPromocionAbsolutaDAO();
+					} else if (Integer.parseInt(parametro[0]) == 2) {
+						promDao = FactoryDAO.getPromocionPorcentualDao();
+					} else if (Integer.parseInt(parametro[0]) == 3) {
+						promDao = FactoryDAO.getPromocionAxBDAO();
+					} else {
+						throw new IllegalArgumentException("Codigo de tipo de promocion invalido."
+								+ " \n 1-Promocion absoluta \n 2-Promocion porcentual \n 3-Promocion AxB");
+					}
+					Promocion promocionaAgregar = determinarTipoPromocion(parametro);
+					promDao.insert(promocionaAgregar);
 					for (int i = 4; i < parametro.length; i++) {
 						listaAtraccionesDAO.insert(atraccDAO.encontrarAtraccion(parametro[i]));
 					}

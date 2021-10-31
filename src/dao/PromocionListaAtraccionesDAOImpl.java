@@ -53,17 +53,19 @@ public class PromocionListaAtraccionesDAOImpl implements PromocionListaAtraccion
 	@Override
 	public List<Integer> obtenerListaAtraccionesporID(int id){
 		try {
-			String sql = "SELECT DISTINCT id_atraccion\r\n"
-					+ "FROM promociones_atracciones A\r\n"
-					+ "INNER JOIN promociones B\r\n"
-					+ "ON A.id_listaAtracciones = B.id_promocion";
+			String sql = "SELECT * \n"
+					+ "FROM promociones_atracciones A \n"
+					+ "INNER JOIN promociones B \n"
+					+ "ON A.id_listaAtracciones = B.id_promocion \n"
+					+ "WHERE B.id_promocion = ?";
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, id);
 			ResultSet resultados = statement.executeQuery();
 
 			List<Integer> idAtracciones = new ArrayList<Integer>();
 			while (resultados.next()) {
-				idAtracciones.add(resultados.getInt(1));
+				idAtracciones.add(resultados.getInt(2));
 			}
 
 			return idAtracciones;

@@ -62,20 +62,18 @@ public class PromocionAxBDAOImpl implements PromocionDAO{
 	
 	@Override
 	public int insert(Promocion t) throws SQLException {
-		PromocionAbsoluta promoAbs = (PromocionAbsoluta) t;
+		PromocionAxB promoAbs = (PromocionAxB) t;
 		
 		try {
-			String sql = "INSERT INTO PROMOCIONES (codigoTipoPromocion,TipoAtraccionPromocion,nombre,costo,id_listaAtracciones, id_atraccionGratis) VALUES (?, ?, ?, ?, ?,?)";
+			String sql = "INSERT INTO PROMOCIONES (codigoTipoPromocion,TipoAtraccionPromocion,nombre, id_atraccionGratis) VALUES (?, ?, ?, ?)";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 
-			statement.setInt(1, 1);
+			statement.setInt(1, 3);
 			statement.setString(2, promoAbs.getTipo().toString());
 			statement.setString(3, promoAbs.getNombre());
-			statement.setInt(4, promoAbs.obtenerPrecioFinal());
-			statement.setInt(5,0);
-			statement.setInt(6,0);
+			statement.setInt(4,promoAbs.getAtraccionGratis().getID());
 			int rows = statement.executeUpdate();
 
 			return rows;

@@ -9,6 +9,12 @@ public class PromocionAxB extends Promocion {
 	private Atraccion atraccionGratis;
 
 	// Constructores
+	
+	public PromocionAxB(int id, String tipo, String pack, Atraccion atraccGratis) {
+		super(id, tipo, pack);
+		setAtraccion(atraccGratis);
+		this.atraccion.add(atraccGratis);
+	}
 
 	public PromocionAxB(String tipo, String pack, Atraccion atraccGratis) {
 		super(tipo, pack);

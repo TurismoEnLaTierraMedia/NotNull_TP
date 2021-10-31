@@ -30,6 +30,14 @@ public class FactoryDAO {
 	public static PromocionDAO getPromocionPorcentualDao() {
 		return new PromocionPorcentualDaoImpl();
 	}
+	
+	public static PromocionDAO getPromocionAbsolutaDAO() {
+		return new PromocionAbsolutaDAOImpl();
+	}
+	
+	public static PromocionDAO getPromocionAxBDAO() {
+		return new PromocionAxBDAOImpl();
+	}
 
 	public static PromocionListaAtraccionesDAO getPromocionListaAtraccionesDAO() {
 		return new PromocionListaAtraccionesDAOImpl();

@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import clases.Atraccion;
 import clases.Itinerario;
 import clases.Usuario;
 import jdbc.ConnectionProvider;
@@ -34,8 +36,14 @@ public class ItinerarioDAOImpl implements ItinerarioDAO {
 	
 	private Itinerario aItinerario(ResultSet resultados) throws SQLException{
 		UsuarioDAO usuDAO = FactoryDAO.getUsuarioDAO();
-		
-		return new Itinerario(usuDAO.encontrarUsuario(resultados.getInt(1)), null, null, resultados.getInt(4), resultados.getDouble(5));
+		ItinerarioAtraccionesCompradasDAO itiAtraccCompraDAO = FactoryDAO.getItinerarioAtraccionesCompradasDAO();
+		AtraccionDAO atraccDAO = FactoryDAO.getAtraccionDAO();
+		List<Integer> idIntegers = itiAtraccCompraDAO.listaAtraccionesPorID(resultados.getInt(1));
+		List<Atraccion> listaAtracciones = new ArrayList<Atraccion>();
+		for (int i = 0; i < idIntegers.size(); i++) {
+			listaAtracciones.add(atraccDAO.encontrarAtraccion(idIntegers.get(i)));
+		}
+		return new Itinerario(usuDAO.encontrarUsuario(resultados.getInt(1)), null, listaAtracciones, resultados.getInt(4), resultados.getDouble(5));
 	}
 
 	@Override

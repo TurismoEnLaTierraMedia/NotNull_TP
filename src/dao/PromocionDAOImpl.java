@@ -81,14 +81,28 @@ public class PromocionDAOImpl implements PromocionDAO {
 		return promocion;
 	}
 
-	public PromocionAbsoluta aPromocionAbsoluta(ResultSet resultado) {
-		// TODO Auto-generated method stub
-		return null;
+	public PromocionAbsoluta aPromocionAbsoluta(ResultSet resultado) throws SQLException{
+		PromocionListaAtraccionesDAO promoListaAtraccDAO = FactoryDAO.getPromocionListaAtraccionesDAO();
+		AtraccionDAO atraccDAO = FactoryDAO.getAtraccionDAO();
+		PromocionAbsoluta promocion = new PromocionAbsoluta(resultado.getInt(1), resultado.getString(3), resultado.getString(4), resultado.getInt(5));
+		List<Integer> listaID = promoListaAtraccDAO.obtenerListaAtraccionesporID(resultado.getInt(1));
+		for (Iterator iterator = listaID.iterator(); iterator.hasNext();) {
+			Integer integer = (Integer) iterator.next();
+			promocion.getAtracciones().add(atraccDAO.encontrarAtraccion(integer));
+		}
+		return promocion;
 	}
 
-	public PromocionAxB aPromocionAxB(ResultSet resultado) {
-		// TODO Auto-generated method stub
-		return null;
+	public PromocionAxB aPromocionAxB(ResultSet resultado) throws SQLException{
+		PromocionListaAtraccionesDAO promoListaAtraccDAO = FactoryDAO.getPromocionListaAtraccionesDAO();
+		AtraccionDAO atraccDAO = FactoryDAO.getAtraccionDAO();
+		PromocionAxB promocion = new PromocionAxB(resultado.getInt(1), resultado.getString(3), resultado.getString(4), atraccDAO.encontrarAtraccion(resultado.getInt(7)));
+		List<Integer> listaID = promoListaAtraccDAO.obtenerListaAtraccionesporID(resultado.getInt(1));
+		for (Iterator iterator = listaID.iterator(); iterator.hasNext();) {
+			Integer integer = (Integer) iterator.next();
+			promocion.getAtracciones().add(atraccDAO.encontrarAtraccion(integer));
+		}
+		return promocion;
 	}
 
 }

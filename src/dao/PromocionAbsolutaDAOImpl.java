@@ -60,18 +60,17 @@ public class PromocionAbsolutaDAOImpl implements PromocionDAO {
 		PromocionAbsoluta promoAbs = (PromocionAbsoluta) t;
 
 		try {
-			String sql = "INSERT INTO PROMOCIONES (codigoTipoPromocion,TipoAtraccionPromocion,nombre,costo,id_listaAtracciones) VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO PROMOCIONES (codigoTipoPromocion,TipoAtraccionPromocion,nombre,descuento) VALUES (?, ?, ?, ?)";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 
 			// id_promocion, codigoTipoPromocion, TipoAtraccionPromocion, nombre, costo,
 			// id_listaAtracciones
-			statement.setInt(1, 1);
+			statement.setInt(1, 2);
 			statement.setString(2, promoAbs.getTipo().toString());
 			statement.setString(3, promoAbs.getNombre());
-			statement.setInt(4, promoAbs.obtenerPrecioFinal());
-			statement.setInt(5, 0);
+			statement.setInt(4, promoAbs.getValorDesc());
 			int rows = statement.executeUpdate();
 
 			return rows;
