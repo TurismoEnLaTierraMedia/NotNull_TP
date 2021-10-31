@@ -8,6 +8,7 @@ import dao.AtraccionDAO;
 import dao.FactoryDAO;
 import dao.ItinerarioAtraccionesCompradasDAO;
 import dao.ItinerarioDAO;
+import dao.PromocionDAO;
 import dao.UsuarioDAO;
 
 import java.io.*;
@@ -95,6 +96,12 @@ public class Sistema {
 	public void nuevaCargaAtracciones() throws SQLException{
 		AtraccionDAO atraccDAO = FactoryDAO.getAtraccionDAO();
 		this.atracciones = (ArrayList<Atraccion>)atraccDAO.findAll();
+		Collections.sort(this.atracciones, new OrdenablePorPrecioYTiempo());
+	}
+	
+	public void nuevaCargaPromociones() throws SQLException{
+		PromocionDAO promoDAO = FactoryDAO.getPromocionDAO();
+		this.promociones = (ArrayList<Promocion>)promoDAO.findAll();
 	}
 
 	/**

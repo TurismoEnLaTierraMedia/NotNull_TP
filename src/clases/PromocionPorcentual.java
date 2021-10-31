@@ -7,6 +7,11 @@ public class PromocionPorcentual extends Promocion {
 	private int valorDesc;
 
 	// Constructores
+	
+	public PromocionPorcentual(int id, String tipo, String pack, int valorDesc) {
+		super(id, tipo, pack);
+		setValorDesc(valorDesc);
+	}
 
 	public PromocionPorcentual(String tipo, String pack, int valorDesc) {
 		super(tipo, pack);
