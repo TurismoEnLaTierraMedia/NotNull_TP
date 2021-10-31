@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import clases.Promocion;
+import clases.PromocionAbsoluta;
+import clases.PromocionAxB;
 import clases.PromocionPorcentual;
 import jdbc.ConnectionProvider;
 
@@ -58,7 +60,7 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 		PromocionPorcentual promoPorc = (PromocionPorcentual) t;
 		
 		try {
-			String sql = "INSERT INTO PROMOCIONES (codigoTipoPromocion,TipoAtraccionPromocion,nombre,costo,id_listaAtracciones) VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO PROMOCIONES (codigoTipoPromocion,TipoAtraccionPromocion,nombre,costo) VALUES (?, ?, ?, ?)";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -69,7 +71,6 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 			statement.setString(2, promoPorc.getTipo().toString());
 			statement.setString(3, promoPorc.getNombre());
 			statement.setInt(4, promoPorc.obtenerPrecioFinal());
-			statement.setInt(5,0);
 			int rows = statement.executeUpdate();
 
 			return rows;

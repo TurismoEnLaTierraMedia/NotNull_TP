@@ -31,4 +31,8 @@ public class FactoryDAO {
 		return new PromocionPorcentualDaoImpl();
 	}
 
+	public static PromocionListaAtraccionesDAO getPromocionListaAtraccionesDAO() {
+		return new PromocionListaAtraccionesDAOImpl();
+	}
+
 }

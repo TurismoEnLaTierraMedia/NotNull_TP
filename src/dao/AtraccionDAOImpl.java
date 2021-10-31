@@ -86,4 +86,34 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 		return 0;
 	}
 
+	@Override
+	public Atraccion encontrarAtraccion(int id) {
+		try {
+			String sql = "SELECT * FROM atracciones WHERE atraccion_id = ?";
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, id);
+			ResultSet resultados = statement.executeQuery();
+
+			return aAtraccion(resultados);
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+	
+	@Override
+	public Atraccion encontrarAtraccion(String nombre) {
+		try {
+			String sql = "SELECT * FROM atracciones WHERE nombre = ?";
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, nombre);
+			ResultSet resultados = statement.executeQuery();
+
+			return aAtraccion(resultados);
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+
 }

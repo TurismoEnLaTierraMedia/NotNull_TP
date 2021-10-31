@@ -15,6 +15,7 @@ import clases.Usuario;
 import dao.AtraccionDAO;
 import dao.FactoryDAO;
 import dao.PromocionDAO;
+import dao.PromocionListaAtraccionesDAO;
 import dao.TipoAtraccionDAO;
 import dao.TipoAtraccionDAOImpl;
 import dao.UsuarioDAO;
@@ -41,8 +42,12 @@ public class CreadorBaseDeDatos {
 
 		String tablaPromocion = "CREATE TABLE IF NOT EXISTS promociones (\n" + " id_promocion INTEGER PRIMARY KEY,\n"
 				+ " codigoTipoPromocion INTEGER NOT NULL,\n" + " TipoAtraccionPromocion TEXT NOT NULL,\n"
-				+ " nombre TEXT NOT NULL,\n" + " costo INTEGER,\n" + " id_listaAtracciones INTEGER NOT NULL,\n"
-				+ "UNIQUE(nombre)" + ");";
+				+ " nombre TEXT NOT NULL,\n" + " costo INTEGER,\n" + " id_listaAtracciones INTEGER,\n"
+				+ " id_atraccionGratis INTEGER,\n" + "UNIQUE(nombre)" + ");";
+
+		String tablaAtraccionesDePromocion = "CREATE TABLE IF NOT EXISTS promociones_atracciones (\n"
+				+ "id_listaAtracciones INTEGER NOT NULL,\n" + "id_atraccion INTEGER NOT NULL,\n" 
+				+ "FOREIGN KEY (id_listaAtracciones) REFERENCES promociones (id_promocion)" + ");";
 
 		String tablaTipoAtraccion = "CREATE TABLE IF NOT EXISTS tipoAtracciones (\n" + " id INTEGER NOT NULL,\n"
 				+ " nombre TEXT NOT NULL,\n" + "UNIQUE(nombre)" + ");";
@@ -62,6 +67,7 @@ public class CreadorBaseDeDatos {
 		stmt.execute(tablaUsuario);
 		stmt.execute(tablaAtraccion);
 		stmt.execute(tablaPromocion);
+		stmt.execute(tablaAtraccionesDePromocion);
 		stmt.execute(tablaTipoAtraccion);
 		stmt.execute(tablaItinerario);
 		stmt.execute(tablaItinerarioAtraccionesCompradas);
@@ -143,8 +149,6 @@ public class CreadorBaseDeDatos {
 		}
 	}
 
-	
-
 	private static void cargaTipoAtraccion() throws SQLException {
 		TipoAtraccionDAO TatraccDAO = FactoryDAO.getTipoAtraccionDAO();
 		Tipo_De_Atraccion[] tipos = Tipo_De_Atraccion.values();
@@ -166,12 +170,12 @@ public class CreadorBaseDeDatos {
 		crearTablas(connection);
 		cargarEjemplos();
 	}
-	
-		
-	
+
 	public static void cargaPromocion(String rutaPromociones) throws SQLException {
 		PromocionDAO promDao = FactoryDAO.getPromocionPorcentualDao();
-		
+		PromocionListaAtraccionesDAO listaAtraccionesDAO = FactoryDAO.getPromocionListaAtraccionesDAO();
+		AtraccionDAO atraccDAO = FactoryDAO.getAtraccionDAO();
+
 		try {
 			archivo = new File(rutaPromociones);
 			if (archivo.length() == 0) {
@@ -184,11 +188,12 @@ public class CreadorBaseDeDatos {
 			while ((linea = br.readLine()) != null) {
 				String[] parametro = linea.split("-");
 				try {
-					Promocion promocionaAgregar = new PromocionPorcentual(parametro[1], parametro [2], Integer.parseInt(parametro [3]));
-//					for (int i = 4; i < parametro.length; i++) {
-//						promocionaAgregar.anadirAtraccion(convertirStringAAtraccion(parametro[i]));
-//					}
-					promDao.insert(promocionaAgregar);
+					Promocion promocionaAgregar = new PromocionPorcentual(parametro[1], parametro[2],
+							Integer.parseInt(parametro[3]));
+					promDao.insert(promocionaAgregar);					
+					for (int i = 4; i < parametro.length; i++) {
+						listaAtraccionesDAO.insert(atraccDAO.encontrarAtraccion(parametro[i]));
+					}
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
 					System.err.println("No se pudo cargar la promocion " + parametro[2]);
