@@ -7,17 +7,21 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+import clases.Atraccion;
 import clases.Promocion;
-
-import clases.PromocionPorcentual;
+import clases.PromocionAbsoluta;
+import clases.PromocionAxB;
 import jdbc.ConnectionProvider;
 
-public class PromocionPorcentualDaoImpl implements PromocionDAO {
+public class PromocionAxBDAOImpl implements PromocionDAO{
 
-	private PromocionPorcentual toPromocionPorcentual(ResultSet resultados) throws SQLException {
-		return new PromocionPorcentual(resultados.getString(2), resultados.getString(3), resultados.getInt(5));
-	}
-
+	
+	private PromocionAxB toPromocionAxB(ResultSet resultados) throws SQLException {
+		AtraccionDAO PromAxB = FactoryDAO.getAtraccionDAO();
+		return new PromocionAxB(resultados.getString(3), resultados.getString(4), PromAxB.encontrarAtraccion(resultados.getString(7)));	
+		
+	}	
+	
 	@Override
 	public List<Promocion> findAll() throws SQLException {
 		try {
@@ -28,7 +32,7 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 
 			List<Promocion> promociones = new LinkedList<Promocion>();
 			while (resultados.next()) {
-				promociones.add(toPromocionPorcentual(resultados));
+				promociones.add(toPromocionAxB(resultados));
 			}
 
 			return promociones;
@@ -36,7 +40,7 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 			throw new MissingDataException(e);
 		}
 	}
-
+	
 	@Override
 	public int countAll() throws SQLException {
 		try {
@@ -53,23 +57,25 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 			throw new MissingDataException(e);
 		}
 	}
-
+	
+	
+	
 	@Override
 	public int insert(Promocion t) throws SQLException {
-		PromocionPorcentual promoPorc = (PromocionPorcentual) t;
-
+		PromocionAbsoluta promoAbs = (PromocionAbsoluta) t;
+		
 		try {
-			String sql = "INSERT INTO PROMOCIONES (codigoTipoPromocion,TipoAtraccionPromocion,nombre,costo) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO PROMOCIONES (codigoTipoPromocion,TipoAtraccionPromocion,nombre,costo,id_listaAtracciones, id_atraccionGratis) VALUES (?, ?, ?, ?, ?,?)";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 
-			// id_promocion, codigoTipoPromocion, TipoAtraccionPromocion, nombre, costo,
-			// id_listaAtracciones
 			statement.setInt(1, 1);
-			statement.setString(2, promoPorc.getTipo().toString());
-			statement.setString(3, promoPorc.getNombre());
-			statement.setInt(4, promoPorc.obtenerPrecioFinal());
+			statement.setString(2, promoAbs.getTipo().toString());
+			statement.setString(3, promoAbs.getNombre());
+			statement.setInt(4, promoAbs.obtenerPrecioFinal());
+			statement.setInt(5,0);
+			statement.setInt(6,0);
 			int rows = statement.executeUpdate();
 
 			return rows;
@@ -80,12 +86,15 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 
 	@Override
 	public int update(Promocion t) throws SQLException {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int delete(Promocion t) throws SQLException {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	
 }

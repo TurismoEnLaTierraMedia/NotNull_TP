@@ -8,14 +8,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import clases.Promocion;
+import clases.PromocionAbsoluta;
 
-import clases.PromocionPorcentual;
 import jdbc.ConnectionProvider;
 
-public class PromocionPorcentualDaoImpl implements PromocionDAO {
+public class PromocionAbsolutaDAOImpl implements PromocionDAO {
 
-	private PromocionPorcentual toPromocionPorcentual(ResultSet resultados) throws SQLException {
-		return new PromocionPorcentual(resultados.getString(2), resultados.getString(3), resultados.getInt(5));
+	private PromocionAbsoluta toPromocionAbsoluta(ResultSet resultados) throws SQLException {
+		return new PromocionAbsoluta(resultados.getString(3), resultados.getString(4), resultados.getInt(5));
+
 	}
 
 	@Override
@@ -28,7 +29,7 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 
 			List<Promocion> promociones = new LinkedList<Promocion>();
 			while (resultados.next()) {
-				promociones.add(toPromocionPorcentual(resultados));
+				promociones.add(toPromocionAbsoluta(resultados));
 			}
 
 			return promociones;
@@ -56,10 +57,10 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 
 	@Override
 	public int insert(Promocion t) throws SQLException {
-		PromocionPorcentual promoPorc = (PromocionPorcentual) t;
+		PromocionAbsoluta promoAbs = (PromocionAbsoluta) t;
 
 		try {
-			String sql = "INSERT INTO PROMOCIONES (codigoTipoPromocion,TipoAtraccionPromocion,nombre,costo) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO PROMOCIONES (codigoTipoPromocion,TipoAtraccionPromocion,nombre,costo,id_listaAtracciones) VALUES (?, ?, ?, ?, ?)";
 			Connection conn = ConnectionProvider.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -67,9 +68,10 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 			// id_promocion, codigoTipoPromocion, TipoAtraccionPromocion, nombre, costo,
 			// id_listaAtracciones
 			statement.setInt(1, 1);
-			statement.setString(2, promoPorc.getTipo().toString());
-			statement.setString(3, promoPorc.getNombre());
-			statement.setInt(4, promoPorc.obtenerPrecioFinal());
+			statement.setString(2, promoAbs.getTipo().toString());
+			statement.setString(3, promoAbs.getNombre());
+			statement.setInt(4, promoAbs.obtenerPrecioFinal());
+			statement.setInt(5, 0);
 			int rows = statement.executeUpdate();
 
 			return rows;
@@ -80,11 +82,13 @@ public class PromocionPorcentualDaoImpl implements PromocionDAO {
 
 	@Override
 	public int update(Promocion t) throws SQLException {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int delete(Promocion t) throws SQLException {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
